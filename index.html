@@ -1,0 +1,627 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dr. med. Christoph Manicke · Neurochirurgie Kiel</title>
+<meta name="description" content="Dr. med. Christoph Manicke, Neurochirurg in Kiel mit Schwerpunkt Wirbelsäule. Unabhängige Zweitmeinung vor geplanten Operationen und Beratung nach Operationen. Burgstraße 2, Sprechstunde nach Vereinbarung.">
+<meta name="theme-color" content="#f7f7f5">
+<link rel="preload" href="assets/fonts/archivo-var.woff2" as="font" type="font/woff2" crossorigin>
+<script>document.documentElement.classList.add('js')</script>
+<style>
+@font-face { font-family: "Archivo"; font-style: normal; font-weight: 100 900; font-stretch: 62% 125%; font-display: swap; src: url(assets/fonts/archivo-var.woff2) format("woff2"); }
+
+:root {
+  /* the two style guides from the README: N26 (paper, sand, deep teal) and Gyn Paradeplatz (sage, mint) */
+  --paper: #f7f7f5;
+  --sand: #ebe9e5;
+  --sand-2: #e1ded9;
+  --teal: #003b39;
+  --teal-2: #0b4b48;
+  --sage: #5d6c67;
+  --sage-2: #6c7a75;
+  --mint: #c0e2bf;
+  --ink: #1b1b1b;
+
+  --bg: var(--paper);
+  --surface: var(--sand);
+  --accent: var(--mint);
+  --accent-ink: var(--ink);
+
+  --font: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --wide: 116%;
+
+  --step-small: clamp(0.875rem, 0.85rem + 0.1vw, 0.9375rem);
+  --step-body: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+  --step-lead: clamp(1.375rem, 1.15rem + 0.8vw, 1.875rem);
+  --step-head: clamp(2.25rem, 1.4rem + 3vw, 4rem);
+  --step-display: clamp(2.5rem, 0.6rem + 8.6vw, 9.25rem);
+
+  --margin: clamp(1.25rem, 2.2vw, 2rem);
+  --gutter: clamp(1rem, 2vw, 2rem);
+  --radius: 24px;
+  --bar: 72px;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-soft: cubic-bezier(0.33, 1, 0.68, 1);
+  --t-press: 140ms;
+  --t-hover: 180ms;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; color-scheme: light; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font); font-size: var(--step-body); line-height: 1.55; font-kerning: normal; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, p, figure, blockquote, ul, ol, dl, dd { margin: 0; }
+ul[class], ol[class] { padding: 0; list-style: none; }
+img, video, svg { display: block; max-width: 100%; }
+img, video { height: auto; }
+button, input, select { font: inherit; color: inherit; }
+button { background: none; border: 0; padding: 0; cursor: pointer; }
+a { color: inherit; }
+a, button, summary, select { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+:target { scroll-margin-top: calc(var(--bar) + 16px); }
+::selection { background: var(--teal); color: var(--paper); }
+:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+h1, h2, h3 { font-weight: 560; font-stretch: var(--wide); letter-spacing: -0.03em; line-height: 1; text-wrap: balance; }
+h2 { font-size: var(--step-head); }
+p { max-width: 62ch; text-wrap: pretty; }
+.small { font-size: var(--step-small); line-height: 1.45; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); }
+
+.skip { position: fixed; left: var(--margin); top: -4rem; z-index: 50; padding: 10px 18px; border-radius: 999px; background: var(--teal); color: var(--paper); text-decoration: none; font-size: var(--step-small); }
+.skip:focus { top: 12px; }
+
+.pill { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 3.25rem; padding: 0 1.6rem; border-radius: 999px; background: var(--accent); color: var(--accent-ink); text-decoration: none; font-weight: 560; font-size: var(--step-small); white-space: nowrap; transition: transform var(--t-press) var(--ease-out), background-color var(--t-hover) ease; }
+.pill:hover { background: #aed6ad; }
+.pill:active { transform: scale(0.97); }
+.pill.dark { background: var(--teal); color: var(--paper); }
+.pill.dark:hover { background: var(--teal-2); }
+.bar .pill.dark { background: var(--pill-bg, var(--teal)); color: var(--pill-ink, var(--paper)); transition: background-color 300ms ease, color 300ms ease, transform var(--t-press) var(--ease-out); }
+.bar .pill.dark:hover { filter: brightness(1.08); }
+.link { text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 0.22em; text-decoration-thickness: 0.07em; transition: text-decoration-color var(--t-hover) ease; }
+.link:hover, .link:focus-visible { text-decoration-color: currentColor; }
+
+/* ---------- the bar: takes the colour of the chapter beneath it ---------- */
+.bar { position: fixed; inset: 0 0 auto 0; z-index: 20; height: var(--bar); padding: 0 var(--margin); display: flex; align-items: center; justify-content: space-between; gap: 24px; background: var(--bar-bg, var(--paper)); color: var(--bar-ink, var(--ink)); transition: background-color 300ms ease, color 300ms ease; }
+.wordmark { font-weight: 600; font-stretch: var(--wide); font-size: 1.0625rem; letter-spacing: -0.01em; text-decoration: none; white-space: nowrap; }
+.bar nav { display: flex; align-items: center; gap: 28px; font-size: var(--step-small); }
+.nav-links { display: flex; gap: 28px; }
+.nav-links a { text-decoration: none; transition: opacity var(--t-hover) ease; }
+.nav-links a:hover { opacity: 0.65; }
+.nav-toggle { display: none; }
+
+/* ---------- hero: headline across two fields ---------- */
+.hero { position: relative; height: calc(100svh + 30svh); min-height: 46rem; background: var(--teal); }
+.hero::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 50svh; background: var(--paper); }
+.hero-title { position: absolute; left: 0; right: 0; top: calc(50svh - 1em); font-size: var(--step-display); text-align: center; }
+.hero-title h1 { font-size: 1em; line-height: 1; font-weight: 600; letter-spacing: -0.045em; padding-inline: var(--margin); }
+.hero-title .line { display: block; }
+.hero-title .up-line { color: var(--teal); background: var(--paper); }
+.hero-title .down-line { color: var(--paper); background: var(--teal); }
+.hero-lede { position: absolute; left: var(--margin); right: var(--margin); top: calc(100svh - 56px); transform: translateY(-100%); display: grid; justify-items: center; gap: 28px; text-align: center; color: var(--paper); }
+.hero-lede p { font-size: var(--step-lead); line-height: 1.3; max-width: 34ch; }
+.hero-facts { position: absolute; left: var(--margin); right: var(--margin); bottom: clamp(40px, 7svh, 72px); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gutter); color: var(--paper); }
+.hero-facts div { padding-top: 18px; }
+.hero-facts b { display: block; font-weight: 560; font-stretch: var(--wide); font-size: var(--step-body); }
+.hero-facts span { display: block; margin-top: 4px; color: #b9cac6; font-size: var(--step-small); }
+.hero-facts a { color: var(--paper); }
+
+/* ---------- intro: one statement on sand ---------- */
+.intro { background: var(--sand); min-height: 90svh; padding: clamp(6rem, 12vw, 10rem) var(--margin); }
+.intro h2 { grid-column: 1 / 13; grid-row: 1; font-size: clamp(2rem, 0.4rem + 6.6vw, 7rem); line-height: 0.95; letter-spacing: -0.045em; }
+.intro .statement { grid-column: 1 / 7; grid-row: 2; margin-top: clamp(40px, 5vw, 72px); font-size: var(--step-lead); line-height: 1.3; max-width: 30ch; }
+.intro .quote { grid-column: 9 / 13; grid-row: 2; align-self: end; }
+.intro .quote p + p { margin-top: 0.8em; }
+.intro h2 .line-b { display: block; }
+.intro .quote cite { display: block; margin-top: 14px; font-style: normal; font-weight: 560; font-size: var(--step-small); }
+.chip { grid-column: 7 / 9; grid-row: 2; align-self: start; justify-self: center; margin-top: clamp(40px, 5vw, 72px); width: clamp(150px, 15vw, 230px); aspect-ratio: 4 / 5; border-radius: var(--radius); overflow: hidden; rotate: 4deg; background: #000; }
+.chip img { width: 100%; height: 100%; object-fit: cover; }
+
+/* ---------- Leistungen: four cards dealt into a fan ---------- */
+.deal { position: relative; height: 240svh; background: var(--teal); color: var(--paper); }
+.deal-stage { position: sticky; top: 0; height: 100svh; overflow: hidden; padding: calc(var(--bar) + 32px) var(--margin) 40px; display: grid; grid-template-rows: auto 1fr; }
+.deal-head h2 { color: var(--paper); }
+.deal-head p { margin-top: 16px; max-width: 46ch; color: #d3dfdc; }
+.fan { position: relative; align-self: center; height: 420px; width: 1090px; max-width: 100%; margin: 0 auto; }
+.card { position: absolute; top: 10px; left: calc(var(--k) * 250px); width: 340px; height: 400px; padding: 28px; border-radius: var(--radius); background: var(--c); color: var(--ci, var(--ink)); rotate: var(--r); display: grid; grid-template-rows: auto 1fr auto; gap: 14px; will-change: transform; }
+.card h3 { font-size: var(--step-lead); line-height: 1.05; max-width: 236px; letter-spacing: -0.025em; }
+.card figure { align-self: center; width: 60%; aspect-ratio: 1; border-radius: 14px; overflow: hidden; background: #000; }
+.card figure img { width: 100%; height: 100%; object-fit: cover; }
+.card p { font-size: var(--step-small); line-height: 1.4; max-width: 24ch; }
+
+/* ---------- Ablauf: tiles that grow ---------- */
+.steps { background: var(--paper); padding: clamp(7rem, 12vw, 11rem) var(--margin) clamp(6rem, 10vw, 9rem); }
+.steps .tiles { position: relative; align-items: end; }
+.steps .head { position: absolute; left: 0; top: 0; width: 58%; }
+.steps .head p { margin-top: 18px; max-width: 34ch; }
+.tile { border-radius: var(--radius); overflow: hidden; background: var(--t); }
+.tile img { width: 100%; height: 100%; object-fit: cover; mix-blend-mode: screen; }
+.t1 { grid-column: 1 / 4; height: 30vh; }
+.t2 { grid-column: 4 / 8; height: 44vh; }
+.t3 { grid-column: 8 / 13; height: 60vh; min-height: 380px; }
+.steps .labels { margin-top: 24px; }
+.steps .labels div:nth-child(1) { grid-column: 1 / 4; }
+.steps .labels div:nth-child(2) { grid-column: 4 / 8; }
+.steps .labels div:nth-child(3) { grid-column: 8 / 13; }
+.step-name { display: block; margin: 0; font-weight: 560; font-stretch: var(--wide); font-size: var(--step-lead); letter-spacing: -0.02em; line-height: 1.1; }
+.steps .labels p, .tile-label p { margin-top: 8px; max-width: 34ch; }
+.tile-label { display: none; }
+
+/* ---------- Praxis: inset panel with a disc-shaped photograph ---------- */
+.practice { background: var(--mint); padding: 20px; }
+.panel { position: relative; min-height: 110svh; border-radius: var(--radius); background: var(--teal); color: var(--paper); overflow: hidden; padding: 56px; }
+.panel h2 { color: var(--paper); max-width: 8em; }
+.disc { position: absolute; left: 56px; bottom: 0; width: min(28vw, 440px); aspect-ratio: 4 / 5; translate: 0 18%; border-radius: 50%; overflow: hidden; background: #e9eceb; }
+.disc img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; }
+.panel .texts { position: absolute; left: 63%; top: 56px; right: 56px; display: grid; gap: 56px; max-width: 360px; }
+.panel h3 { font-size: var(--step-lead); letter-spacing: -0.02em; line-height: 1.1; color: var(--paper); }
+.panel .texts p { margin-top: 12px; color: #d3dfdc; }
+.panel .texts p.strong { color: var(--paper); }
+.panel .pill { justify-self: start; }
+
+/* ---------- FAQ: accordion of filled tiles ---------- */
+.faq { background: var(--paper); padding: clamp(7rem, 12vw, 11rem) var(--margin); }
+.faq h2 { grid-column: 1 / 5; position: sticky; top: calc(var(--bar) + 24px); align-self: start; max-width: 7em; }
+.faq .list { grid-column: 5 / 13; display: grid; gap: 8px; }
+.faq details { border-radius: var(--radius); background: var(--sand); transition: background-color 240ms ease; }
+.faq details[open] { background: var(--mint); }
+.faq summary { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 72px; padding: 18px 28px; font-weight: 520; font-size: var(--step-body); cursor: pointer; border-radius: var(--radius); transition: background-color var(--t-hover) ease; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq details:not([open]) summary:hover { background: var(--sand-2); }
+.plus { position: relative; flex: none; width: 16px; height: 16px; }
+.plus::before, .plus::after { content: ""; position: absolute; left: 0; top: 6.5px; width: 16px; height: 3px; border-radius: 2px; background: currentColor; transition: transform 240ms var(--ease-out); }
+.plus::after { transform: rotate(90deg); }
+details[open] .plus::after { transform: rotate(0deg); }
+.faq .answer { padding: 0 28px 26px; max-width: calc(52ch + 56px); }
+
+/* ---------- Kontakt: photo strip and the three-cell request bar ---------- */
+.contact { background: var(--sage); color: var(--paper); min-height: 80svh; padding: 48px 0 clamp(5rem, 9vw, 8rem); overflow: hidden; }
+.strip { display: flex; gap: 8px; width: max-content; }
+.strip figure { height: 150px; border-radius: 14px; overflow: hidden; flex: none; background: var(--sage-2); }
+.strip img, .strip video { height: 150px; width: auto; object-fit: cover; }
+.strip .w34 img { aspect-ratio: 3 / 4; }
+.strip .w11 img { aspect-ratio: 1; }
+.strip .w32 img, .strip .w32 video { aspect-ratio: 3 / 2; }
+.strip-row { display: flex; align-items: center; justify-content: flex-start; gap: 20px; padding: 14px var(--margin) 0; }
+.strip-row p { color: #e8eeec; }
+.motion-toggle { min-height: 2.75rem; padding: 0 18px; border-radius: 999px; background: var(--sage-2); color: var(--paper); font-size: var(--step-small); font-weight: 520; transition: background-color var(--t-hover) ease, transform var(--t-press) var(--ease-out); }
+.motion-toggle[hidden] { display: none; }
+.motion-toggle:hover { background: #7a8883; }
+.motion-toggle:active { transform: scale(0.97); }
+.contact h2 { margin: 72px var(--margin) 0; color: var(--paper); }
+.contact .lead-line { margin: 16px var(--margin) 0; max-width: 52ch; color: #eef2f0; }
+.request { margin: 40px var(--margin) 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.cell { position: relative; height: 96px; border-radius: var(--radius); background: var(--sage-2); transition: background-color var(--t-hover) ease, color var(--t-hover) ease; }
+.cell:hover { background: #75837e; }
+.cell:focus-within { background: #e7ecea; color: var(--ink); }
+.cell label { position: absolute; left: 24px; top: 16px; font-size: var(--step-small); font-weight: 520; pointer-events: none; }
+.cell input, .cell select { position: absolute; inset: 0; width: 100%; height: 100%; padding: 36px 24px 0; border: 0; border-radius: var(--radius); background: transparent; font-size: var(--step-body); outline: none; appearance: none; color: inherit; }
+.cell select { cursor: pointer; padding-right: 56px; }
+.cell input::placeholder { color: #dde4e1; }
+.cell:focus-within input::placeholder { color: #5f6562; }
+.cell:has(:focus-visible) { outline: 2px solid var(--paper); outline-offset: 3px; }
+.cell .chev { position: absolute; right: 28px; top: 50%; width: 10px; height: 10px; border-right: 3px solid currentColor; border-bottom: 3px solid currentColor; rotate: 45deg; translate: 0 -40%; pointer-events: none; }
+.cell select option { color: var(--ink); background: var(--paper); }
+.submit { height: 96px; border-radius: var(--radius); background: var(--paper); color: var(--ink); font-weight: 560; font-stretch: var(--wide); font-size: var(--step-lead); letter-spacing: -0.02em; transition: background-color var(--t-hover) ease, transform var(--t-press) var(--ease-out); }
+.submit:hover { background: var(--mint); }
+.submit:active { transform: scale(0.98); }
+.fine { margin: 14px var(--margin) 0; display: flex; flex-wrap: wrap; gap: 8px 40px; color: #eef2f0; }
+.fine a { color: var(--paper); }
+
+/* ---------- footer: the telephone number is the headline ---------- */
+.foot { background: var(--mint); color: var(--ink); min-height: 90svh; padding: 40px var(--margin) 28px; display: grid; grid-template-rows: auto 1fr auto auto; }
+.foot-top { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--gutter); font-size: var(--step-small); }
+.foot-top p { grid-column: span 2; max-width: none; }
+.foot-top p:first-child { grid-column: span 3; }
+.foot-top .up { grid-column: 12; justify-self: end; font-weight: 560; }
+.foot h2 { align-self: end; margin-top: 18vh; font-size: var(--step-lead); letter-spacing: -0.02em; }
+.call { display: block; margin-top: 14px; font-size: var(--step-display); font-weight: 600; font-stretch: var(--wide); letter-spacing: -0.05em; line-height: 0.9; text-decoration: none; white-space: nowrap; font-variant-numeric: tabular-nums; transition: color var(--t-hover) ease; }
+.call:hover { color: var(--teal); }
+.mail { display: inline-block; margin-top: 18px; font-size: var(--step-lead); font-weight: 520; letter-spacing: -0.02em; text-decoration-color: currentColor; }
+.foot-meta { margin-top: 56px; display: grid; grid-template-columns: 1fr 2fr 1fr; gap: var(--gutter); align-items: start; font-size: var(--step-small); }
+.foot-meta nav { display: flex; gap: 20px; }
+.foot-meta .credits { line-height: 1.45; max-width: 70ch; }
+.foot-meta .credits a { text-underline-offset: 0.15em; }
+.foot-meta .end { justify-self: end; }
+
+/* ---------- tablet ---------- */
+@media (max-width: 1100px) {
+  .nav-links .hide-mid { display: none; }
+  .fan { transform: scale(0.66); transform-origin: 50% 50%; width: 1090px; max-width: none; left: 50%; margin-left: -545px; }
+  .panel .texts { left: 54%; }
+  .disc { width: 34vw; }
+  .faq h2 { grid-column: 1 / 13; position: static; margin-bottom: 40px; max-width: none; }
+  .faq .list { grid-column: 1 / 13; }
+  .intro h2 { grid-column: 1 / 13; }
+  .intro .statement { grid-column: 1 / 13; }
+  .intro .quote { grid-column: 1 / 13; grid-row: 3; margin-top: 48px; max-width: 52ch; }
+  .chip { display: none; }
+  .steps .head { width: 70%; }
+  .request { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .request .submit { grid-column: 1 / -1; }
+}
+
+/* ---------- phone ---------- */
+@media (max-width: 767px) {
+  :root { --bar: 64px; --radius: 20px; --step-display: 10.2vw; }
+  .bar nav { gap: 8px; }
+  .wordmark { font-size: var(--step-small); white-space: normal; line-height: 1.15; max-width: 11em; }
+  .bar .pill { min-height: 2.75rem; padding: 0 16px; }
+  .js .nav-toggle { display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0 14px; border-radius: 999px; font-weight: 560; font-size: var(--step-small); }
+  .nav-links { position: absolute; top: var(--bar); left: 0; right: 0; flex-direction: column; gap: 0; padding: 8px var(--margin) 20px; background: var(--bar-bg, var(--paper)); }
+  .nav-links a { padding: 14px 0; font-size: var(--step-body); }
+  .nav-links .hide-mid { display: block; }
+  .js .bar:not(.is-open) .nav-links { display: none; }
+
+  .hero { height: auto; min-height: 0; padding-bottom: 48px; }
+  .hero::before { height: 46svh; }
+  .hero-title { position: relative; top: auto; padding-top: calc(46svh - 1em); font-size: var(--step-display); }
+  .hero-lede { position: static; transform: none; margin: 48px var(--margin) 0; gap: 24px; }
+  .hero-lede p { font-size: var(--step-body); max-width: 28ch; }
+  .hero-lede .pill { width: 100%; }
+  .hero-facts { position: static; margin: 40px var(--margin) 0; grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .hero-facts div { padding: 14px 0; }
+
+  .intro { min-height: 0; padding-block: 88px; }
+  .intro h2 { font-size: 8.4vw; }
+
+
+  .deal { height: auto; }
+  .deal-stage { position: static; height: auto; overflow: visible; padding: 88px 0; display: block; }
+  .deal-head { padding-inline: var(--margin); }
+  .fan { transform: none; left: auto; margin: 32px 0 0; width: auto; height: auto; display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 var(--margin) 8px; scrollbar-width: none; }
+  .fan::-webkit-scrollbar { display: none; }
+  .card { position: relative; left: auto; top: auto; rotate: 0deg; flex: none; width: 82%; height: 420px; scroll-snap-align: start; transform: none !important; }
+
+  .steps { padding-block: 88px; }
+  .steps .tiles { display: block; }
+  .steps .head { position: static; width: auto; margin-bottom: 8px; }
+  .tile { margin-top: 28px; }
+  .t1 { height: 34vw; }
+  .t2 { height: 46vw; }
+  .t3 { height: 62vw; min-height: 0; }
+  .steps .labels { display: none; }
+  .tile-label { display: block; margin-top: 14px; }
+
+
+  .practice { padding: 10px; }
+  .panel { min-height: 0; padding: 32px 22px 0; }
+
+  .panel .texts { position: static; margin-top: 36px; gap: 36px; max-width: none; }
+  .disc { position: relative; left: auto; width: 72vw; margin: 48px auto 0; translate: 0 18%; }
+
+  .faq { padding-block: 88px; }
+  .faq summary { min-height: 64px; padding: 16px 20px; }
+  .faq .answer { padding: 0 20px 22px; }
+
+  .strip figure, .strip img, .strip video { height: 110px; }
+  .strip-row { flex-wrap: wrap; }
+  .contact h2 { margin-top: 48px; }
+  .request { grid-template-columns: minmax(0, 1fr); }
+  .cell, .submit { height: 72px; }
+  .cell input, .cell select { padding-top: 30px; }
+  .cell label { top: 12px; }
+
+  .foot { min-height: 0; padding-top: 32px; }
+  .foot-top { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+  .foot-top p, .foot-top p:first-child { grid-column: auto; }
+  .foot-top .up { grid-column: auto; justify-self: start; margin-top: 8px; }
+  .foot h2 { margin-top: 64px; }
+  .mail { font-size: var(--step-body); }
+  .foot-meta { grid-template-columns: minmax(0, 1fr); gap: 12px; margin-top: 40px; }
+  .foot-meta .end { justify-self: start; }
+}
+
+/* ---------- motion ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity 700ms var(--ease-out), transform 900ms var(--ease-out); transition-delay: calc(var(--i, 0) * 80ms); }
+  .js [data-reveal].is-in { opacity: 1; transform: none; }
+  .js .hero [data-rise] { opacity: 0; transform: translateY(18px); animation: rise 900ms var(--ease-out) forwards; animation-delay: calc(var(--i, 0) * 110ms + 120ms); }
+  .strip.is-running { animation: drift 80s linear infinite; }
+  .js .tile img { transform: scale(1.14); transition: transform 1600ms var(--ease-soft); }
+  .js .tile.is-in img { transform: scale(1.02); }
+  .chip { transition: rotate 900ms var(--ease-out); }
+  .chip:hover { rotate: 0deg; }
+}
+@keyframes rise { to { opacity: 1; transform: none; } }
+@keyframes drift { to { transform: translateX(-50%); } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Zum Inhalt</a>
+
+<header class="bar">
+  <a class="wordmark" href="#top" translate="no">Dr. med. Christoph Manicke</a>
+  <nav aria-label="Hauptnavigation">
+    <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="nav-links">Menü</button>
+    <div class="nav-links" id="nav-links">
+      <a href="#leistungen">Leistungen</a>
+      <a href="#ablauf">Ablauf</a>
+      <a class="hide-mid" href="#praxis">Praxis</a>
+      <a href="#fragen">Fragen</a>
+      <a class="hide-mid" href="#kontakt">Kontakt</a>
+    </div>
+    <a class="pill dark" href="tel:+491726347706">Anrufen</a>
+  </nav>
+</header>
+
+<main id="main">
+  <section class="hero" id="top" data-bg="#f7f7f5" data-ink="#1b1b1b" aria-labelledby="title">
+    <div class="hero-title">
+      <h1 id="title"><span class="line up-line">Zweite Meinung</span> <span class="line down-line">zur Wirbelsäule</span></h1>
+    </div>
+    <div class="hero-lede">
+      <p data-rise style="--i:1">Dr. med. Christoph Manicke, Neurochirurg in&nbsp;Kiel. Unabhängige Beratung vor und nach Operationen an der Wirbelsäule.</p>
+      <a class="pill" data-rise style="--i:2" href="tel:+491726347706">Termin vereinbaren: 0172&nbsp;6347706</a>
+    </div>
+    <div class="hero-facts" data-rise style="--i:3">
+      <div><b>Sprechstunde nach Vereinbarung</b><span>Telefonisch oder per <a class="link" href="mailto:christoph.manicke@gmx.de">E-Mail</a></span></div>
+      <div><b>Burgstraße&nbsp;2, 24103&nbsp;Kiel</b><span>4.&nbsp;Stock, mit Aufzug erreichbar</span></div>
+      <div><b>Privatpraxis</b><span>Für privat Versicherte und Selbstzahler</span></div>
+    </div>
+  </section>
+
+  <section class="intro" data-bg="#ebe9e5" data-ink="#1b1b1b" aria-labelledby="intro-title">
+    <div class="grid">
+      <h2 id="intro-title" data-reveal><span class="line-b">Erst verstehen,</span> <span class="line-b">dann entscheiden.</span></h2>
+      <figure class="chip" data-reveal style="--i:2">
+        <img src="assets/v2/mri-t2-lumbar.webp" width="620" height="760" alt="MRT der Lendenwirbelsäule in seitlicher Ansicht, T2-gewichtet" loading="lazy">
+      </figure>
+      <p class="statement" data-reveal style="--i:1">Eine Operation an der Wirbelsäule lässt sich nicht zurücknehmen. Bevor Sie zustimmen, sollten Sie wissen, was sie leisten kann und welche Wege es sonst gibt.</p>
+      <blockquote class="quote" data-reveal style="--i:3">
+        <p>„Ich berate Sie zu allen Erkrankungen auf dem neurochirurgischen Fachgebiet mit dem Schwerpunkt Wirbelsäulenerkrankungen.</p>
+        <p>Sie werden ausführlich über das konservative und operative Behandlungsspektrum informiert.“</p>
+        <cite>Dr. med. Christoph Manicke</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <section class="deal" id="leistungen" data-bg="#003b39" data-ink="#f7f7f5" aria-labelledby="deal-title">
+    <div class="deal-stage">
+      <div class="deal-head">
+        <h2 id="deal-title" data-reveal>Wobei ich berate</h2>
+        <p data-reveal style="--i:1">Alle Erkrankungen des neurochirurgischen Fachgebiets, mit dem Schwerpunkt Wirbelsäule.</p>
+      </div>
+      <div class="fan">
+        <article class="card" style="--k:0; --r:-3deg; --c:#f7f7f5">
+          <h3>Zweitmeinung vor der OP</h3>
+          <figure><img src="assets/v2/mri-stir.webp" width="600" height="771" alt="MRT der Lendenwirbelsäule, STIR-Sequenz" loading="lazy"></figure>
+          <p>Ihnen wurde eine Operation empfohlen? Sie erhalten eine unabhängige Einschätzung, bevor Sie entscheiden.</p>
+        </article>
+        <article class="card" style="--k:1; --r:2deg; --c:#c0e2bf">
+          <h3>Nach einer Operation</h3>
+          <figure><img src="assets/v2/mri-t1.webp" width="600" height="771" alt="MRT der Lendenwirbelsäule, T1-gewichtet" loading="lazy"></figure>
+          <p>Auch nach einer bereits durchgeführten Operation ist eine Beratung möglich.</p>
+        </article>
+        <article class="card" style="--k:2; --r:-2deg; --c:#ebe9e5">
+          <h3>Konservativ oder operativ</h3>
+          <figure><img src="assets/v2/disc-herniation.webp" width="600" height="886" alt="MRT mit einem Bandscheibenvorfall zwischen dem vierten und fünften Lendenwirbel" loading="lazy"></figure>
+          <p>Sie lernen das ganze Behandlungsspektrum kennen, nicht nur den Eingriff.</p>
+        </article>
+        <article class="card" style="--k:3; --r:3deg; --c:#5d6c67; --ci:#f7f7f5">
+          <h3>Das ganze Fachgebiet</h3>
+          <figure><img src="assets/v2/bell-vertebrae.webp" width="600" height="465" alt="Kupferstich einzelner Wirbel von Andrew Bell, 1798" loading="lazy"></figure>
+          <p>Bandscheibenvorfall, Spinalkanalstenose, Wirbelgleiten und weitere Erkrankungen der Nerven und Wirbel.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="steps" id="ablauf" data-bg="#f7f7f5" data-ink="#1b1b1b" aria-labelledby="steps-title">
+    <div class="grid tiles">
+      <div class="head">
+        <h2 id="steps-title" data-reveal>So läuft die Zweitmeinung</h2>
+        <p data-reveal style="--i:1">Drei Schritte, vom ersten Anruf bis zu einer klaren Einschätzung.</p>
+      </div>
+      <div class="tile t1" style="--t:#5d6c67"><img src="assets/v2/mri-t2-disc.webp" width="800" height="800" alt="Nahaufnahme einer Bandscheibe im MRT" loading="lazy"></div>
+      <div class="tile-label"><h3 class="step-name">Anrufen</h3><p>Termin nach Vereinbarung unter 0172&nbsp;6347706 oder per E-Mail.</p></div>
+      <div class="tile t2" style="--t:#0b4b48"><img src="assets/v2/mri-t2-lumbar.webp" width="620" height="760" alt="Lendenwirbelsäule im MRT" loading="lazy"></div>
+      <div class="tile-label"><h3 class="step-name">Mitbringen</h3><p>MRT- oder CT-Bilder, Befunde, die OP-Empfehlung und Ihre Medikamentenliste.</p></div>
+      <div class="tile t3" style="--t:#003b39"><img src="assets/v2/mri-t2-full.webp" width="1024" height="1024" alt="Ganze Lendenwirbelsäule und Kreuzbein im MRT" loading="lazy"></div>
+      <div class="tile-label"><h3 class="step-name">Besprechen</h3><p>Ein gemeinsamer Blick auf Bilder und Beschwerden, dann eine klare Einschätzung, was Sie erwarten können.</p></div>
+    </div>
+    <div class="grid labels" aria-hidden="true">
+      <div data-reveal><h3 class="step-name">Anrufen</h3><p>Termin nach Vereinbarung unter 0172&nbsp;6347706 oder per E-Mail.</p></div>
+      <div data-reveal style="--i:1"><h3 class="step-name">Mitbringen</h3><p>MRT- oder CT-Bilder, Befunde, die OP-Empfehlung und Ihre Medikamentenliste.</p></div>
+      <div data-reveal style="--i:2"><h3 class="step-name">Besprechen</h3><p>Ein gemeinsamer Blick auf Bilder und Beschwerden, dann eine klare Einschätzung, was Sie erwarten können.</p></div>
+    </div>
+  </section>
+
+  <section class="practice" id="praxis" data-bg="#c0e2bf" data-ink="#1b1b1b" aria-labelledby="practice-title">
+    <div class="panel">
+      <h2 id="practice-title" data-reveal>Zeit für Ihre Fragen</h2>
+      <div class="texts">
+        <div data-reveal style="--i:1">
+          <h3>Die Praxis</h3>
+          <p>Burgstraße&nbsp;2 in der Kieler Innenstadt, zwischen Altem Markt und Schloss. Die Praxis liegt im 4.&nbsp;Stock und ist mit dem Aufzug erreichbar.</p>
+        </div>
+        <div data-reveal style="--i:2">
+          <h3>Der Arzt</h3>
+          <p>Dr. med. Christoph Manicke ist Neurochirurg mit dem Schwerpunkt Wirbelsäulenerkrankungen.</p>
+          <p class="strong">„Liebe Patientin, lieber Patient, ich freue mich, Sie in meiner Praxis in Kiel begrüßen zu dürfen!“</p>
+        </div>
+        <a class="pill" data-reveal style="--i:3" href="tel:+491726347706">Termin vereinbaren</a>
+      </div>
+      <figure class="disc" data-reveal style="--i:2"><img src="assets/v2/portrait-manicke.webp" width="528" height="700" alt="Porträt von Dr. med. Christoph Manicke" loading="lazy"></figure>
+    </div>
+  </section>
+
+  <section class="faq" id="fragen" data-bg="#f7f7f5" data-ink="#1b1b1b" aria-labelledby="faq-title">
+    <div class="grid">
+      <h2 id="faq-title" data-reveal>Häufige Fragen</h2>
+      <div class="list">
+        <details name="faq" data-reveal style="--i:1"><summary>Wer kann in die Sprechstunde kommen?<span class="plus" aria-hidden="true"></span></summary><p class="answer">Die Praxis ist eine Privatpraxis für privat Versicherte und Selbstzahler. Gesetzlich Versicherte können als Selbstzahler kommen.</p></details>
+        <details name="faq" data-reveal style="--i:2"><summary>Wie bekomme ich einen Termin?<span class="plus" aria-hidden="true"></span></summary><p class="answer">Termine gibt es nach Vereinbarung, telefonisch unter 0172&nbsp;6347706 oder per E-Mail an christoph.manicke@gmx.de. Eine Online-Buchung gibt es nicht.</p></details>
+        <details name="faq" data-reveal style="--i:3"><summary>Was kostet eine Zweitmeinung?<span class="plus" aria-hidden="true"></span></summary><p class="answer">Abgerechnet wird nach der Gebührenordnung für Ärzte (GOÄ). Ob Ihre Versicherung die Kosten übernimmt, klären Sie am besten vorher mit ihr.</p></details>
+        <details name="faq" data-reveal style="--i:4"><summary>Was soll ich mitbringen?<span class="plus" aria-hidden="true"></span></summary><p class="answer">Ihre aktuellen MRT- oder CT-Bilder auf CD oder als Link, Arztbriefe und Befunde, die schriftliche OP-Empfehlung, falls es eine gibt, und eine Liste Ihrer Medikamente.</p></details>
+        <details name="faq" data-reveal style="--i:5"><summary>Ich bin schon operiert. Kann ich trotzdem kommen?<span class="plus" aria-hidden="true"></span></summary><p class="answer">Ja. Auch nach einer bereits durchgeführten Operation ist eine Beratung möglich, etwa wenn Beschwerden geblieben oder neu aufgetreten sind.</p></details>
+        <details name="faq" data-reveal style="--i:6"><summary>Was unterscheidet Neurochirurgie von Orthopädie?<span class="plus" aria-hidden="true"></span></summary><p class="answer">Beide behandeln die Wirbelsäule. Die Neurochirurgie kommt vom Nervensystem her: Sie ist dort gefragt, wo Nervenwurzeln oder Rückenmark bedrängt werden.</p></details>
+        <details name="faq" data-reveal style="--i:7"><summary>Ist die Praxis barrierefrei erreichbar?<span class="plus" aria-hidden="true"></span></summary><p class="answer">Die Praxis liegt im 4.&nbsp;Stock der Burgstraße&nbsp;2 und ist mit einem Aufzug erreichbar.</p></details>
+        <details name="faq" data-reveal style="--i:8"><summary>Kann ich Befunde vorab per E-Mail schicken?<span class="plus" aria-hidden="true"></span></summary><p class="answer">Bitte senden Sie Gesundheitsdaten nicht unverschlüsselt per E-Mail. Sprechen Sie am Telefon ab, wie Ihre Unterlagen am besten zur Praxis kommen.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="kontakt" data-bg="#5d6c67" data-ink="#f7f7f5" aria-labelledby="contact-title">
+    <div class="strip">
+      <figure class="w32"><img src="assets/v2/burgstra-e-kiel-2017-01-strip.webp" width="396" height="300" alt="Burgstraße in Kiel, 2017" loading="lazy"></figure>
+      <figure class="w34"><img src="assets/v2/mri-stir.webp" width="600" height="771" alt="MRT der Lendenwirbelsäule" loading="lazy"></figure>
+      <figure class="w32"><img src="assets/v2/alter-markt-kiel-01-strip.webp" width="400" height="300" alt="Alter Markt in Kiel" loading="lazy"></figure>
+      <figure class="w11"><img src="assets/v2/burgstrasse-1966-strip.webp" width="453" height="300" alt="Burgstraße in Kiel, 1966" loading="lazy"></figure>
+      <figure class="w32"><video muted loop playsinline preload="none" poster="assets/v2/ostsee-strip.webp" width="533" height="300" aria-hidden="true"><source src="assets/kuhlungsborn-strand-lub-2025-02-14.webm" type="video/webm"><source src="assets/kuhlungsborn-strand-lub-2025-02-14.mp4" type="video/mp4"></video></figure>
+      <figure class="w34"><img src="assets/v2/kieler-schloss-01-16505090827-strip.webp" width="450" height="300" alt="Kieler Schloss" loading="lazy"></figure>
+      <figure class="w32"><img src="assets/v2/forde-strip.webp" width="450" height="300" alt="Kieler Förde an einem Wintermorgen" loading="lazy"></figure>
+      <figure class="w11"><img src="assets/v2/mri-t2-disc.webp" width="800" height="800" alt="Bandscheibe im MRT" loading="lazy"></figure>
+      <figure class="w32"><img src="assets/v2/panorama-strip.webp" width="461" height="300" alt="Kiel auf einer Postkarte um 1902" loading="lazy"></figure>
+      <figure class="w34"><img src="assets/v2/burgstra-e-kiel-2017-02-strip.webp" width="396" height="300" alt="Häuserzeile in der Burgstraße" loading="lazy"></figure>
+    </div>
+    <div class="strip-row">
+      <p class="small">Rund um die Burgstraße: Alter Markt, Schloss und Förde</p>
+      <button type="button" class="motion-toggle" aria-pressed="false" hidden>Bewegung anhalten</button>
+    </div>
+
+    <h2 id="contact-title" data-reveal>Anfrage vorbereiten</h2>
+    <p class="lead-line" data-reveal style="--i:1">Wählen Sie Ihr Anliegen. Ihr E-Mail-Programm öffnet sich mit einer fertigen Nachricht, die Sie nur noch abschicken.</p>
+    <form class="request" action="mailto:christoph.manicke@gmx.de" method="get" data-reveal style="--i:2">
+      <div class="cell">
+        <label for="f-name">Ihr Name</label>
+        <input id="f-name" name="name" type="text" autocomplete="name" placeholder="z.&nbsp;B. Anna Petersen…" required>
+      </div>
+      <div class="cell">
+        <label for="f-topic">Ihr Anliegen</label>
+        <select id="f-topic" name="anliegen">
+          <option>Zweitmeinung vor einer Operation</option>
+          <option>Beschwerden nach einer Operation</option>
+          <option>Beratung bei Rückenbeschwerden</option>
+          <option>Andere neurochirurgische Frage</option>
+        </select>
+        <span class="chev" aria-hidden="true"></span>
+      </div>
+      <button type="submit" class="submit">E-Mail öffnen</button>
+    </form>
+    <div class="fine small">
+      <p>Bitte hängen Sie keine Befunde an.</p>
+      <p>Lieber sprechen? <a class="link" href="tel:+491726347706">0172&nbsp;6347706</a></p>
+    </div>
+  </section>
+</main>
+
+<footer class="foot" data-bg="#c0e2bf" data-ink="#1b1b1b" aria-labelledby="foot-title">
+  <div class="foot-top">
+    <p>Dr. med. Christoph Manicke<br>Neurochirurgie, Schwerpunkt Wirbelsäule</p>
+    <p>Burgstraße&nbsp;2<br>24103&nbsp;Kiel, 4.&nbsp;Stock</p>
+    <p>Sprechstunde<br>nach Vereinbarung</p>
+    <a class="up link" href="#top">Nach oben</a>
+  </div>
+  <h2 id="foot-title">Termin vereinbaren</h2>
+  <div>
+    <a class="call" href="tel:+491726347706">0172&nbsp;6347706</a>
+    <a class="mail link" href="mailto:christoph.manicke@gmx.de">christoph.manicke@gmx.de</a>
+  </div>
+  <div class="foot-meta">
+    <nav aria-label="Rechtliches">
+      <a class="link" href="impressum.html">Impressum</a>
+      <a class="link" href="datenschutz.html">Datenschutz</a>
+    </nav>
+    <p class="credits" id="bildnachweis">Bilder über <a class="link" href="https://commons.wikimedia.org">Wikimedia Commons</a>, zugeschnitten und verkleinert: MRT-Aufnahmen der Lendenwirbelsäule (CC BY-SA 4.0) und Bandscheibenvorfall L4/L5 (gemeinfrei); Wirbel, Kupferstich von A. Bell, 1798, Wellcome Collection (CC BY 4.0); Burgstraße Kiel 2017 (CC BY-SA 4.0); Burgstraße 1966, Friedrich Magnussen, Stadtarchiv Kiel (CC BY-SA 3.0 DE); Alter Markt Kiel (CC BY-SA 4.0); Kieler Schloss (CC BY-SA 2.0); Wintermorgen am Eingang zur Kieler Förde, Dan Kollmann (CC BY-SA 4.0); Panorama von Kiel, 1902 (gemeinfrei); Kühlungsborn Strand, Lukas Beck (CC BY 4.0).</p>
+    <p class="end">Kiel, 2026</p>
+  </div>
+</footer>
+
+<script>
+// The bar takes the colour of the chapter under it.
+(() => {
+  const bar = document.querySelector('.bar');
+  const chapters = document.querySelectorAll('[data-bg]');
+  if (!('IntersectionObserver' in window)) return;
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) if (e.isIntersecting) {
+      bar.style.setProperty('--bar-bg', e.target.dataset.bg);
+      bar.style.setProperty('--bar-ink', e.target.dataset.ink);
+      const dark = e.target.dataset.ink === '#f7f7f5';
+      bar.style.setProperty('--pill-bg', dark ? '#c0e2bf' : '#003b39');
+      bar.style.setProperty('--pill-ink', dark ? '#1b1b1b' : '#f7f7f5');
+    }
+  }, { rootMargin: '0px 0px -92% 0px', threshold: 0 });
+  chapters.forEach((c) => io.observe(c));
+})();
+
+// Phone menu.
+(() => {
+  const bar = document.querySelector('.bar');
+  const btn = bar.querySelector('.nav-toggle');
+  const set = (open) => { bar.classList.toggle('is-open', open); btn.setAttribute('aria-expanded', String(open)); };
+  btn.addEventListener('click', () => set(!bar.classList.contains('is-open')));
+  bar.querySelectorAll('.nav-links a').forEach((a) => a.addEventListener('click', () => set(false)));
+  addEventListener('keydown', (e) => { if (e.key === 'Escape' && bar.classList.contains('is-open')) { set(false); btn.focus(); } });
+  addEventListener('click', (e) => { if (!bar.contains(e.target)) set(false); });
+})();
+
+// Entrances, once.
+(() => {
+  const els = document.querySelectorAll('[data-reveal], .tile');
+  if (!('IntersectionObserver' in window)) { els.forEach((el) => el.classList.add('is-in')); return; }
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+  els.forEach((el) => io.observe(el));
+})();
+
+// The fan: each further part of the pinned stage deals the next card from below.
+(() => {
+  const deal = document.querySelector('.deal');
+  const cards = [...deal.querySelectorAll('.card')];
+  const wide = matchMedia('(min-width: 768px)');
+  const still = matchMedia('(prefers-reduced-motion: reduce)');
+  let ticking = false;
+  const place = () => {
+    ticking = false;
+    if (!wide.matches || still.matches) { cards.forEach((c) => (c.style.transform = '')); return; }
+    const r = deal.getBoundingClientRect();
+    const p = Math.min(1, Math.max(0, -r.top / (r.height - innerHeight)));
+    cards.forEach((c, k) => {
+      if (k === 0) return;
+      const t = Math.min(1, Math.max(0, p * 3.6 - (k - 1) * 1.05));
+      const e = 1 - Math.pow(1 - t, 3);
+      c.style.transform = e >= 1 ? '' : `translateY(${(1 - e) * 110}vh)`;
+    });
+  };
+  addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(place); } }, { passive: true });
+  addEventListener('resize', place);
+  place();
+})();
+
+// The photo strip drifts and the clip plays; one button stops both.
+(() => {
+  const strip = document.querySelector('.strip');
+  const btn = document.querySelector('.motion-toggle');
+  if (!strip || !btn) return;
+  strip.append(...[...strip.children].map((f) => { const c = f.cloneNode(true); c.setAttribute('aria-hidden', 'true'); c.querySelectorAll('img').forEach((i) => (i.alt = '')); return c; }));
+  const clips = strip.querySelectorAll('video');
+  let on = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const apply = () => {
+    strip.classList.toggle('is-running', on);
+    clips.forEach((v) => (on ? v.play().catch(() => {}) : v.pause()));
+    btn.textContent = on ? 'Bewegung anhalten' : 'Bewegung abspielen';
+    btn.setAttribute('aria-pressed', String(!on));
+  };
+  btn.hidden = false;
+  btn.addEventListener('click', () => { on = !on; apply(); });
+  apply();
+})();
+
+// The request: a ready-written e-mail from the visitor's choices.
+(() => {
+  const form = document.querySelector('.request');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = form.elements.name.value.trim();
+    const topic = form.elements.anliegen.value;
+    const body = `Guten Tag Herr Dr. Manicke,\n\nich bitte um einen Termin. Mein Anliegen: ${topic}.\n\nSie erreichen mich unter dieser Telefonnummer: \n\nMit freundlichen Grüßen\n${name}`;
+    location.href = `mailto:christoph.manicke@gmx.de?subject=${encodeURIComponent('Terminanfrage: ' + topic)}&body=${encodeURIComponent(body)}`;
+  });
+})();
+</script>
+</body>
+</html>
