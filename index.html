@@ -18,6 +18,7 @@
   --sand-2: #e1ded9;
   --teal: #003b39;
   --teal-2: #0b4b48;
+  --teal-3: #245f5a;
   --sage: #5d6c67;
   --sage-2: #6c7a75;
   --mint: #c0e2bf;
@@ -91,24 +92,52 @@ p { max-width: 62ch; text-wrap: pretty; }
 .nav-links a:hover { opacity: 0.65; }
 .nav-toggle { display: none; }
 
-/* ---------- hero: headline across two fields ---------- */
-.hero { position: relative; height: calc(100svh + 30svh); min-height: 46rem; background: var(--teal); }
-.hero::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 50svh; background: var(--paper); }
-.hero-title { position: absolute; left: 0; right: 0; top: calc(50svh - 1em); font-size: var(--step-display); text-align: center; }
-.hero-title h1 { font-size: 1em; line-height: 1; font-weight: 600; letter-spacing: -0.045em; padding-inline: var(--margin); }
-.hero-title .line { display: block; }
-.hero-title .up-line { color: var(--teal); background: var(--paper); }
-.hero-title .down-line { color: var(--paper); background: var(--teal); }
-.hero-lede { position: absolute; left: var(--margin); right: var(--margin); top: calc(100svh - 56px); transform: translateY(-100%); display: grid; justify-items: center; gap: 28px; text-align: center; color: var(--paper); }
-.hero-lede p { font-size: var(--step-lead); line-height: 1.3; max-width: 34ch; }
-.hero-facts { position: absolute; left: var(--margin); right: var(--margin); bottom: clamp(40px, 7svh, 72px); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gutter); color: var(--paper); }
-.hero-facts div { padding-top: 18px; }
-.hero-facts b { display: block; font-weight: 560; font-stretch: var(--wide); font-size: var(--step-body); }
-.hero-facts span { display: block; margin-top: 4px; color: #b9cac6; font-size: var(--step-small); }
-.hero-facts a { color: var(--paper); }
+/* ---------- hero: headline across two fields, which part as you scroll to show the spine ---------- */
+.split { position: relative; }
+.js .split { height: 340svh; }
+.js .split-stage { position: sticky; top: 0; height: 100svh; overflow: hidden; }
+.doors { position: relative; height: 100svh; min-height: 34rem; }
+.js .doors { position: absolute; inset: 0; z-index: 3; min-height: 0; pointer-events: none; }
+.js .door { pointer-events: auto; }
+.door { position: absolute; left: 0; right: 0; height: 50%; overflow: hidden; font-size: var(--step-display); text-align: center; }
+.js .door { will-change: transform; }
+.door-top { top: 0; display: flex; align-items: flex-end; justify-content: center; background: var(--paper); color: var(--teal); box-shadow: 0 1px 0 rgba(0, 59, 57, 0.08), 0 28px 56px -28px rgba(0, 59, 57, 0.22); }
+.door-bottom { bottom: 0; background: var(--teal); color: var(--paper); }
+.door-line { max-width: none; font-size: 1em; line-height: 1; font-weight: 600; font-stretch: var(--wide); letter-spacing: -0.045em; padding-inline: var(--margin); text-wrap: balance; }
+.door-lede { position: absolute; left: var(--margin); right: var(--margin); bottom: 56px; display: grid; justify-items: center; gap: 28px; font-size: var(--step-body); }
+.door-lede p { font-size: var(--step-lead); line-height: 1.3; max-width: 34ch; }
+
+/* beneath the fields: the spine, built large */
+.sp-hero { --step-display: clamp(2.6rem, 0.8rem + 6.2vw, 7.5rem); position: relative; display: flex; flex-direction: column; min-height: 100svh; padding: calc(var(--bar) + 12vh) var(--margin) 56px; overflow: hidden; background: var(--paper); }
+.js .sp-hero { position: absolute; inset: 0; min-height: 0; }
+/* past the spine the view dives into one vertebra until its colour fills the screen */
+.sp-flood { display: none; }
+.js .sp-flood { display: block; position: absolute; inset: 0; z-index: 2; background: var(--teal); opacity: 0; pointer-events: none; }
+.split.is-zooming .spine-live .v { fill: var(--teal); translate: none; }
+.sp-copy { position: relative; z-index: 2; order: 1; max-width: min(58vw, 60rem); }
+.sp-hero h1 { font-size: var(--step-display); line-height: 0.95; font-weight: 600; letter-spacing: -0.045em; }
+.sp-hero h1 .line { display: block; overflow: hidden; padding-bottom: 0.12em; margin-bottom: -0.12em; }
+.sp-hero h1 .line > span { display: block; }
+.sp-lede { margin-top: 40px; font-size: clamp(1.1875rem, 0.95rem + 0.6vw, 1.5rem); line-height: 1.35; max-width: 36ch; }
+.sp-actions { margin-top: 36px; display: flex; flex-wrap: wrap; gap: 12px; }
+.hero-spine { position: absolute; z-index: 1; right: 7vw; top: calc(var(--bar) - 10svh); height: 140svh; width: auto; max-width: none; }
+.hero-spine-h { display: none; order: 2; }
+.hero-spine .v, .hero-spine-h .v { fill: var(--teal); }
+.hero-spine .seg[data-region="isg"] .v, .hero-spine-h .seg[data-region="isg"] .v { fill: var(--teal-3); }
+/* the spine is a set of four links to the request form; the vertebrae answer the pointer */
+.hero-spine .seg, .hero-spine-h .seg { cursor: pointer; outline: none; }
+.hero-spine .hit, .hero-spine-h .hit { fill: transparent; }
+.hero-spine .v, .hero-spine-h .v { transition: fill 160ms ease, translate 200ms var(--ease-out); }
+/* while the pointer is on the spine, each vertebra darkens and lifts by its distance to the pointer (--i, 0 to 1) */
+.spine-live .v { fill: color-mix(in srgb, var(--teal) calc(var(--i, 0) * 100%), var(--sand-2)); }
+@media (prefers-reduced-motion: no-preference) {
+  .hero-spine.spine-live .v { translate: calc(var(--i, 0) * -22px) 0; }
+  .hero-spine-h.spine-live .v { translate: 0 calc(var(--i, 0) * -10px); }
+}
+.hero-spine .seg:focus-visible .v, .hero-spine-h .seg:focus-visible .v { stroke: var(--ink); stroke-width: 4px; paint-order: stroke; }
 
 /* ---------- intro: one statement on sand ---------- */
-.intro { background: var(--sand); min-height: 90svh; padding: clamp(6rem, 12vw, 10rem) var(--margin); }
+.intro { position: relative; z-index: 1; border-radius: 0 0 var(--vert-r) var(--vert-r); background: var(--teal); color: var(--paper); min-height: 90svh; padding: clamp(6rem, 12vw, 10rem) var(--margin); }
 .intro h2 { grid-column: 1 / 13; grid-row: 1; font-size: clamp(2rem, 0.4rem + 6.6vw, 7rem); line-height: 0.95; letter-spacing: -0.045em; }
 .intro .statement { grid-column: 1 / 7; grid-row: 2; margin-top: clamp(40px, 5vw, 72px); font-size: var(--step-lead); line-height: 1.3; max-width: 30ch; }
 .intro .quote { grid-column: 9 / 13; grid-row: 2; align-self: end; }
@@ -116,10 +145,15 @@ p { max-width: 62ch; text-wrap: pretty; }
 .intro h2 .line-b { display: block; }
 .intro .quote cite { display: block; margin-top: 14px; font-style: normal; font-weight: 560; font-size: var(--step-small); }
 .chip { grid-column: 7 / 9; grid-row: 2; align-self: start; justify-self: center; margin-top: clamp(40px, 5vw, 72px); width: clamp(150px, 15vw, 230px); aspect-ratio: 4 / 5; border-radius: var(--radius); overflow: hidden; rotate: 4deg; background: #000; }
-.chip img { width: 100%; height: 100%; object-fit: cover; }
+.chip img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; }
 
 /* ---------- Leistungen: four cards dealt into a fan ---------- */
-.deal { position: relative; height: 240svh; background: var(--teal); color: var(--paper); }
+.deal { position: relative; z-index: 1; height: 240svh; border-radius: var(--vert-r) var(--vert-r) 0 0; background: var(--teal); color: var(--paper); }
+/* between the two vertebrae, seen up close: the disc, running in behind their rounded edges */
+:root { --vert-r: clamp(56px, 9vw, 160px); }
+.cartilage { position: relative; height: calc(clamp(120px, 22svh, 220px) + 2 * var(--vert-r)); margin-block: calc(-1 * var(--vert-r)); background: var(--paper); }
+/* a cushion, narrower than the bone, tucked under both vertebrae and bulging a little at its sides; its rings show as fine lines */
+.cartilage::before { content: ""; position: absolute; left: clamp(20px, 7vw, 120px); right: clamp(20px, 7vw, 120px); top: calc(var(--vert-r) * 0.5); bottom: calc(var(--vert-r) * 0.5); border-radius: 18% / 50%; background: repeating-linear-gradient(180deg, transparent 0 13px, rgba(0, 59, 57, 0.1) 13px 15px), var(--mint); box-shadow: inset 0 0 0 1px rgba(0, 59, 57, 0.08); }
 .deal-stage { position: sticky; top: 0; height: 100svh; overflow: hidden; padding: calc(var(--bar) + 32px) var(--margin) 40px; display: grid; grid-template-rows: auto 1fr; }
 .deal-head h2 { color: var(--paper); }
 .deal-head p { margin-top: 16px; max-width: 46ch; color: #d3dfdc; }
@@ -129,24 +163,6 @@ p { max-width: 62ch; text-wrap: pretty; }
 .card figure { align-self: center; width: 60%; aspect-ratio: 1; border-radius: 14px; overflow: hidden; background: #000; }
 .card figure img { width: 100%; height: 100%; object-fit: cover; }
 .card p { font-size: var(--step-small); line-height: 1.4; max-width: 24ch; }
-
-/* ---------- Ablauf: tiles that grow ---------- */
-.steps { background: var(--paper); padding: clamp(7rem, 12vw, 11rem) var(--margin) clamp(6rem, 10vw, 9rem); }
-.steps .tiles { position: relative; align-items: end; }
-.steps .head { position: absolute; left: 0; top: 0; width: 58%; }
-.steps .head p { margin-top: 18px; max-width: 34ch; }
-.tile { border-radius: var(--radius); overflow: hidden; background: var(--t); }
-.tile img { width: 100%; height: 100%; object-fit: cover; mix-blend-mode: screen; }
-.t1 { grid-column: 1 / 4; height: 30vh; }
-.t2 { grid-column: 4 / 8; height: 44vh; }
-.t3 { grid-column: 8 / 13; height: 60vh; min-height: 380px; }
-.steps .labels { margin-top: 24px; }
-.steps .labels div:nth-child(1) { grid-column: 1 / 4; }
-.steps .labels div:nth-child(2) { grid-column: 4 / 8; }
-.steps .labels div:nth-child(3) { grid-column: 8 / 13; }
-.step-name { display: block; margin: 0; font-weight: 560; font-stretch: var(--wide); font-size: var(--step-lead); letter-spacing: -0.02em; line-height: 1.1; }
-.steps .labels p, .tile-label p { margin-top: 8px; max-width: 34ch; }
-.tile-label { display: none; }
 
 /* ---------- Praxis: inset panel with a disc-shaped photograph ---------- */
 .practice { background: var(--mint); padding: 20px; }
@@ -227,6 +243,8 @@ details[open] .plus::after { transform: rotate(0deg); }
 
 /* ---------- tablet ---------- */
 @media (max-width: 1100px) {
+  .sp-copy { max-width: 64vw; }
+  .hero-spine { right: -6vw; }
   .nav-links .hide-mid { display: none; }
   .fan { transform: scale(0.66); transform-origin: 50% 50%; width: 1090px; max-width: none; left: 50%; margin-left: -545px; }
   .panel .texts { left: 54%; }
@@ -237,7 +255,6 @@ details[open] .plus::after { transform: rotate(0deg); }
   .intro .statement { grid-column: 1 / 13; }
   .intro .quote { grid-column: 1 / 13; grid-row: 3; margin-top: 48px; max-width: 52ch; }
   .chip { display: none; }
-  .steps .head { width: 70%; }
   .request { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .request .submit { grid-column: 1 / -1; }
 }
@@ -254,14 +271,16 @@ details[open] .plus::after { transform: rotate(0deg); }
   .nav-links .hide-mid { display: block; }
   .js .bar:not(.is-open) .nav-links { display: none; }
 
-  .hero { height: auto; min-height: 0; padding-bottom: 48px; }
-  .hero::before { height: 46svh; }
-  .hero-title { position: relative; top: auto; padding-top: calc(46svh - 1em); font-size: var(--step-display); }
-  .hero-lede { position: static; transform: none; margin: 48px var(--margin) 0; gap: 24px; }
-  .hero-lede p { font-size: var(--step-body); max-width: 28ch; }
-  .hero-lede .pill { width: 100%; }
-  .hero-facts { position: static; margin: 40px var(--margin) 0; grid-template-columns: minmax(0, 1fr); gap: 0; }
-  .hero-facts div { padding: 14px 0; }
+  .door-lede { bottom: 40px; gap: 24px; }
+  .door-lede p { font-size: var(--step-body); max-width: 28ch; }
+  .door-lede .pill { width: 100%; }
+  .sp-hero { --step-display: 10.6vw; padding-top: calc(var(--bar) + 28px); padding-bottom: 32px; }
+  .sp-copy { max-width: none; }
+  .sp-lede { font-size: var(--step-body); margin-top: 20px; max-width: 26ch; }
+  .sp-actions { margin-top: 24px; }
+  .sp-actions .pill { flex: 1 1 100%; }
+  .hero-spine { display: none; }
+  .hero-spine-h { display: block; width: 100%; height: auto; margin-top: auto; padding-top: 32px; }
 
   .intro { min-height: 0; padding-block: 88px; }
   .intro h2 { font-size: 8.4vw; }
@@ -274,15 +293,9 @@ details[open] .plus::after { transform: rotate(0deg); }
   .fan::-webkit-scrollbar { display: none; }
   .card { position: relative; left: auto; top: auto; rotate: 0deg; flex: none; width: 82%; height: 420px; scroll-snap-align: start; transform: none !important; }
 
-  .steps { padding-block: 88px; }
-  .steps .tiles { display: block; }
-  .steps .head { position: static; width: auto; margin-bottom: 8px; }
-  .tile { margin-top: 28px; }
   .t1 { height: 34vw; }
   .t2 { height: 46vw; }
   .t3 { height: 62vw; min-height: 0; }
-  .steps .labels { display: none; }
-  .tile-label { display: block; margin-top: 14px; }
 
 
   .practice { padding: 10px; }
@@ -317,14 +330,23 @@ details[open] .plus::after { transform: rotate(0deg); }
 @media (prefers-reduced-motion: no-preference) {
   .js [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity 700ms var(--ease-out), transform 900ms var(--ease-out); transition-delay: calc(var(--i, 0) * 80ms); }
   .js [data-reveal].is-in { opacity: 1; transform: none; }
-  .js .hero [data-rise] { opacity: 0; transform: translateY(18px); animation: rise 900ms var(--ease-out) forwards; animation-delay: calc(var(--i, 0) * 110ms + 120ms); }
+  /* on arrival the two lines come out of the seam, one up, one down; then the lede rises */
+  .js .door-top .door-line { animation: from-below 1100ms var(--ease-out) 150ms both; }
+  .js .door-bottom .door-line { animation: from-above 1100ms var(--ease-out) 150ms both; }
+  .js .doors [data-rise] { opacity: 0; transform: translateY(18px); animation: rise 900ms var(--ease-out) forwards; animation-delay: calc(var(--i, 0) * 120ms + 650ms); }
   .strip.is-running { animation: drift 80s linear infinite; }
-  .js .tile img { transform: scale(1.14); transition: transform 1600ms var(--ease-soft); }
-  .js .tile.is-in img { transform: scale(1.02); }
   .chip { transition: rotate 900ms var(--ease-out); }
   .chip:hover { rotate: 0deg; }
+  /* the spine builds and the copy rises once the fields have parted */
+  .js .hero-spine .v { opacity: 0; transform: translateY(40px); transform-box: fill-box; transform-origin: center; animation: build 700ms var(--ease-out) forwards paused; animation-delay: calc((27 - var(--n)) * 45ms + 450ms); }
+  .js .sp-hero h1 .line > span { animation: from-below 1000ms var(--ease-out) both paused; animation-delay: calc(var(--l) * 140ms + 200ms); }
+  .js .sp-hero [data-rise] { opacity: 0; transform: translateY(18px); animation: rise 900ms var(--ease-out) forwards paused; animation-delay: calc(var(--i, 0) * 140ms + 420ms); }
+  .js .split.is-open .hero-spine .v, .js .split.is-open .sp-hero h1 .line > span, .js .split.is-open .sp-hero [data-rise] { animation-play-state: running; }
 }
+@keyframes build { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: none; } }
 @keyframes rise { to { opacity: 1; transform: none; } }
+@keyframes from-below { from { transform: translateY(105%); } }
+@keyframes from-above { from { transform: translateY(-105%); } }
 @keyframes drift { to { transform: translateX(-50%); } }
 </style>
 </head>
@@ -337,7 +359,6 @@ details[open] .plus::after { transform: rotate(0deg); }
     <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="nav-links">Menü</button>
     <div class="nav-links" id="nav-links">
       <a href="#leistungen">Leistungen</a>
-      <a href="#ablauf">Ablauf</a>
       <a class="hide-mid" href="#praxis">Praxis</a>
       <a href="#fragen">Fragen</a>
       <a class="hide-mid" href="#kontakt">Kontakt</a>
@@ -347,26 +368,37 @@ details[open] .plus::after { transform: rotate(0deg); }
 </header>
 
 <main id="main">
-  <section class="hero" id="top" data-bg="#f7f7f5" data-ink="#1b1b1b" aria-labelledby="title">
-    <div class="hero-title">
-      <h1 id="title"><span class="line up-line">Zweite Meinung</span> <span class="line down-line">zur Wirbelsäule</span></h1>
-    </div>
-    <div class="hero-lede">
-      <p data-rise style="--i:1">Dr. med. Christoph Manicke, Neurochirurg in&nbsp;Kiel. Unabhängige Beratung vor und nach Operationen an der Wirbelsäule.</p>
-      <a class="pill" data-rise style="--i:2" href="tel:+491726347706">Termin vereinbaren: 0172&nbsp;6347706</a>
-    </div>
-    <div class="hero-facts" data-rise style="--i:3">
-      <div><b>Sprechstunde nach Vereinbarung</b><span>Telefonisch oder per <a class="link" href="mailto:christoph.manicke@gmx.de">E-Mail</a></span></div>
-      <div><b>Burgstraße&nbsp;2, 24103&nbsp;Kiel</b><span>4.&nbsp;Stock, mit Aufzug erreichbar</span></div>
-      <div><b>Privatpraxis</b><span>Für privat Versicherte und Selbstzahler</span></div>
+  <section class="split" id="top" data-bg="#f7f7f5" data-ink="#1b1b1b" aria-labelledby="title">
+    <div class="split-stage">
+      <div class="sp-hero">
+        <svg class="hero-spine" viewBox="0 0 380 1351" role="group" aria-label="Wirbelsäule: Abschnitt wählen"><a class="seg" href="#kontakt" data-region="hws" aria-label="Halswirbelsäule: Termin anfragen"><rect class="hit" x="128.9" y="1.5" width="176.1" height="273.0"/><rect class="v" style="--n:0" x="168.9" y="6.0" width="72.0" height="30" rx="10.2"/><rect class="v" style="--n:1" x="173.6" y="45.0" width="73.7" height="30" rx="10.2"/><rect class="v" style="--n:2" x="177.6" y="84.0" width="75.3" height="30" rx="10.2"/><rect class="v" style="--n:3" x="180.6" y="123.0" width="77.0" height="30" rx="10.2"/><rect class="v" style="--n:4" x="182.6" y="162.0" width="78.7" height="30" rx="10.2"/><rect class="v" style="--n:5" x="183.4" y="201.0" width="80.3" height="30" rx="10.2"/><rect class="v" style="--n:6" x="183.0" y="240.0" width="82.0" height="30" rx="10.2"/></a><a class="seg" href="#kontakt" data-region="bws" aria-label="Brustwirbelsäule: Termin anfragen"><rect class="hit" x="55.1" y="274.5" width="251.9" height="588.0"/><rect class="v" style="--n:7" x="179.0" y="279.0" width="88.0" height="40" rx="13.6"/><rect class="v" style="--n:8" x="174.4" y="328.0" width="91.3" height="40" rx="13.6"/><rect class="v" style="--n:9" x="168.1" y="377.0" width="94.5" height="40" rx="13.6"/><rect class="v" style="--n:10" x="160.4" y="426.0" width="97.8" height="40" rx="13.6"/><rect class="v" style="--n:11" x="151.5" y="475.0" width="101.1" height="40" rx="13.6"/><rect class="v" style="--n:12" x="142.0" y="524.0" width="104.4" height="40" rx="13.6"/><rect class="v" style="--n:13" x="132.2" y="573.0" width="107.6" height="40" rx="13.6"/><rect class="v" style="--n:14" x="122.6" y="622.0" width="110.9" height="40" rx="13.6"/><rect class="v" style="--n:15" x="113.8" y="671.0" width="114.2" height="40" rx="13.6"/><rect class="v" style="--n:16" x="106.0" y="720.0" width="117.5" height="40" rx="13.6"/><rect class="v" style="--n:17" x="99.7" y="769.0" width="120.7" height="40" rx="13.6"/><rect class="v" style="--n:18" x="95.1" y="818.0" width="124.0" height="40" rx="13.6"/></a><a class="seg" href="#kontakt" data-region="lws" aria-label="Lendenwirbelsäule: Termin anfragen"><rect class="hit" x="44.0" y="862.5" width="263.0" height="325.0"/><rect class="v" style="--n:19" x="86.0" y="867.0" width="140.0" height="56" rx="19.0"/><rect class="v" style="--n:20" x="84.0" y="932.0" width="148.0" height="56" rx="19.0"/><rect class="v" style="--n:21" x="85.3" y="997.0" width="156.0" height="56" rx="19.0"/><rect class="v" style="--n:22" x="89.2" y="1062.0" width="164.0" height="56" rx="19.0"/><rect class="v" style="--n:23" x="95.0" y="1127.0" width="172.0" height="56" rx="19.0"/></a><a class="seg" href="#kontakt" data-region="isg" aria-label="Kreuzbein und Becken: Termin anfragen"><rect class="hit" x="75.7" y="1187.5" width="230.0" height="159.0"/><rect class="v" style="--n:24" x="115.7" y="1192.0" width="150.0" height="44" rx="15.0"/><rect class="v" style="--n:25" x="144.4" y="1245.0" width="110.0" height="44" rx="15.0"/><rect class="v" style="--n:26" x="172.5" y="1298.0" width="70.0" height="44" rx="15.0"/></a></svg><svg class="hero-spine-h" viewBox="0 0 1351 380" role="group" aria-label="Wirbelsäule: Abschnitt wählen"><a class="seg" href="#kontakt" data-region="hws" aria-label="Halswirbelsäule: Termin anfragen"><rect class="hit" x="1.5" y="128.9" width="273.0" height="176.1"/><rect class="v" style="--n:0" x="6.0" y="168.9" width="30" height="72.0" rx="10.2"/><rect class="v" style="--n:1" x="45.0" y="173.6" width="30" height="73.7" rx="10.2"/><rect class="v" style="--n:2" x="84.0" y="177.6" width="30" height="75.3" rx="10.2"/><rect class="v" style="--n:3" x="123.0" y="180.6" width="30" height="77.0" rx="10.2"/><rect class="v" style="--n:4" x="162.0" y="182.6" width="30" height="78.7" rx="10.2"/><rect class="v" style="--n:5" x="201.0" y="183.4" width="30" height="80.3" rx="10.2"/><rect class="v" style="--n:6" x="240.0" y="183.0" width="30" height="82.0" rx="10.2"/></a><a class="seg" href="#kontakt" data-region="bws" aria-label="Brustwirbelsäule: Termin anfragen"><rect class="hit" x="274.5" y="55.1" width="588.0" height="251.9"/><rect class="v" style="--n:7" x="279.0" y="179.0" width="40" height="88.0" rx="13.6"/><rect class="v" style="--n:8" x="328.0" y="174.4" width="40" height="91.3" rx="13.6"/><rect class="v" style="--n:9" x="377.0" y="168.1" width="40" height="94.5" rx="13.6"/><rect class="v" style="--n:10" x="426.0" y="160.4" width="40" height="97.8" rx="13.6"/><rect class="v" style="--n:11" x="475.0" y="151.5" width="40" height="101.1" rx="13.6"/><rect class="v" style="--n:12" x="524.0" y="142.0" width="40" height="104.4" rx="13.6"/><rect class="v" style="--n:13" x="573.0" y="132.2" width="40" height="107.6" rx="13.6"/><rect class="v" style="--n:14" x="622.0" y="122.6" width="40" height="110.9" rx="13.6"/><rect class="v" style="--n:15" x="671.0" y="113.8" width="40" height="114.2" rx="13.6"/><rect class="v" style="--n:16" x="720.0" y="106.0" width="40" height="117.5" rx="13.6"/><rect class="v" style="--n:17" x="769.0" y="99.7" width="40" height="120.7" rx="13.6"/><rect class="v" style="--n:18" x="818.0" y="95.1" width="40" height="124.0" rx="13.6"/></a><a class="seg" href="#kontakt" data-region="lws" aria-label="Lendenwirbelsäule: Termin anfragen"><rect class="hit" x="862.5" y="44.0" width="325.0" height="263.0"/><rect class="v" style="--n:19" x="867.0" y="86.0" width="56" height="140.0" rx="19.0"/><rect class="v" style="--n:20" x="932.0" y="84.0" width="56" height="148.0" rx="19.0"/><rect class="v" style="--n:21" x="997.0" y="85.3" width="56" height="156.0" rx="19.0"/><rect class="v" style="--n:22" x="1062.0" y="89.2" width="56" height="164.0" rx="19.0"/><rect class="v" style="--n:23" x="1127.0" y="95.0" width="56" height="172.0" rx="19.0"/></a><a class="seg" href="#kontakt" data-region="isg" aria-label="Kreuzbein und Becken: Termin anfragen"><rect class="hit" x="1187.5" y="75.7" width="159.0" height="230.0"/><rect class="v" style="--n:24" x="1192.0" y="115.7" width="44" height="150.0" rx="15.0"/><rect class="v" style="--n:25" x="1245.0" y="144.4" width="44" height="110.0" rx="15.0"/><rect class="v" style="--n:26" x="1298.0" y="172.5" width="44" height="70.0" rx="15.0"/></a></svg>
+        <div class="sp-copy">
+          <h1 id="title"><span class="sr-only">Zweite Meinung zur Wirbelsäule: </span><span class="line"><span style="--l:0">Jeder Wirbel</span></span> <span class="line"><span style="--l:1">zählt.</span></span></h1>
+          <p class="sp-lede" data-rise style="--i:1">Vom Nacken bis zum Becken: Ich prüfe Ihre Befunde und sage Ihnen, ob eine Operation wirklich nötig ist.</p>
+          <div class="sp-actions" data-rise style="--i:2">
+            <a class="pill" href="tel:+491726347706">Termin vereinbaren: 0172&nbsp;6347706</a>
+          </div>
+        </div>
+      </div>
+      <div class="sp-flood" aria-hidden="true"></div>
+      <div class="doors" aria-hidden="true">
+        <div class="door door-top"><p class="door-line">Zweite Meinung</p></div>
+        <div class="door door-bottom">
+          <p class="door-line">zur Wirbelsäule</p>
+          <div class="door-lede">
+            <p data-rise style="--i:1">Dr. med. Christoph Manicke, Neurochirurg in&nbsp;Kiel. Unabhängige Beratung vor und nach Operationen an der Wirbelsäule.</p>
+            <a class="pill" data-rise style="--i:2" href="tel:+491726347706" tabindex="-1">Termin vereinbaren: 0172&nbsp;6347706</a>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="intro" data-bg="#ebe9e5" data-ink="#1b1b1b" aria-labelledby="intro-title">
+  <section class="intro" data-bg="#003b39" data-ink="#f7f7f5" aria-labelledby="intro-title">
     <div class="grid">
       <h2 id="intro-title" data-reveal><span class="line-b">Erst verstehen,</span> <span class="line-b">dann entscheiden.</span></h2>
       <figure class="chip" data-reveal style="--i:2">
-        <img src="assets/v2/mri-t2-lumbar.webp" width="620" height="760" alt="MRT der Lendenwirbelsäule in seitlicher Ansicht, T2-gewichtet" loading="lazy">
+        <img src="assets/v2/portrait-manicke.webp" width="528" height="700" alt="Porträt von Dr. med. Christoph Manicke" loading="lazy">
       </figure>
       <p class="statement" data-reveal style="--i:1">Eine Operation an der Wirbelsäule lässt sich nicht zurücknehmen. Bevor Sie zustimmen, sollten Sie wissen, was sie leisten kann und welche Wege es sonst gibt.</p>
       <blockquote class="quote" data-reveal style="--i:3">
@@ -376,6 +408,8 @@ details[open] .plus::after { transform: rotate(0deg); }
       </blockquote>
     </div>
   </section>
+
+  <div class="cartilage" data-bg="#f7f7f5" data-ink="#1b1b1b" aria-hidden="true"></div>
 
   <section class="deal" id="leistungen" data-bg="#003b39" data-ink="#f7f7f5" aria-labelledby="deal-title">
     <div class="deal-stage">
@@ -405,26 +439,6 @@ details[open] .plus::after { transform: rotate(0deg); }
           <p>Bandscheibenvorfall, Spinalkanalstenose, Wirbelgleiten und weitere Erkrankungen der Nerven und Wirbel.</p>
         </article>
       </div>
-    </div>
-  </section>
-
-  <section class="steps" id="ablauf" data-bg="#f7f7f5" data-ink="#1b1b1b" aria-labelledby="steps-title">
-    <div class="grid tiles">
-      <div class="head">
-        <h2 id="steps-title" data-reveal>So läuft die Zweitmeinung</h2>
-        <p data-reveal style="--i:1">Drei Schritte, vom ersten Anruf bis zu einer klaren Einschätzung.</p>
-      </div>
-      <div class="tile t1" style="--t:#5d6c67"><img src="assets/v2/mri-t2-disc.webp" width="800" height="800" alt="Nahaufnahme einer Bandscheibe im MRT" loading="lazy"></div>
-      <div class="tile-label"><h3 class="step-name">Anrufen</h3><p>Termin nach Vereinbarung unter 0172&nbsp;6347706 oder per E-Mail.</p></div>
-      <div class="tile t2" style="--t:#0b4b48"><img src="assets/v2/mri-t2-lumbar.webp" width="620" height="760" alt="Lendenwirbelsäule im MRT" loading="lazy"></div>
-      <div class="tile-label"><h3 class="step-name">Mitbringen</h3><p>MRT- oder CT-Bilder, Befunde, die OP-Empfehlung und Ihre Medikamentenliste.</p></div>
-      <div class="tile t3" style="--t:#003b39"><img src="assets/v2/mri-t2-full.webp" width="1024" height="1024" alt="Ganze Lendenwirbelsäule und Kreuzbein im MRT" loading="lazy"></div>
-      <div class="tile-label"><h3 class="step-name">Besprechen</h3><p>Ein gemeinsamer Blick auf Bilder und Beschwerden, dann eine klare Einschätzung, was Sie erwarten können.</p></div>
-    </div>
-    <div class="grid labels" aria-hidden="true">
-      <div data-reveal><h3 class="step-name">Anrufen</h3><p>Termin nach Vereinbarung unter 0172&nbsp;6347706 oder per E-Mail.</p></div>
-      <div data-reveal style="--i:1"><h3 class="step-name">Mitbringen</h3><p>MRT- oder CT-Bilder, Befunde, die OP-Empfehlung und Ihre Medikamentenliste.</p></div>
-      <div data-reveal style="--i:2"><h3 class="step-name">Besprechen</h3><p>Ein gemeinsamer Blick auf Bilder und Beschwerden, dann eine klare Einschätzung, was Sie erwarten können.</p></div>
     </div>
   </section>
 
@@ -531,20 +545,223 @@ details[open] .plus::after { transform: rotate(0deg); }
 
 <script>
 // The bar takes the colour of the chapter under it.
-(() => {
+const paintBar = (chapter) => {
   const bar = document.querySelector('.bar');
+  bar.style.setProperty('--bar-bg', chapter.dataset.bg);
+  bar.style.setProperty('--bar-ink', chapter.dataset.ink);
+  const dark = chapter.dataset.ink === '#f7f7f5';
+  bar.style.setProperty('--pill-bg', dark ? '#c0e2bf' : '#003b39');
+  bar.style.setProperty('--pill-ink', dark ? '#1b1b1b' : '#f7f7f5');
+};
+(() => {
   const chapters = document.querySelectorAll('[data-bg]');
   if (!('IntersectionObserver' in window)) return;
   const io = new IntersectionObserver((entries) => {
-    for (const e of entries) if (e.isIntersecting) {
-      bar.style.setProperty('--bar-bg', e.target.dataset.bg);
-      bar.style.setProperty('--bar-ink', e.target.dataset.ink);
-      const dark = e.target.dataset.ink === '#f7f7f5';
-      bar.style.setProperty('--pill-bg', dark ? '#c0e2bf' : '#003b39');
-      bar.style.setProperty('--pill-ink', dark ? '#1b1b1b' : '#f7f7f5');
+    // chapters overlap at their rounded edges: of those under the bar, the one stacked on top is the one showing
+    const line = document.querySelector('.bar').offsetHeight;
+    let under = null, best = -Infinity;
+    for (const c of chapters) {
+      const r = c.getBoundingClientRect();
+      const z = parseInt(getComputedStyle(c).zIndex, 10) || 0;
+      if (r.top <= line && r.bottom > line && z >= best) { under = c; best = z; }
     }
+    if (under) paintBar(under);
+    else for (const e of entries) if (e.isIntersecting) paintBar(e.target);
   }, { rootMargin: '0px 0px -92% 0px', threshold: 0 });
   chapters.forEach((c) => io.observe(c));
+})();
+
+// The glide: past a threshold a pinned scene finishes on its own, one glide at a time across the page.
+// The visitor stays in charge: scrolling the other way stops a glide on the spot and the page follows them;
+// scrolling the same way is absorbed while it runs and for a moment after it lands, so trackpad momentum does not overshoot.
+const glider = (() => {
+  const still = matchMedia('(prefers-reduced-motion: reduce)');
+  let gliding = false, lastWheel = 0, speed = 0, lastY = scrollY, lastT = performance.now(), heading = 0, frame = 0, settle = 0, touchY = 0;
+  addEventListener('scroll', () => {
+    const now = performance.now();
+    if (!gliding) speed = speed * 0.4 + 0.6 * (scrollY - lastY) / Math.max(1, now - lastT); // px per ms, lightly smoothed
+    lastY = scrollY;
+    lastT = now;
+  }, { passive: true });
+  const steer = (e, dy) => {
+    if (!heading || !dy) return;
+    if (Math.sign(dy) === -heading) return stop();
+    e.preventDefault();
+    lastWheel = performance.now();
+  };
+  const onWheel = (e) => steer(e, e.deltaY);
+  const onTouchStart = (e) => { touchY = e.touches[0].clientY; };
+  const onTouchMove = (e) => { const y = e.touches[0].clientY; const dy = touchY - y; touchY = y; steer(e, dy); };
+  const listen = (on) => {
+    const method = on ? addEventListener : removeEventListener;
+    method('wheel', onWheel, { passive: false });
+    method('touchstart', onTouchStart, { passive: true });
+    method('touchmove', onTouchMove, { passive: false });
+  };
+  const stop = () => {
+    cancelAnimationFrame(frame);
+    clearTimeout(settle);
+    if (heading) listen(false);
+    heading = 0;
+    gliding = false;
+    lastY = scrollY;
+    lastT = performance.now();
+  };
+  // it sets off at the speed the visitor was already scrolling and settles on the target (a cubic Hermite curve)
+  const go = (to, ms = 850) => {
+    stop();
+    const from = scrollY, d = to - from, t0 = performance.now();
+    if (!d) return;
+    gliding = true;
+    heading = Math.sign(d);
+    listen(true);
+    const span = still.matches ? 0 : Math.max(ms * 0.6, Math.min(ms, 2.5 * Math.abs(d) / Math.max(0.01, Math.abs(speed)))); // a fast scroll gets a shorter glide
+    const m = Math.min(2.5, Math.max(1.2, Math.abs(speed) * span / Math.abs(d))); // starting slope, kept short of an overshoot
+    const step = (now) => {
+      const k = span ? Math.min(1, (now - t0) / span) : 1;
+      scrollTo(0, from + d * (m * (k - 2 * k * k + k * k * k) + 3 * k * k - 2 * k * k * k));
+      if (k < 1) { frame = requestAnimationFrame(step); return; }
+      gliding = false;
+      speed = 0;
+      // on the way back up, a visitor still scrolling carries straight on
+      if (heading < 0) { stop(); return; }
+      // on the way down, let go once the wheel is quiet, and in any case within half a second
+      const landed = performance.now();
+      const release = () => {
+        const now2 = performance.now();
+        if (now2 - lastWheel < 160 && now2 - landed < 500) { settle = setTimeout(release, 60); return; }
+        stop();
+      };
+      release();
+    };
+    frame = requestAnimationFrame(step);
+  };
+  return { go, get active() { return gliding; } };
+})();
+
+// The hero: the two fields part as you scroll and show the spine beneath.
+(() => {
+  const split = document.querySelector('.split');
+  const doors = split.querySelector('.doors');
+  const [top, bottom] = doors.querySelectorAll('.door');
+  const inner = split.querySelector('.sp-hero');
+  const still = matchMedia('(prefers-reduced-motion: reduce)');
+  const copy = inner.querySelector('.sp-copy');
+  const flood = split.querySelector('.sp-flood');
+  const OPEN = 0.32; // share of the pinned scroll spent parting
+  const DIVE = 0.45; // from here to the end of the pin the view dives into a vertebra
+  const pinned = () => split.offsetHeight - innerHeight;
+  const reach = () => Math.round(pinned() * OPEN); // whole pixels, so the scroll can land on it exactly
+  const SNAP = 0.3; // past this share the fields finish parting on their own; scrolling back, they close below 1 - SNAP
+  const DIVE_SNAP = 0.06; // the dive takes over almost as soon as it starts
+  const at = () => split.getBoundingClientRect().top + scrollY;
+  let ticking = false, opened = false, lastY = scrollY, target = null, deep = null;
+
+  // the vertebra nearest the middle of the screen, measured at rest, and how far to grow it to cover the screen
+  const aim = () => {
+    inner.style.transform = '';
+    const box = inner.getBoundingClientRect();
+    let best = null, bestD = Infinity;
+    inner.querySelectorAll('.seg:not([data-region="isg"]) .v').forEach((v) => {
+      const r = v.getBoundingClientRect();
+      if (!r.width || r.top < 0 || r.bottom > innerHeight) return;
+      const d = Math.hypot(r.left + r.width / 2 - innerWidth / 2, r.top + r.height / 2 - innerHeight / 2);
+      if (d < bestD) { bestD = d; best = r; }
+    });
+    if (!best) return null;
+    return {
+      x: best.left + best.width / 2 - box.left,
+      y: best.top + best.height / 2 - box.top,
+      s: Math.max(innerWidth / best.width, innerHeight / best.height) * 1.8, // past the rounded corners
+    };
+  };
+
+  const place = () => {
+    ticking = false;
+    const rect = split.getBoundingClientRect();
+    const t = Math.min(1, Math.max(0, -rect.top / reach()));
+    const z = Math.min(1, Math.max(0, (-rect.top - pinned() * DIVE) / (pinned() * (1 - DIVE))));
+    const dir = Math.sign(scrollY - lastY);
+    lastY = scrollY;
+    const free = !glider.active;
+    if (free && dir > 0 && t >= SNAP && t < 1) glider.go(at() + reach());
+    else if (free && dir < 0 && t > 0 && t <= 1 - SNAP) glider.go(at());
+    // the dive carries on by itself just past DIVE_SNAP into the next chapter, scrolling back below 1 - SNAP it returns to the spine
+    else if (free && dir > 0 && z >= DIVE_SNAP && z < 1) glider.go(at() + split.offsetHeight, 2200);
+    else if (free && dir < 0 && z > 0 && z <= 1 - SNAP) glider.go(Math.round(at() + pinned() * DIVE), 1500);
+    const e = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(2 - 2 * t, 3) / 2;
+    if (still.matches) {
+      doors.style.opacity = String(1 - t);
+      top.style.transform = bottom.style.transform = inner.style.transform = '';
+    } else {
+      doors.style.opacity = '';
+      top.style.transform = `translateY(${-e * 100}%)`;
+      bottom.style.transform = `translateY(${e * 100}%)`;
+      inner.style.transform = e >= 1 ? '' : `scale(${0.94 + 0.06 * e})`;
+    }
+    if (z > 0 && !still.matches) {
+      if (!target) target = aim();
+      if (target) {
+        const k = z * z * (3 - 2 * z), s = Math.pow(target.s, k);
+        const x = target.x + (innerWidth / 2 - target.x) * k, y = target.y + (innerHeight / 2 - target.y) * k;
+        inner.style.transformOrigin = '0 0';
+        inner.style.transform = `translate(${x - s * target.x}px, ${y - s * target.y}px) scale(${s})`;
+      }
+    } else {
+      target = null;
+      inner.style.transformOrigin = '';
+    }
+    // with reduced motion the colour simply fades in
+    flood.style.opacity = String(still.matches ? z : Math.min(1, Math.max(0, (z - 0.7) / 0.3)));
+    copy.style.opacity = z ? String(Math.max(0, 1 - z * 4)) : '';
+    copy.style.visibility = z > 0.25 ? 'hidden' : '';
+    split.classList.toggle('is-zooming', z > 0);
+    const isDeep = z >= 0.85;
+    if (isDeep !== deep) {
+      deep = isDeep;
+      split.dataset.bg = deep ? '#003b39' : '#f7f7f5';
+      split.dataset.ink = deep ? '#f7f7f5' : '#1b1b1b';
+      if (rect.top <= 0 && rect.bottom > 0) paintBar(split);
+    }
+    doors.style.visibility = t >= 1 ? 'hidden' : '';
+    if (t > 0.85) split.classList.add('is-open');
+    opened = t >= 1;
+  };
+  addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(place); } }, { passive: true });
+  addEventListener('resize', () => { target = null; place(); });
+  // a keyboard visitor tabbing into the spine finds the fields already parted
+  inner.addEventListener('focusin', () => { if (!opened) scrollTo({ top: split.offsetTop + reach(), behavior: 'instant' }); });
+  place();
+})();
+
+// The spine: while the pointer is on it, the vertebrae near the pointer darken and lift.
+(() => {
+  const SIGMA = 58; // in spine units: about three vertebrae either side feel the pointer
+  document.querySelectorAll('.hero-spine, .hero-spine-h').forEach((sv) => {
+    const horizontal = sv.classList.contains('hero-spine-h');
+    const verts = [...sv.querySelectorAll('.v')].map((el) => {
+      const n = (k) => parseFloat(el.getAttribute(k));
+      return { el, c: horizontal ? n('x') + n('width') / 2 : n('y') + n('height') / 2 };
+    });
+    const light = (pos) => {
+      sv.classList.add('spine-live');
+      for (const v of verts) { const d = v.c - pos; v.el.style.setProperty('--i', Math.exp(-(d * d) / (2 * SIGMA * SIGMA)).toFixed(3)); }
+    };
+    const dark = () => { sv.classList.remove('spine-live'); verts.forEach((v) => v.el.style.removeProperty('--i')); };
+    let frame = 0;
+    sv.addEventListener('pointermove', (e) => {
+      if (e.pointerType !== 'mouse') return;
+      const p = new DOMPoint(e.clientX, e.clientY).matrixTransform(sv.getScreenCTM().inverse());
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => light(horizontal ? p.x : p.y));
+    });
+    sv.addEventListener('pointerleave', () => { cancelAnimationFrame(frame); dark(); });
+    sv.querySelectorAll('.seg').forEach((seg) => {
+      const own = verts.filter((v) => seg.contains(v.el));
+      seg.addEventListener('focus', () => light((own[0].c + own[own.length - 1].c) / 2));
+      seg.addEventListener('blur', dark);
+    });
+  });
 })();
 
 // Phone menu.
@@ -560,7 +777,7 @@ details[open] .plus::after { transform: rotate(0deg); }
 
 // Entrances, once.
 (() => {
-  const els = document.querySelectorAll('[data-reveal], .tile');
+  const els = document.querySelectorAll('[data-reveal]');
   if (!('IntersectionObserver' in window)) { els.forEach((el) => el.classList.add('is-in')); return; }
   const io = new IntersectionObserver((entries) => {
     for (const e of entries) if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
