@@ -193,7 +193,8 @@ p { max-width: 62ch; text-wrap: pretty; }
 .panel { position: relative; min-height: 110svh; border-radius: var(--radius); background: var(--teal); color: var(--paper); overflow: hidden; padding: 56px; }
 .panel h2 { color: var(--paper); max-width: 8em; }
 .disc { position: absolute; left: 56px; bottom: 0; width: min(28vw, 440px); aspect-ratio: 4 / 5; translate: 0 18%; border-radius: 50%; overflow: hidden; background: #e9eceb; }
-.disc img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; }
+.disc a { display: block; height: 100%; }
+.disc img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
 .panel .texts { position: absolute; left: 63%; top: 56px; right: 56px; display: grid; gap: 56px; max-width: 360px; }
 .panel h3 { font-size: var(--step-lead); letter-spacing: -0.02em; line-height: 1.1; color: var(--paper); }
 .panel .texts p { margin-top: 12px; color: #d3dfdc; }
@@ -509,7 +510,7 @@ details[open] .plus::after { transform: rotate(0deg); }
         </div>
         <a class="pill" data-reveal style="--i:3" href="#kontakt">Gespräch anfragen</a>
       </div>
-      <figure class="disc" data-reveal style="--i:2"><img src="assets/v2/burgstra-e-kiel-2017-01.webp" width="1200" height="908" alt="Die Burgstraße in Kiel, in der die Praxis liegt" loading="lazy"></figure>
+      <figure class="disc" data-reveal style="--i:2"><a href="https://www.openstreetmap.org/?mlat=54.32433&amp;mlon=10.14184#map=18/54.32433/10.14184" aria-label="Lage der Praxis auf OpenStreetMap öffnen"><img src="assets/story/praxis-karte.webp" width="560" height="700" alt="Stadtplan der Kieler Altstadt mit einer Markierung auf der Burgstraße&nbsp;2, zwischen Altem Markt und Schloss" loading="lazy"></a></figure>
     </div>
   </section>
 
@@ -611,7 +612,7 @@ details[open] .plus::after { transform: rotate(0deg); }
       <a class="link" href="impressum.html">Impressum</a>
       <a class="link" href="datenschutz.html">Datenschutz</a>
     </nav>
-    <p class="credits" id="bildnachweis">Bilder über <a class="link" href="https://commons.wikimedia.org">Wikimedia Commons</a>, zugeschnitten und verkleinert: Wirbel, Kupferstich von A. Bell, 1798, Wellcome Collection (CC BY 4.0); Burgstraße Kiel 2017 (CC BY-SA 4.0); Burgstraße 1966, Friedrich Magnussen, Stadtarchiv Kiel (CC BY-SA 3.0 DE); Alter Markt Kiel (CC BY-SA 4.0); Kieler Schloss (CC BY-SA 2.0); Wintermorgen am Eingang zur Kieler Förde, Dan Kollmann (CC BY-SA 4.0); Panorama von Kiel, 1902 (gemeinfrei); Kühlungsborn Strand, Lukas Beck (CC BY 4.0). Über <a class="link" href="https://unsplash.com">Unsplash</a>: VW-Bus, Hasse Lossius; Toskana, Kristof Van Rentergem; Hobelspäne, Clem Onojeghuo; Tee und Buch, Farzad Mohamadi; Notizblock, Kelly Sikkema; Tasse, Kira auf der Heide.</p>
+    <p class="credits" id="bildnachweis">Bilder über <a class="link" href="https://commons.wikimedia.org">Wikimedia Commons</a>, zugeschnitten und verkleinert: Wirbel, Kupferstich von A. Bell, 1798, Wellcome Collection (CC BY 4.0); Burgstraße Kiel 2017 (CC BY-SA 4.0); Burgstraße 1966, Friedrich Magnussen, Stadtarchiv Kiel (CC BY-SA 3.0 DE); Alter Markt Kiel (CC BY-SA 4.0); Kieler Schloss (CC BY-SA 2.0); Wintermorgen am Eingang zur Kieler Förde, Dan Kollmann (CC BY-SA 4.0); Panorama von Kiel, 1902 (gemeinfrei); Kühlungsborn Strand, Lukas Beck (CC BY 4.0). Karte der Praxis: © <a class="link" href="https://www.openstreetmap.org/copyright">OpenStreetMap-Mitwirkende</a> (ODbL). Über <a class="link" href="https://unsplash.com">Unsplash</a>: VW-Bus, Hasse Lossius; Toskana, Kristof Van Rentergem; Hobelspäne, Clem Onojeghuo; Tee und Buch, Farzad Mohamadi; Notizblock, Kelly Sikkema; Tasse, Kira auf der Heide.</p>
     <p class="end">Kiel, 2026</p>
   </div>
 </footer>
