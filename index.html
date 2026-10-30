@@ -13,22 +13,22 @@
 @font-face { font-family: "Archivo"; font-style: normal; font-weight: 100 900; font-stretch: 62% 125%; font-display: swap; src: url(assets/fonts/archivo-var.woff2) format("woff2"); }
 
 :root {
-  /* the two style guides from the README: N26 (paper, sand, deep teal) and Gyn Paradeplatz (sage, mint) */
+  /* the client's two colours, navy and sea, on warm paper and sand */
   --paper: #f7f7f5;
   --sand: #ebe9e5;
   --sand-2: #e1ded9;
-  --teal: #003b39;
-  --teal-2: #0b4b48;
-  --teal-3: #245f5a;
-  --sage: #5d6c67;
-  --sage-2: #6c7a75;
-  --mint: #c0e2bf;
+  --navy: #101a35;
+  --navy-2: #1c2a50;
+  --sea: #287f91;
+  --sea-2: #22707f;
+  --sea-pale: #d5e9ed;
+  --slate: #4d5a6e;
   --ink: #1b1b1b;
 
   --bg: var(--paper);
   --surface: var(--sand);
-  --accent: var(--mint);
-  --accent-ink: var(--ink);
+  --accent: var(--sea);
+  --accent-ink: #fff;
 
   --font: "Archivo", "Helvetica Neue", Arial, sans-serif;
   --wide: 116%;
@@ -62,7 +62,7 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
 a { color: inherit; }
 a, button, summary, select { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
 :target { scroll-margin-top: calc(var(--bar) + 16px); }
-::selection { background: var(--teal); color: var(--paper); }
+::selection { background: var(--navy); color: var(--paper); }
 :focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
 h1, h2, h3 { font-weight: 560; font-stretch: var(--wide); letter-spacing: -0.03em; line-height: 1; text-wrap: balance; }
 h2 { font-size: var(--step-head); }
@@ -71,15 +71,15 @@ p { max-width: 62ch; text-wrap: pretty; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); }
 
-.skip { position: fixed; left: var(--margin); top: -4rem; z-index: 50; padding: 10px 18px; border-radius: 999px; background: var(--teal); color: var(--paper); text-decoration: none; font-size: var(--step-small); }
+.skip { position: fixed; left: var(--margin); top: -4rem; z-index: 50; padding: 10px 18px; border-radius: 999px; background: var(--navy); color: var(--paper); text-decoration: none; font-size: var(--step-small); }
 .skip:focus { top: 12px; }
 
 .pill { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 3.25rem; padding: 0 1.6rem; border-radius: 999px; background: var(--accent); color: var(--accent-ink); text-decoration: none; font-weight: 560; font-size: var(--step-small); white-space: nowrap; transition: transform var(--t-press) var(--ease-out), background-color var(--t-hover) ease; }
-.pill:hover { background: #aed6ad; }
+.pill:hover { background: var(--sea-2); }
 .pill:active { transform: scale(0.97); }
-.pill.dark { background: var(--teal); color: var(--paper); }
-.pill.dark:hover { background: var(--teal-2); }
-.bar .pill.dark { background: var(--pill-bg, var(--teal)); color: var(--pill-ink, var(--paper)); transition: background-color 300ms ease, color 300ms ease, transform var(--t-press) var(--ease-out); }
+.pill.dark { background: var(--navy); color: var(--paper); }
+.pill.dark:hover { background: var(--navy-2); }
+.bar .pill.dark { background: var(--pill-bg, var(--navy)); color: var(--pill-ink, var(--paper)); transition: background-color 300ms ease, color 300ms ease, transform var(--t-press) var(--ease-out); }
 .bar .pill.dark:hover { filter: brightness(1.08); }
 .link { text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 0.22em; text-decoration-thickness: 0.07em; transition: text-decoration-color var(--t-hover) ease; }
 .link:hover, .link:focus-visible { text-decoration-color: currentColor; }
@@ -102,13 +102,13 @@ p { max-width: 62ch; text-wrap: pretty; }
 .js .door { pointer-events: auto; }
 .door { position: absolute; left: 0; right: 0; height: 50%; overflow: hidden; font-size: clamp(2.4rem, 0.4rem + 6.4vw, 6.75rem); text-align: center; }
 .js .door { will-change: transform; }
-.door-top { top: 0; display: flex; align-items: flex-end; justify-content: center; background: var(--paper); color: var(--teal); box-shadow: 0 1px 0 rgba(0, 59, 57, 0.08), 0 28px 56px -28px rgba(0, 59, 57, 0.22); }
-.door-bottom { bottom: 0; background: var(--teal); color: var(--paper); }
+.door-top { top: 0; display: flex; align-items: flex-end; justify-content: center; background: var(--paper); color: var(--navy); box-shadow: 0 1px 0 rgba(16, 26, 53, 0.08), 0 28px 56px -28px rgba(16, 26, 53, 0.22); }
+.door-bottom { bottom: 0; background: var(--navy); color: var(--paper); }
 .door-line { max-width: none; font-size: 1em; line-height: 1; font-weight: 600; font-stretch: var(--wide); letter-spacing: -0.045em; padding-inline: var(--margin); text-wrap: balance; }
 /* he says hello first: his face above the greeting, which runs on across the seam into his name */
 .door-hello { display: grid; justify-items: center; gap: clamp(14px, 2.4svh, 28px); }
-.door-face { width: clamp(84px, 13svh, 144px); aspect-ratio: 1; border-radius: 50%; object-fit: cover; object-position: 50% 22%; background: #fff; border: 6px solid var(--mint); box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.28); }
-.door-lede { position: absolute; left: var(--margin); right: var(--margin); bottom: 56px; display: grid; justify-items: center; gap: 28px; font-size: var(--step-body); }
+.door-face { width: clamp(84px, 13svh, 144px); aspect-ratio: 1; border-radius: 50%; object-fit: cover; object-position: 50% 22%; background: #fff; border: 6px solid var(--sea); box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.28); }
+.door-lede { position: absolute; left: var(--margin); right: var(--margin); bottom: 96px; display: grid; justify-items: center; gap: 28px; font-size: var(--step-body); }
 .door-lede p { font-size: var(--step-lead); line-height: 1.3; max-width: 34ch; }
 
 /* beneath the fields: the spine, built large */
@@ -116,8 +116,8 @@ p { max-width: 62ch; text-wrap: pretty; }
 .js .sp-hero { position: absolute; inset: 0; min-height: 0; }
 /* past the spine the view dives into one vertebra until its colour fills the screen */
 .sp-flood { display: none; }
-.js .sp-flood { display: block; position: absolute; inset: 0; z-index: 2; background: var(--teal); opacity: 0; pointer-events: none; }
-.split.is-zooming .spine-live .v { fill: var(--teal); translate: none; }
+.js .sp-flood { display: block; position: absolute; inset: 0; z-index: 2; background: var(--navy); opacity: 0; pointer-events: none; }
+.split.is-zooming .spine-live .v { fill: var(--navy); translate: none; }
 .sp-copy { position: relative; z-index: 2; order: 1; max-width: min(58vw, 60rem); }
 .sp-hero h1 { font-size: var(--step-display); line-height: 0.95; font-weight: 600; letter-spacing: -0.045em; }
 .sp-hero h1 .line { display: block; overflow: hidden; padding-bottom: 0.12em; margin-bottom: -0.12em; }
@@ -126,24 +126,24 @@ p { max-width: 62ch; text-wrap: pretty; }
 .sp-actions { margin-top: 36px; display: flex; flex-wrap: wrap; gap: 12px; }
 .hero-spine { position: absolute; z-index: 1; right: 7vw; top: calc(var(--bar) - 10svh); height: 140svh; width: auto; max-width: none; }
 .hero-spine-h { display: none; order: 2; }
-.hero-spine .v, .hero-spine-h .v { fill: var(--teal); }
-.hero-spine .seg[data-region="isg"] .v, .hero-spine-h .seg[data-region="isg"] .v { fill: var(--teal-3); }
+.hero-spine .v, .hero-spine-h .v { fill: var(--navy); }
+.hero-spine .seg[data-region="isg"] .v, .hero-spine-h .seg[data-region="isg"] .v { fill: var(--sea); }
 /* the spine is a set of four links to the request form; the vertebrae answer the pointer */
 .hero-spine .seg, .hero-spine-h .seg { cursor: pointer; outline: none; }
 .hero-spine .hit, .hero-spine-h .hit { fill: transparent; }
 .hero-spine .v, .hero-spine-h .v { transition: fill 160ms ease, translate 200ms var(--ease-out); }
 /* while the pointer is on the spine, each vertebra darkens and lifts by its distance to the pointer (--i, 0 to 1) */
-.spine-live .v { fill: color-mix(in srgb, var(--teal) calc(var(--i, 0) * 100%), var(--sand-2)); }
+.spine-live .v { fill: color-mix(in srgb, var(--navy) calc(var(--i, 0) * 100%), var(--sand-2)); }
 @media (prefers-reduced-motion: no-preference) {
   .hero-spine.spine-live .v { translate: calc(var(--i, 0) * -22px) 0; }
   .hero-spine-h.spine-live .v { translate: 0 calc(var(--i, 0) * -10px); }
 }
 .hero-spine .seg:focus-visible .v, .hero-spine-h .seg:focus-visible .v { stroke: var(--ink); stroke-width: 4px; paint-order: stroke; }
 /* a click on a vertebra picks it and opens a small card about it */
-.hero-spine .v.is-picked, .hero-spine-h .v.is-picked { fill: var(--mint); stroke: var(--teal); stroke-width: 3px; paint-order: stroke; }
-.spine-hint { display: none; margin-top: 20px; font-size: var(--step-small); color: var(--sage); }
+.hero-spine .v.is-picked, .hero-spine-h .v.is-picked { fill: var(--sea); stroke: var(--navy); stroke-width: 3px; paint-order: stroke; }
+.spine-hint { display: none; margin-top: 20px; font-size: var(--step-small); color: var(--slate); }
 .js .spine-hint { display: block; }
-.vcard { position: absolute; z-index: 3; width: min(22rem, calc(100% - 2 * var(--margin))); padding: 22px 24px 18px; border-radius: var(--radius); background: var(--teal); color: var(--paper); box-shadow: 0 28px 56px -24px rgba(0, 59, 57, 0.5); outline: none; }
+.vcard { position: absolute; z-index: 3; width: min(22rem, calc(100% - 2 * var(--margin))); padding: 22px 24px 18px; border-radius: var(--radius); background: var(--navy); color: var(--paper); box-shadow: 0 28px 56px -24px rgba(16, 26, 53, 0.5); outline: none; }
 .vcard[hidden] { display: none; }
 .vcard-kicker { font-size: var(--step-small); opacity: 0.72; padding-right: 36px; }
 .vcard-name { margin-top: 6px; font-size: clamp(1.5rem, 1.2rem + 0.8vw, 1.875rem); line-height: 1.05; font-weight: 600; font-stretch: var(--wide); letter-spacing: -0.03em; }
@@ -158,28 +158,28 @@ p { max-width: 62ch; text-wrap: pretty; }
 .vcard-close { position: absolute; top: 10px; right: 10px; }
 
 /* ---------- intro: one statement on sand ---------- */
-.intro { position: relative; z-index: 1; border-radius: 0 0 var(--vert-r) var(--vert-r); background: var(--teal); color: var(--paper); min-height: 90svh; padding: clamp(6rem, 12vw, 10rem) var(--margin); }
+.intro { position: relative; z-index: 1; border-radius: 0 0 var(--vert-r) var(--vert-r); background: var(--navy); color: var(--paper); min-height: 90svh; padding: clamp(6rem, 12vw, 10rem) var(--margin); }
 .intro h2 { grid-column: 1 / 13; grid-row: 1; font-size: clamp(2rem, 0.4rem + 6.6vw, 7rem); line-height: 0.95; letter-spacing: -0.045em; }
 .intro .statement { grid-column: 1 / 7; grid-row: 2; margin-top: clamp(40px, 5vw, 72px); font-size: var(--step-lead); line-height: 1.3; max-width: 30ch; }
 .intro h2 .line-b { display: block; }
 /* the story in three snapshots */
 .polaroids { grid-column: 1 / 13; grid-row: 3; display: flex; justify-content: center; gap: clamp(16px, 3vw, 44px); margin-top: clamp(48px, 6vw, 96px); padding: 0; list-style: none; }
-.polaroids li { width: clamp(180px, 22vw, 290px); padding: 12px 12px 0; border-radius: 6px; background: var(--paper); color: var(--ink); box-shadow: 0 14px 34px rgba(0, 20, 19, 0.35); rotate: var(--t); }
+.polaroids li { width: clamp(180px, 22vw, 290px); padding: 12px 12px 0; border-radius: 6px; background: var(--paper); color: var(--ink); box-shadow: 0 14px 34px rgba(8, 13, 28, 0.35); rotate: var(--t); }
 .polaroids img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; border-radius: 2px; }
 .polaroids figcaption { padding: 12px 4px 16px; text-align: center; font-size: var(--step-small); font-style: italic; }
 .chip { grid-column: 7 / 9; grid-row: 2; align-self: start; justify-self: center; margin-top: clamp(40px, 5vw, 72px); width: clamp(150px, 15vw, 230px); aspect-ratio: 4 / 5; border-radius: var(--radius); overflow: hidden; rotate: 4deg; background: #000; }
 .chip img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; }
 
 /* ---------- So berate ich: three cards dealt into a fan ---------- */
-.deal { position: relative; z-index: 1; height: 170svh; border-radius: var(--vert-r) var(--vert-r) 0 0; background: var(--teal); color: var(--paper); }
+.deal { position: relative; z-index: 1; height: 170svh; border-radius: var(--vert-r) var(--vert-r) 0 0; background: var(--navy); color: var(--paper); }
 /* between the two vertebrae, seen up close: the disc, running in behind their rounded edges */
 :root { --vert-r: clamp(56px, 9vw, 160px); }
 .cartilage { position: relative; height: calc(clamp(120px, 22svh, 220px) + 2 * var(--vert-r)); margin-block: calc(-1 * var(--vert-r)); background: var(--paper); }
 /* a cushion, narrower than the bone, tucked under both vertebrae and bulging a little at its sides; its rings show as fine lines */
-.cartilage::before { content: ""; position: absolute; left: clamp(20px, 7vw, 120px); right: clamp(20px, 7vw, 120px); top: calc(var(--vert-r) * 0.5); bottom: calc(var(--vert-r) * 0.5); border-radius: 18% / 50%; background: repeating-linear-gradient(180deg, transparent 0 13px, rgba(0, 59, 57, 0.1) 13px 15px), var(--mint); box-shadow: inset 0 0 0 1px rgba(0, 59, 57, 0.08); }
+.cartilage::before { content: ""; position: absolute; left: clamp(20px, 7vw, 120px); right: clamp(20px, 7vw, 120px); top: calc(var(--vert-r) * 0.5); bottom: calc(var(--vert-r) * 0.5); border-radius: 18% / 50%; background: repeating-linear-gradient(180deg, transparent 0 13px, rgba(255, 255, 255, 0.16) 13px 15px), var(--sea); box-shadow: inset 0 0 0 1px rgba(16, 26, 53, 0.08); }
 .deal-stage { position: sticky; top: 0; height: 100svh; overflow: hidden; padding: calc(var(--bar) + 32px) var(--margin) 40px; display: grid; grid-template-rows: auto 1fr; }
 .deal-head h2 { color: var(--paper); }
-.deal-head p { margin-top: 16px; max-width: 46ch; color: #d3dfdc; }
+.deal-head p { margin-top: 16px; max-width: 46ch; color: #d3d9e6; }
 .fan { position: relative; align-self: center; height: 420px; width: 840px; max-width: 100%; margin: 0 auto; }
 .fan:focus-visible { outline: 2px solid var(--paper); outline-offset: 6px; border-radius: var(--radius); }
 .card { position: absolute; top: 10px; left: calc(var(--k) * 250px); width: 340px; height: 400px; padding: 28px; border-radius: var(--radius); background: var(--c); color: var(--ci, var(--ink)); rotate: var(--r); display: grid; grid-template-rows: auto 1fr auto; gap: 14px; will-change: transform; }
@@ -195,9 +195,9 @@ p { max-width: 62ch; text-wrap: pretty; }
 .js .map-stage { position: sticky; top: 0; }
 .map { position: absolute; inset: 0; transform: scale(var(--z, 1)); transform-origin: 50% 50%; will-change: transform; }
 .map img { width: 100%; height: 100%; object-fit: cover; }
-.map-pin { position: absolute; left: 50%; top: 50%; width: 52px; height: 70px; translate: -50% -100%; filter: drop-shadow(0 8px 10px rgba(0, 40, 38, 0.3)); }
-.map-veil { position: absolute; inset: 0; background: var(--teal); opacity: var(--veil, 0); pointer-events: none; }
-.map-card { position: absolute; left: var(--margin); bottom: clamp(24px, 7svh, 72px); width: min(460px, calc(100% - 2 * var(--margin))); padding: clamp(24px, 3vw, 40px); border-radius: var(--radius); background: var(--paper); color: var(--ink); box-shadow: 0 30px 60px -30px rgba(0, 40, 38, 0.45); opacity: var(--card, 1); translate: 0 calc((1 - var(--card, 1)) * 40px); }
+.map-pin { position: absolute; left: 50%; top: 50%; width: 52px; height: 70px; translate: -50% -100%; filter: drop-shadow(0 8px 10px rgba(16, 26, 53, 0.3)); }
+.map-veil { position: absolute; inset: 0; background: var(--navy); opacity: var(--veil, 0); pointer-events: none; }
+.map-card { position: absolute; left: var(--margin); bottom: clamp(24px, 7svh, 72px); width: min(460px, calc(100% - 2 * var(--margin))); padding: clamp(24px, 3vw, 40px); border-radius: var(--radius); background: var(--paper); color: var(--ink); box-shadow: 0 30px 60px -30px rgba(16, 26, 53, 0.45); opacity: var(--card, 1); translate: 0 calc((1 - var(--card, 1)) * 40px); }
 .map-card h2 { font-size: clamp(2rem, 1.1rem + 2.6vw, 3.6rem); line-height: 1; letter-spacing: -0.04em; }
 .map-card p { margin-top: 14px; }
 .map-card p.strong { font-size: var(--step-lead); line-height: 1.25; letter-spacing: -0.015em; }
@@ -208,7 +208,7 @@ p { max-width: 62ch; text-wrap: pretty; }
 .faq h2 { grid-column: 1 / 5; position: sticky; top: calc(var(--bar) + 24px); align-self: start; max-width: 7em; }
 .faq .list { grid-column: 5 / 13; display: grid; gap: 8px; }
 .faq details { border-radius: var(--radius); background: var(--sand); transition: background-color 240ms ease; }
-.faq details[open] { background: var(--mint); }
+.faq details[open] { background: var(--sea-pale); }
 .faq summary { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 72px; padding: 18px 28px; font-weight: 520; font-size: var(--step-body); cursor: pointer; border-radius: var(--radius); transition: background-color var(--t-hover) ease; }
 .faq summary::-webkit-details-marker { display: none; }
 .faq details:not([open]) summary:hover { background: var(--sand-2); }
@@ -218,59 +218,47 @@ p { max-width: 62ch; text-wrap: pretty; }
 details[open] .plus::after { transform: rotate(0deg); }
 .faq .answer { padding: 0 28px 26px; max-width: calc(52ch + 56px); }
 
-/* ---------- Kontakt: photo strip and the three-cell request bar ---------- */
-.contact { background: var(--sage); color: var(--paper); min-height: 80svh; padding: 48px 0 clamp(5rem, 9vw, 8rem); overflow: clip; }
-.strip { display: flex; gap: 8px; width: max-content; }
-.strip figure { height: 150px; border-radius: 14px; overflow: hidden; flex: none; background: var(--sage-2); }
-.strip img, .strip video { height: 150px; width: auto; object-fit: cover; }
-.strip .w34 img { aspect-ratio: 3 / 4; }
-.strip .w11 img { aspect-ratio: 1; }
-.strip .w32 img, .strip .w32 video { aspect-ratio: 3 / 2; }
-.strip-row { display: flex; align-items: center; justify-content: flex-start; gap: 20px; padding: 14px var(--margin) 0; }
-.strip-row p { color: #e8eeec; }
-.motion-toggle { min-height: 2.75rem; padding: 0 18px; border-radius: 999px; background: #4f5d58; color: var(--paper); font-size: var(--step-small); font-weight: 520; transition: background-color var(--t-hover) ease, transform var(--t-press) var(--ease-out); }
-.motion-toggle[hidden] { display: none; }
-.motion-toggle:hover { background: #56645f; }
-.motion-toggle:active { transform: scale(0.97); }
-/* the request: a light sheet on the sage, big labels above every field, every choice visible at once */
-.ask { margin: 72px var(--margin) 0; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(2rem, 5vw, 5rem); align-items: start; }
+/* ---------- Kontakt: the request on navy ---------- */
+.contact { background: var(--navy); color: var(--paper); padding: clamp(6rem, 11vw, 9rem) 0 clamp(5rem, 9vw, 8rem); overflow: clip; }
+/* the request: a light sheet on the navy, big labels above every field, every choice visible at once */
+.ask { margin: 0 var(--margin); display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(2rem, 5vw, 5rem); align-items: start; }
 .ask-intro { position: sticky; top: calc(var(--bar) + 32px); }
 .contact h2 { color: var(--paper); }
 .contact .lead-line { margin-top: 20px; max-width: 34ch; font-size: var(--step-lead); line-height: 1.35; color: var(--paper); }
 .ask-notes { margin-top: 32px; display: grid; gap: 14px; color: var(--paper); }
 .ask-notes li { position: relative; padding-left: 30px; max-width: 40ch; }
-.ask-notes li::before { content: ""; position: absolute; left: 0; top: 0.5em; width: 12px; height: 12px; border-radius: 50%; background: var(--mint); }
+.ask-notes li::before { content: ""; position: absolute; left: 0; top: 0.5em; width: 12px; height: 12px; border-radius: 50%; background: var(--sea); }
 .request { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 20px; padding: clamp(24px, 4vw, 48px); border-radius: var(--radius); background: var(--paper); color: var(--ink); font-size: 1.1875rem; box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.45); }
 .request .wide { grid-column: 1 / -1; }
 .field label, .request legend { display: block; padding: 0; font-size: 1.1875rem; font-weight: 600; line-height: 1.3; }
-.request .opt { font-weight: 400; color: #4a4f4d; }
-.hint { margin-top: 4px; font-size: 1rem; line-height: 1.4; color: #4a4f4d; }
-.field input, .field textarea { display: block; width: 100%; margin-top: 10px; min-height: 60px; padding: 14px 18px; border: 2px solid #7d8884; border-radius: 14px; background: #fff; font: inherit; font-size: 1.1875rem; line-height: 1.4; color: var(--ink); transition: border-color var(--t-hover) ease; }
+.request .opt { font-weight: 400; color: #4a4f57; }
+.hint { margin-top: 4px; font-size: 1rem; line-height: 1.4; color: #4a4f57; }
+.field input, .field textarea { display: block; width: 100%; margin-top: 10px; min-height: 60px; padding: 14px 18px; border: 2px solid #7c8596; border-radius: 14px; background: #fff; font: inherit; font-size: 1.1875rem; line-height: 1.4; color: var(--ink); transition: border-color var(--t-hover) ease; }
 .field textarea { min-height: 150px; resize: vertical; }
-.field input:hover, .field textarea:hover { border-color: var(--teal); }
-.field input:focus-visible, .field textarea:focus-visible { outline: 3px solid var(--teal); outline-offset: 2px; border-color: var(--teal); }
+.field input:hover, .field textarea:hover { border-color: var(--navy); }
+.field input:focus-visible, .field textarea:focus-visible { outline: 3px solid var(--navy); outline-offset: 2px; border-color: var(--navy); }
 .field input:user-invalid { border-color: #b3261e; }
 .request fieldset { margin: 0; padding: 0; border: 0; min-width: 0; }
 .choices { margin-top: 12px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-.choice { display: flex; align-items: center; gap: 14px; min-height: 60px; padding: 12px 18px; border: 2px solid #c3cbc8; border-radius: 14px; background: #fff; line-height: 1.3; cursor: pointer; transition: border-color var(--t-hover) ease, background-color var(--t-hover) ease; }
-.choice:hover { border-color: var(--teal); }
-.choice:has(:checked) { border-color: var(--teal); background: #e4f1e3; }
-.choice:has(:focus-visible) { outline: 3px solid var(--teal); outline-offset: 2px; }
-.choice input, .consent input { flex: none; width: 26px; height: 26px; margin: 0; accent-color: var(--teal); cursor: pointer; }
+.choice { display: flex; align-items: center; gap: 14px; min-height: 60px; padding: 12px 18px; border: 2px solid #c4cad3; border-radius: 14px; background: #fff; line-height: 1.3; cursor: pointer; transition: border-color var(--t-hover) ease, background-color var(--t-hover) ease; }
+.choice:hover { border-color: var(--navy); }
+.choice:has(:checked) { border-color: var(--navy); background: #e6f1f4; }
+.choice:has(:focus-visible) { outline: 3px solid var(--navy); outline-offset: 2px; }
+.choice input, .consent input { flex: none; width: 26px; height: 26px; margin: 0; accent-color: var(--navy); cursor: pointer; }
 .consent { display: flex; align-items: flex-start; gap: 16px; font-size: 1.0625rem; line-height: 1.45; cursor: pointer; }
-.consent a { color: var(--teal); text-decoration-color: currentColor; }
+.consent a { color: var(--navy); text-decoration-color: currentColor; }
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
-.form-status { grid-column: 1 / -1; color: var(--teal); font-size: var(--step-lead); line-height: 1.3; }
+.form-status { grid-column: 1 / -1; color: var(--navy); font-size: var(--step-lead); line-height: 1.3; }
 .form-status:empty { display: none; }
 .request.is-sent > :not(.form-status) { display: none; }
 .request .submit:disabled { opacity: 0.6; cursor: progress; }
-.submit { min-height: 76px; border-radius: 999px; background: var(--teal); color: var(--paper); font-weight: 600; font-stretch: var(--wide); font-size: var(--step-lead); letter-spacing: -0.02em; transition: background-color var(--t-hover) ease, transform var(--t-press) var(--ease-out); }
-.submit:hover { background: var(--teal-2); }
-.submit:focus-visible { outline: 3px solid var(--teal); outline-offset: 4px; }
+.submit { min-height: 76px; border-radius: 999px; background: var(--navy); color: var(--paper); font-weight: 600; font-stretch: var(--wide); font-size: var(--step-lead); letter-spacing: -0.02em; transition: background-color var(--t-hover) ease, transform var(--t-press) var(--ease-out); }
+.submit:hover { background: var(--navy-2); }
+.submit:focus-visible { outline: 3px solid var(--navy); outline-offset: 4px; }
 .submit:active { transform: scale(0.98); }
 
 /* ---------- footer: the telephone number is the headline ---------- */
-.foot { background: var(--mint); color: var(--ink); min-height: 60svh; padding: 40px var(--margin) 28px; display: grid; grid-template-rows: auto 1fr auto auto; }
+.foot { background: var(--sea); color: #fff; min-height: 60svh; padding: 40px var(--margin) 28px; display: grid; grid-template-rows: auto 1fr auto auto; }
 .foot-top { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--gutter); font-size: var(--step-small); }
 .foot-top p { grid-column: span 2; max-width: none; }
 .foot-top p:first-child { grid-column: span 3; }
@@ -283,6 +271,13 @@ details[open] .plus::after { transform: rotate(0deg); }
 .foot-meta .credits { line-height: 1.45; max-width: 70ch; }
 .foot-meta .credits a { text-underline-offset: 0.15em; }
 .foot-meta .end { justify-self: end; }
+
+/* ---------- the cue: when the page has been still for a while, a quiet nudge that there is more below ---------- */
+.cue { position: fixed; left: 50%; bottom: max(16px, env(safe-area-inset-bottom)); z-index: 15; display: inline-flex; align-items: center; gap: 10px; min-height: 2.75rem; padding: 0 16px 0 20px; border-radius: 999px; background: rgba(247, 247, 245, 0.86); color: var(--navy); font-size: var(--step-small); font-weight: 520; box-shadow: 0 0 0 1px rgba(16, 26, 53, 0.08), 0 10px 24px -14px rgba(16, 26, 53, 0.45); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); translate: -50% 8px; opacity: 0; visibility: hidden; transition: opacity 600ms ease, translate 600ms var(--ease-out), visibility 0s 600ms; }
+.cue[hidden] { display: none; }
+.cue.is-on { opacity: 1; visibility: visible; translate: -50% 0; transition-delay: 0s; }
+.cue:hover { background: var(--paper); }
+.cue svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
 /* ---------- tablet ---------- */
 @media (max-width: 1100px) {
@@ -314,7 +309,7 @@ details[open] .plus::after { transform: rotate(0deg); }
   .js .bar:not(.is-open) .nav-links { display: none; }
 
   .door { font-size: 7.6vw; }
-  .door-lede { bottom: 40px; gap: 24px; }
+  .door-lede { bottom: 80px; gap: 24px; }
   .door-lede p { font-size: var(--step-body); max-width: 28ch; }
   .door-lede .pill { width: 100%; }
   .sp-hero { --step-display: 10.6vw; padding-top: calc(var(--bar) + 28px); padding-bottom: 32px; }
@@ -354,9 +349,6 @@ details[open] .plus::after { transform: rotate(0deg); }
   .faq summary { min-height: 64px; padding: 16px 20px; }
   .faq .answer { padding: 0 20px 22px; }
 
-  .strip figure, .strip img, .strip video { height: 110px; }
-  .strip-row { flex-wrap: wrap; }
-  .ask { margin-top: 48px; }
   .request { grid-template-columns: minmax(0, 1fr); padding: 24px 20px; }
   .choices { grid-template-columns: minmax(0, 1fr); }
 
@@ -378,7 +370,6 @@ details[open] .plus::after { transform: rotate(0deg); }
   .js .door-top .door-line { animation: from-below 1100ms var(--ease-out) 150ms both; }
   .js .door-bottom .door-line { animation: from-above 1100ms var(--ease-out) 150ms both; }
   .js .doors [data-rise] { opacity: 0; transform: translateY(18px); animation: rise 900ms var(--ease-out) forwards; animation-delay: calc(var(--i, 0) * 120ms + 650ms); }
-  .strip.is-running { animation: drift 80s linear infinite; }
   .chip { transition: rotate 900ms var(--ease-out); }
   .chip:hover { rotate: 0deg; }
   /* the spine builds and the copy rises once the fields have parted */
@@ -387,15 +378,16 @@ details[open] .plus::after { transform: rotate(0deg); }
   .js .sp-hero [data-rise] { opacity: 0; transform: translateY(18px); animation: rise 900ms var(--ease-out) forwards paused; animation-delay: calc(var(--i, 0) * 140ms + 420ms); }
   .js .split.is-open .hero-spine .v, .js .split.is-open .sp-hero h1 .line > span, .js .split.is-open .sp-hero [data-rise] { animation-play-state: running; }
   .vcard.is-new { animation: card-in 380ms var(--ease-out); }
+  .cue.is-on svg { animation: nudge 1800ms var(--ease-soft) infinite; }
   .vcard-fact.is-new { animation: rise-in 320ms var(--ease-out); }
 }
 @keyframes card-in { from { opacity: 0; transform: translateY(10px) scale(0.97); } }
 @keyframes rise-in { from { opacity: 0; transform: translateY(6px); } }
+@keyframes nudge { 0%, 60%, 100% { transform: none; } 30% { transform: translateY(4px); } }
 @keyframes build { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: none; } }
 @keyframes rise { to { opacity: 1; transform: none; } }
 @keyframes from-below { from { transform: translateY(105%); } }
 @keyframes from-above { from { transform: translateY(-105%); } }
-@keyframes drift { to { transform: translateX(-50%); } }
 </style>
 </head>
 <body>
@@ -415,6 +407,7 @@ details[open] .plus::after { transform: rotate(0deg); }
 </header>
 
 <main id="main">
+  <button type="button" class="cue" hidden>Weiter nach unten <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 6l5 5 5-5"/></svg></button>
   <section class="split" id="top" data-bg="#f7f7f5" data-ink="#1b1b1b" aria-labelledby="title">
     <div class="split-stage">
       <div class="sp-hero">
@@ -453,7 +446,7 @@ details[open] .plus::after { transform: rotate(0deg); }
     </div>
   </section>
 
-  <section class="intro" id="ueber-mich" data-bg="#003b39" data-ink="#f7f7f5" aria-labelledby="intro-title">
+  <section class="intro" id="ueber-mich" data-bg="#101a35" data-ink="#f7f7f5" aria-labelledby="intro-title">
     <div class="grid">
       <h2 id="intro-title" data-reveal><span class="line-b">Fast wäre alles</span> <span class="line-b">anders gekommen.</span></h2>
       <figure class="chip" data-reveal style="--i:2">
@@ -471,7 +464,7 @@ details[open] .plus::after { transform: rotate(0deg); }
 
   <div class="cartilage" data-bg="#f7f7f5" data-ink="#1b1b1b" aria-hidden="true"></div>
 
-  <section class="deal" id="angebot" data-bg="#003b39" data-ink="#f7f7f5" aria-labelledby="deal-title">
+  <section class="deal" id="angebot" data-bg="#101a35" data-ink="#f7f7f5" aria-labelledby="deal-title">
     <div class="deal-stage">
       <div class="deal-head">
         <h2 id="deal-title" data-reveal>So berate ich</h2>
@@ -483,7 +476,7 @@ details[open] .plus::after { transform: rotate(0deg); }
           <figure><img src="assets/story/tee-buch.webp" width="600" height="600" alt="Eine Tasse Tee über einem aufgeschlagenen Buch" loading="lazy"></figure>
           <p>Wir nehmen uns die Zeit, die Ihre Fragen brauchen. Niemand drängt Sie zu einer Entscheidung.</p>
         </article>
-        <article class="card" style="--k:1; --r:2deg; --c:#c0e2bf">
+        <article class="card" style="--k:1; --r:2deg; --c:#d5e9ed">
           <h3>Verständlich</h3>
           <figure><img src="assets/story/notizblock.webp" width="600" height="600" alt="Bleistift auf einem leeren Notizblock" loading="lazy"></figure>
           <p>Ich erkläre Ihre Bilder und Befunde so, dass Sie sie verstehen, und zeige Ihnen alle Wege, nicht nur den Eingriff.</p>
@@ -500,7 +493,7 @@ details[open] .plus::after { transform: rotate(0deg); }
   <section class="practice" id="praxis" data-bg="#f7f7f5" data-ink="#1b1b1b" aria-labelledby="practice-title">
     <div class="map-stage">
       <div class="map"><img src="assets/story/kiel-karte.webp" width="1600" height="1600" decoding="async" alt="Stadtplan der Kieler Altstadt an der Förde, mit einer Markierung auf der Burgstraße&nbsp;2" loading="lazy"></div>
-      <svg class="map-pin" viewBox="0 0 64 86" aria-hidden="true"><path d="M32 84C32 84 4 50 4 30a28 28 0 0 1 56 0c0 20-28 54-28 54z" fill="#003b39" stroke="#f7f7f5" stroke-width="4"/><circle cx="32" cy="30" r="11" fill="#c0e2bf"/></svg>
+      <svg class="map-pin" viewBox="0 0 64 86" aria-hidden="true"><path d="M32 84C32 84 4 50 4 30a28 28 0 0 1 56 0c0 20-28 54-28 54z" fill="#101a35" stroke="#f7f7f5" stroke-width="4"/><circle cx="32" cy="30" r="11" fill="#287f91"/></svg>
       <div class="map-veil" aria-hidden="true"></div>
       <div class="map-card">
         <h2 id="practice-title">Zeit für Ihre Fragen</h2>
@@ -531,22 +524,7 @@ details[open] .plus::after { transform: rotate(0deg); }
     </div>
   </section>
 
-  <section class="contact" id="kontakt" data-bg="#5d6c67" data-ink="#f7f7f5" aria-labelledby="contact-title">
-    <div class="strip">
-      <figure class="w32"><img src="assets/v2/burgstra-e-kiel-2017-01-strip.webp" width="396" height="300" alt="Burgstraße in Kiel, 2017" loading="lazy"></figure>
-      <figure class="w32"><img src="assets/v2/alter-markt-kiel-01-strip.webp" width="400" height="300" alt="Alter Markt in Kiel" loading="lazy"></figure>
-      <figure class="w11"><img src="assets/v2/burgstrasse-1966-strip.webp" width="453" height="300" alt="Burgstraße in Kiel, 1966" loading="lazy"></figure>
-      <figure class="w32"><video muted loop playsinline preload="none" poster="assets/v2/ostsee-strip.webp" width="533" height="300" aria-hidden="true"><source src="assets/kuhlungsborn-strand-lub-2025-02-14.webm" type="video/webm"><source src="assets/kuhlungsborn-strand-lub-2025-02-14.mp4" type="video/mp4"></video></figure>
-      <figure class="w34"><img src="assets/v2/kieler-schloss-01-16505090827-strip.webp" width="450" height="300" alt="Kieler Schloss" loading="lazy"></figure>
-      <figure class="w32"><img src="assets/v2/forde-strip.webp" width="450" height="300" alt="Kieler Förde an einem Wintermorgen" loading="lazy"></figure>
-      <figure class="w32"><img src="assets/v2/panorama-strip.webp" width="461" height="300" alt="Kiel auf einer Postkarte um 1902" loading="lazy"></figure>
-      <figure class="w34"><img src="assets/v2/burgstra-e-kiel-2017-02-strip.webp" width="396" height="300" alt="Häuserzeile in der Burgstraße" loading="lazy"></figure>
-    </div>
-    <div class="strip-row">
-      <p class="small">Rund um die Burgstraße: Alter Markt, Schloss und Förde</p>
-      <button type="button" class="motion-toggle" aria-pressed="false" hidden>Bewegung anhalten</button>
-    </div>
-
+  <section class="contact" id="kontakt" data-bg="#101a35" data-ink="#f7f7f5" aria-labelledby="contact-title">
     <div class="ask">
       <div class="ask-intro">
         <h2 id="contact-title" data-reveal>Gespräch anfragen</h2>
@@ -597,7 +575,7 @@ details[open] .plus::after { transform: rotate(0deg); }
   </section>
 </main>
 
-<footer class="foot" data-bg="#c0e2bf" data-ink="#1b1b1b" aria-labelledby="foot-title">
+<footer class="foot" data-bg="#287f91" data-ink="#ffffff" aria-labelledby="foot-title">
   <div class="foot-top">
     <p>Dr. med. Christoph Manicke<br>Neurochirurgie, Schwerpunkt Wirbelsäule</p>
     <p>Burgstraße&nbsp;2<br>24103&nbsp;Kiel, 4.&nbsp;Stock</p>
@@ -613,7 +591,7 @@ details[open] .plus::after { transform: rotate(0deg); }
       <a class="link" href="impressum.html">Impressum</a>
       <a class="link" href="datenschutz.html">Datenschutz</a>
     </nav>
-    <p class="credits" id="bildnachweis">Bilder über <a class="link" href="https://commons.wikimedia.org">Wikimedia Commons</a>, zugeschnitten und verkleinert: Wirbel, Kupferstich von A. Bell, 1798, Wellcome Collection (CC BY 4.0); Burgstraße Kiel 2017 (CC BY-SA 4.0); Burgstraße 1966, Friedrich Magnussen, Stadtarchiv Kiel (CC BY-SA 3.0 DE); Alter Markt Kiel (CC BY-SA 4.0); Kieler Schloss (CC BY-SA 2.0); Wintermorgen am Eingang zur Kieler Förde, Dan Kollmann (CC BY-SA 4.0); Panorama von Kiel, 1902 (gemeinfrei); Kühlungsborn Strand, Lukas Beck (CC BY 4.0). Karte der Praxis: © <a class="link" href="https://www.openstreetmap.org/copyright">OpenStreetMap-Mitwirkende</a> (ODbL). Über <a class="link" href="https://unsplash.com">Unsplash</a>: VW-Bus, Hasse Lossius; Toskana, Kristof Van Rentergem; Hobelspäne, Clem Onojeghuo; Tee und Buch, Farzad Mohamadi; Notizblock, Kelly Sikkema; Tasse, Kira auf der Heide.</p>
+    <p class="credits" id="bildnachweis">Karte der Praxis: © <a class="link" href="https://www.openstreetmap.org/copyright">OpenStreetMap-Mitwirkende</a> (ODbL). Über <a class="link" href="https://unsplash.com">Unsplash</a>: VW-Bus, Hasse Lossius; Toskana, Kristof Van Rentergem; Hobelspäne, Clem Onojeghuo; Tee und Buch, Farzad Mohamadi; Notizblock, Kelly Sikkema; Tasse, Kira auf der Heide.</p>
     <p class="end">Kiel, 2026</p>
   </div>
 </footer>
@@ -624,9 +602,10 @@ const paintBar = (chapter) => {
   const bar = document.querySelector('.bar');
   bar.style.setProperty('--bar-bg', chapter.dataset.bg);
   bar.style.setProperty('--bar-ink', chapter.dataset.ink);
-  const dark = chapter.dataset.ink === '#f7f7f5';
-  bar.style.setProperty('--pill-bg', dark ? '#c0e2bf' : '#003b39');
-  bar.style.setProperty('--pill-ink', dark ? '#1b1b1b' : '#f7f7f5');
+  // on navy the button turns sea; on paper and on sea it stays navy
+  const navy = chapter.dataset.bg === '#101a35';
+  bar.style.setProperty('--pill-bg', navy ? '#287f91' : '#101a35');
+  bar.style.setProperty('--pill-ink', navy ? '#ffffff' : '#f7f7f5');
 };
 (() => {
   const chapters = document.querySelectorAll('[data-bg]');
@@ -794,7 +773,7 @@ const glider = (() => {
     const isDeep = z >= 0.85;
     if (isDeep !== deep) {
       deep = isDeep;
-      split.dataset.bg = deep ? '#003b39' : '#f7f7f5';
+      split.dataset.bg = deep ? '#101a35' : '#f7f7f5';
       split.dataset.ink = deep ? '#f7f7f5' : '#1b1b1b';
       if (rect.top <= 0 && rect.bottom > 0) paintBar(split);
     }
@@ -952,6 +931,38 @@ const glider = (() => {
   addEventListener('resize', () => hide(false));
 })();
 
+// The cue: after a quiet spell it shows that the page goes on; sooner inside the moving scenes, where nothing hints at it.
+(() => {
+  const cue = document.querySelector('.cue');
+  const scenes = document.querySelectorAll('.split, .deal, .practice');
+  const contact = document.querySelector('.contact');
+  const card = document.querySelector('.vcard');
+  const still = matchMedia('(prefers-reduced-motion: reduce)');
+  const BUSY = '.map-card, .request, .card, .seg, .pill, a, button:not(.cue), summary';
+  let wait = 0;
+  cue.hidden = false;
+  const off = () => cue.classList.remove('is-on');
+  // not over something the visitor might want to read or press
+  const clear = () => {
+    const y = innerHeight - 38;
+    return [0.5, 0.38, 0.62].every((f) => !document.elementsFromPoint(innerWidth * f, y).some((el) => el !== cue && !cue.contains(el) && el.closest(BUSY)));
+  };
+  const show = () => {
+    if (contact.getBoundingClientRect().top < innerHeight * 0.6) return; // the form is in sight: nothing more to point at
+    if (!card.hidden || document.activeElement?.closest('form')) return;
+    if (clear()) cue.classList.add('is-on');
+  };
+  const arm = () => {
+    clearTimeout(wait);
+    const pinned = [...scenes].some((s) => { const r = s.getBoundingClientRect(); return r.top <= 1 && r.bottom >= innerHeight - 1; });
+    wait = setTimeout(show, pinned || scrollY < 10 ? 2500 : 7000);
+  };
+  addEventListener('scroll', () => { off(); arm(); }, { passive: true });
+  addEventListener('resize', () => { off(); arm(); });
+  cue.addEventListener('click', () => { off(); scrollBy({ top: Math.round(innerHeight * 0.85), behavior: still.matches ? 'auto' : 'smooth' }); });
+  arm();
+})();
+
 // Phone menu.
 (() => {
   const bar = document.querySelector('.bar');
@@ -1003,12 +1014,21 @@ const glider = (() => {
   const stage = sec.querySelector('.map-stage');
   const still = matchMedia('(prefers-reduced-motion: reduce)');
   const clamp = (v) => Math.min(1, Math.max(0, v));
-  let ticking = false, dark = null;
+  const START = 0.6; // once the map has risen this far into the screen, the rest plays by itself
+  const BACK = 0.7; // scrolling back below this share of the pull-back returns to the cards
+  let ticking = false, dark = null, lastY = scrollY;
   const place = () => {
     ticking = false;
     const r = sec.getBoundingClientRect();
     const span = r.height - innerHeight;
     const p = still.matches || span <= 0 ? 1 : clamp(-r.top / span);
+    const dir = Math.sign(scrollY - lastY);
+    lastY = scrollY;
+    const at = r.top + scrollY;
+    if (!glider.active && span > 0) {
+      if (dir > 0 && r.top < innerHeight * (1 - START) && p < 1) glider.go(at + span, 2400);
+      else if (dir < 0 && r.top < 0 && p <= BACK) glider.go(at - innerHeight, 1600);
+    }
     const e = p * p * (3 - 2 * p); // even pull-back, soft at both ends
     stage.style.setProperty('--z', (3 - 2 * e).toFixed(3));
     stage.style.setProperty('--veil', clamp(1 - p / 0.3).toFixed(3));
@@ -1016,7 +1036,7 @@ const glider = (() => {
     const isDark = p < 0.25;
     if (isDark !== dark) {
       dark = isDark;
-      sec.dataset.bg = dark ? '#003b39' : '#f7f7f5';
+      sec.dataset.bg = dark ? '#101a35' : '#f7f7f5';
       sec.dataset.ink = dark ? '#f7f7f5' : '#1b1b1b';
       if (r.top <= 0 && r.bottom > 0) paintBar(sec);
     }
@@ -1024,25 +1044,6 @@ const glider = (() => {
   addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(place); } }, { passive: true });
   addEventListener('resize', place);
   place();
-})();
-
-// The photo strip drifts and the clip plays; one button stops both.
-(() => {
-  const strip = document.querySelector('.strip');
-  const btn = document.querySelector('.motion-toggle');
-  if (!strip || !btn) return;
-  strip.append(...[...strip.children].map((f) => { const c = f.cloneNode(true); c.setAttribute('aria-hidden', 'true'); c.querySelectorAll('img').forEach((i) => (i.alt = '')); return c; }));
-  const clips = strip.querySelectorAll('video');
-  let on = !matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const apply = () => {
-    strip.classList.toggle('is-running', on);
-    clips.forEach((v) => (on ? v.play().catch(() => {}) : v.pause()));
-    btn.textContent = on ? 'Bewegung anhalten' : 'Bewegung abspielen';
-    btn.setAttribute('aria-pressed', String(!on));
-  };
-  btn.hidden = false;
-  btn.addEventListener('click', () => { on = !on; apply(); });
-  apply();
 })();
 
 // The request: sent to the mailer (/api/anfrage); where it is not set up or not reachable, the visitor's own mail program takes over.

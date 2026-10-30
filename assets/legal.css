@@ -6,9 +6,9 @@
   --surface: #ebe9e5;
   --ink: #1b1b1b;
   --muted: #575653;
-  --accent: #003b39;
+  --accent: #101a35;
   --accent-ink: #ffffff;
-  --todo: #c0e2bf;
+  --todo: #d5e9ed;
   --font: "Archivo", "Helvetica Neue", Arial, sans-serif;
   --margin: clamp(1.25rem, 2.2vw, 2rem);
 }
