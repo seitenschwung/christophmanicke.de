@@ -176,7 +176,7 @@ p { max-width: 62ch; text-wrap: pretty; }
 :root { --hold: 100svh; }
 /* a spacer, not padding: a sticky child stays inside its parent's content box */
 .js .curtain-track::after { content: ""; display: block; height: var(--hold); }
-.js .curtain-pane { position: sticky; top: min(0px, calc(100svh - var(--intro-h, 100svh))); z-index: 2; }
+.js .curtain-pane { overflow: clip; position: sticky; top: min(0px, calc(100svh - var(--intro-h, 100svh))); z-index: 2; }
 .curtain-half.is-right { display: none; }
 .curtain.is-parting .curtain-half { width: 50%; overflow: hidden; background: var(--navy); box-shadow: 0 0 80px rgba(4, 8, 20, 0.6); will-change: transform; }
 .curtain.is-parting .curtain-half > .intro { width: 200%; }
@@ -255,7 +255,9 @@ details[open] .plus::after { transform: rotate(0deg); }
 .submit:active { transform: scale(0.98); }
 
 /* ---------- footer: the telephone number is the headline ---------- */
-.foot { background: var(--sea); color: #fff; min-height: 60svh; padding: 40px var(--margin) 28px; display: grid; grid-template-rows: auto 1fr auto auto; }
+/* behind "Alles in Ruhe.": the Förde at Friedrichsort, in the two colours, fading out where the small print sits */
+.foot::before { content: ""; position: absolute; inset: 0; z-index: -1; background: url(assets/story/foerde.webp) 50% 60% / cover no-repeat; -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 32%, #000 72%, transparent 100%); mask-image: linear-gradient(to bottom, transparent 0, #000 32%, #000 72%, transparent 100%); }
+.foot { position: relative; isolation: isolate; background: var(--sea); color: #fff; min-height: 60svh; padding: 40px var(--margin) 28px; display: grid; grid-template-rows: auto 1fr auto auto; }
 .foot-top { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--gutter); font-size: var(--step-small); }
 .foot-top p { grid-column: span 2; max-width: none; }
 .foot-top p:first-child { grid-column: span 3; }
@@ -381,8 +383,9 @@ details[open] .plus::after { transform: rotate(0deg); }
     <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="nav-links">Menü</button>
     <div class="nav-links" id="nav-links">
       <a href="#ueber-mich">Über mich</a>
-      <a href="#praxis">Angebot</a>
       <a href="#kontakt">Kontakt</a>
+      <a href="#praxis">Praxis</a>
+      <a href="#fragen">Fragen</a>
     </div>
     <a class="pill dark" href="#kontakt">Anfragen</a>
   </nav>
@@ -559,7 +562,7 @@ details[open] .plus::after { transform: rotate(0deg); }
       <a class="link" href="impressum.html">Impressum</a>
       <a class="link" href="datenschutz.html">Datenschutz</a>
     </nav>
-    <p class="credits" id="bildnachweis">Karte der Praxis: © <a class="link" href="https://www.openstreetmap.org/copyright">OpenStreetMap-Mitwirkende</a> (ODbL).</p>
+    <p class="credits" id="bildnachweis">Karte der Praxis: © <a class="link" href="https://www.openstreetmap.org/copyright">OpenStreetMap-Mitwirkende</a> (ODbL). Förde mit Leuchtturm Friedrichsort: Marvin Radke über <a class="link" href="https://unsplash.com/photos/w5kP_L-67Sk">Unsplash</a>.</p>
     <p class="end">Kiel, 2026</p>
   </div>
 </footer>
