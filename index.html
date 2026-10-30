@@ -98,24 +98,8 @@ p { max-width: 62ch; text-wrap: pretty; }
 
 /* ---------- hero: headline across two fields, which part as you scroll to show the spine ---------- */
 .split { position: relative; }
-.js .split { height: 220svh; }
+.js .split { height: 170svh; }
 .js .split-stage { position: sticky; top: 0; height: 100svh; overflow: hidden; }
-.doors { position: relative; height: 100svh; min-height: 34rem; }
-.js .doors { position: absolute; inset: 0; z-index: 3; min-height: 0; pointer-events: none; }
-.js .door { pointer-events: auto; }
-.door { position: absolute; left: 0; right: 0; height: 50%; overflow: hidden; font-size: clamp(2.4rem, 0.4rem + 6.4vw, 6.75rem); text-align: center; }
-.js .door { will-change: transform; }
-.door-top { top: 0; display: flex; align-items: flex-end; justify-content: center; background: var(--paper); color: var(--navy); box-shadow: 0 1px 0 rgba(16, 26, 53, 0.08), 0 28px 56px -28px rgba(16, 26, 53, 0.22); }
-.door-bottom { bottom: 0; background: var(--navy); color: var(--paper); }
-.door-line { max-width: none; font-size: 1em; line-height: 1; font-weight: 600; font-stretch: var(--wide); letter-spacing: -0.045em; padding-inline: var(--margin); text-wrap: balance; }
-/* he says hello first: his face above the greeting, which runs on across the seam into his name */
-.door-hello { display: grid; justify-items: center; gap: clamp(14px, 2.4svh, 28px); }
-.door-face { width: clamp(84px, 13svh, 144px); aspect-ratio: 1; border-radius: 50%; object-fit: cover; object-position: 50% 22%; background: #fff; border: 6px solid var(--sea); box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.28); }
-.door-lede { position: absolute; left: var(--margin); right: var(--margin); bottom: 96px; display: grid; justify-items: center; gap: 28px; font-size: var(--step-body); }
-.door-lede p { font-size: var(--step-body); line-height: 1.4; max-width: 34ch; opacity: 0.85; }
-.door-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
-.door-tags li { padding: 10px 20px; border-radius: 999px; box-shadow: inset 0 0 0 1.5px rgba(247, 247, 245, 0.4); font-size: var(--step-body); font-weight: 520; letter-spacing: 0.01em; }
-.door-tags li:first-child { background: var(--sea); box-shadow: none; color: #fff; }
 
 /* beneath the fields: the spine, built large */
 .sp-hero { --step-display: clamp(2.6rem, 0.8rem + 6.2vw, 7.5rem); position: relative; display: flex; flex-direction: column; min-height: 100svh; padding: calc(var(--bar) + 12vh) var(--margin) 56px; overflow: hidden; background: var(--paper); }
@@ -321,10 +305,6 @@ details[open] .plus::after { transform: rotate(0deg); }
   .nav-links .hide-mid { display: block; }
   .js .bar:not(.is-open) .nav-links { display: none; }
 
-  .door { font-size: 7.6vw; }
-  .door-lede { bottom: 80px; gap: 24px; }
-  .door-lede p { font-size: var(--step-body); max-width: 28ch; }
-  .door-lede .pill { width: 100%; }
   .sp-hero { --step-display: 10.6vw; padding-top: calc(var(--bar) + 28px); padding-bottom: 32px; }
   .sp-copy { max-width: none; }
   .sp-face { width: 72px; border-width: 4px; margin-bottom: 16px; }
@@ -375,9 +355,6 @@ details[open] .plus::after { transform: rotate(0deg); }
   .js [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity 700ms var(--ease-out), transform 900ms var(--ease-out); transition-delay: calc(var(--i, 0) * 80ms); }
   .js [data-reveal].is-in { opacity: 1; transform: none; }
   /* on arrival the two lines come out of the seam, one up, one down; then the lede rises */
-  .js .door-top .door-line { animation: from-below 1100ms var(--ease-out) 150ms both; }
-  .js .door-bottom .door-line { animation: from-above 1100ms var(--ease-out) 150ms both; }
-  .js .doors [data-rise] { opacity: 0; transform: translateY(18px); animation: rise 900ms var(--ease-out) forwards; animation-delay: calc(var(--i, 0) * 120ms + 650ms); }
   .chip { transition: rotate 900ms var(--ease-out); }
   .chip:hover { rotate: 0deg; }
   /* the spine builds and the copy rises once the fields have parted */
@@ -395,7 +372,6 @@ details[open] .plus::after { transform: rotate(0deg); }
 @keyframes build { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: none; } }
 @keyframes rise { to { opacity: 1; transform: none; } }
 @keyframes from-below { from { transform: translateY(105%); } }
-@keyframes from-above { from { transform: translateY(-105%); } }
 </style>
 </head>
 <body>
@@ -442,17 +418,6 @@ details[open] .plus::after { transform: rotate(0deg); }
         </div>
       </div>
       <div class="sp-flood" aria-hidden="true"></div>
-      <div class="doors" aria-hidden="true">
-        <div class="door door-top"><div class="door-hello"><img class="door-face" data-rise style="--i:0" src="assets/v2/portrait-manicke.webp" width="528" height="700" alt=""><p class="door-line">Moin, ich bin</p></div></div>
-        <div class="door door-bottom">
-          <p class="door-line">Christoph Manicke.</p>
-          <div class="door-lede">
-            <ul class="door-tags" data-rise style="--i:1"><li>Zweitmeinung</li><li>persönlich</li><li>verständlich</li><li>unabhängig</li></ul>
-            <p data-rise style="--i:2">Neurochirurg in&nbsp;Kiel, Schwerpunkt Wirbelsäule.</p>
-            <a class="pill" data-rise style="--i:3" href="#kontakt" tabindex="-1">Gespräch anfragen</a>
-          </div>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -699,23 +664,18 @@ const glider = (() => {
   return { go, get active() { return gliding; } };
 })();
 
-// The hero: the two fields part as you scroll and show the spine beneath.
+// The opening: the spine builds on arrival; scrolling on, the view dives into one vertebra until its colour fills the screen.
 (() => {
   const split = document.querySelector('.split');
-  const doors = split.querySelector('.doors');
-  const [top, bottom] = doors.querySelectorAll('.door');
   const inner = split.querySelector('.sp-hero');
   const still = matchMedia('(prefers-reduced-motion: reduce)');
   const copy = inner.querySelector('.sp-copy');
   const flood = split.querySelector('.sp-flood');
-  const OPEN = 0.32; // share of the pinned scroll spent parting
-  const DIVE = 0.45; // from here to the end of the pin the view dives into a vertebra
   const pinned = () => split.offsetHeight - innerHeight;
-  const reach = () => Math.round(pinned() * OPEN); // whole pixels, so the scroll can land on it exactly
-  const SNAP = 0.3; // past this share the fields finish parting on their own; scrolling back, they close below 1 - SNAP
+  const SNAP = 0.3; // scrolling back, below 1 - SNAP the view returns to the spine
   const DIVE_SNAP = 0.06; // the dive takes over almost as soon as it starts
   const at = () => split.getBoundingClientRect().top + scrollY;
-  let ticking = false, opened = false, lastY = scrollY, target = null, deep = null;
+  let ticking = false, lastY = scrollY, target = null, deep = null;
 
   // the vertebra nearest the middle of the screen, measured at rest, and how far to grow it to cover the screen
   const aim = () => {
@@ -739,26 +699,12 @@ const glider = (() => {
   const place = () => {
     ticking = false;
     const rect = split.getBoundingClientRect();
-    const t = Math.min(1, Math.max(0, -rect.top / reach()));
-    const z = Math.min(1, Math.max(0, (-rect.top - pinned() * DIVE) / (pinned() * (1 - DIVE))));
+    const z = Math.min(1, Math.max(0, -rect.top / pinned()));
     const dir = Math.sign(scrollY - lastY);
     lastY = scrollY;
     const free = !glider.active;
-    if (free && dir > 0 && t >= SNAP && t < 1) glider.go(at() + reach());
-    else if (free && dir < 0 && t > 0 && t <= 1 - SNAP) glider.go(at());
-    // the dive carries on by itself just past DIVE_SNAP into the next chapter, scrolling back below 1 - SNAP it returns to the spine
-    else if (free && dir > 0 && z >= DIVE_SNAP && z < 1) glider.go(at() + split.offsetHeight, 2200);
-    else if (free && dir < 0 && z > 0 && z <= 1 - SNAP) glider.go(Math.round(at() + pinned() * DIVE), 1500);
-    const e = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(2 - 2 * t, 3) / 2;
-    if (still.matches) {
-      doors.style.opacity = String(1 - t);
-      top.style.transform = bottom.style.transform = inner.style.transform = '';
-    } else {
-      doors.style.opacity = '';
-      top.style.transform = `translateY(${-e * 100}%)`;
-      bottom.style.transform = `translateY(${e * 100}%)`;
-      inner.style.transform = e >= 1 ? '' : `scale(${0.94 + 0.06 * e})`;
-    }
+    if (free && dir > 0 && z >= DIVE_SNAP && z < 1) glider.go(at() + split.offsetHeight, 2200);
+    else if (free && dir < 0 && z > 0 && z <= 1 - SNAP) glider.go(at(), 1500);
     if (z > 0 && !still.matches) {
       if (!target) target = aim();
       if (target) {
@@ -769,7 +715,7 @@ const glider = (() => {
       }
     } else {
       target = null;
-      inner.style.transformOrigin = '';
+      inner.style.transform = inner.style.transformOrigin = '';
     }
     // with reduced motion the colour simply fades in
     flood.style.opacity = String(still.matches ? z : Math.min(1, Math.max(0, (z - 0.7) / 0.3)));
@@ -783,14 +729,10 @@ const glider = (() => {
       split.dataset.ink = deep ? '#f7f7f5' : '#1b1b1b';
       if (rect.top <= 0 && rect.bottom > 0) paintBar(split);
     }
-    doors.style.visibility = t >= 1 ? 'hidden' : '';
-    if (t > 0.85) split.classList.add('is-open');
-    opened = t >= 1;
   };
   addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(place); } }, { passive: true });
   addEventListener('resize', () => { target = null; place(); });
-  // a keyboard visitor tabbing into the spine finds the fields already parted
-  inner.addEventListener('focusin', () => { if (!opened) scrollTo({ top: split.offsetTop + reach(), behavior: 'instant' }); });
+  split.classList.add('is-open');
   place();
 })();
 
