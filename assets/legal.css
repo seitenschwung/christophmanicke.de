@@ -26,7 +26,7 @@ a:hover { color: var(--accent); }
 .bar { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding: 28px var(--margin); font-size: 0.9375rem; }
 .bar a { text-decoration: none; }
 .bar .home { display: inline-flex; align-items: center; gap: 12px; font-weight: 600; }
-.logo { flex: none; width: 46px; height: 37px; overflow: visible; --logo-c: var(--ink); }
+.logo { flex: none; width: 46px; height: 37px; overflow: visible; --logo-c: var(--ink); --logo-weight: 3px; }
 
 main { padding: clamp(3rem, 8vw, 7rem) var(--margin) clamp(5rem, 10vw, 9rem); max-width: 46rem; margin-left: clamp(0px, 14vw, 16rem); }
 h1 { font-stretch: 116%; font-size: clamp(2.25rem, 1.5rem + 3vw, 4rem); font-weight: 600; letter-spacing: -0.03em; line-height: 1.02; text-wrap: balance; margin: 0 0 40px; }

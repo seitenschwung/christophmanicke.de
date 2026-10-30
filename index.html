@@ -5,7 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Dr. med. Christoph Manicke · Neurochirurgie Kiel</title>
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-<meta name="description" content="Dr. med. Christoph Manicke, Neurochirurg in Kiel mit Schwerpunkt Wirbelsäule. Unabhängige Zweitmeinung vor geplanten Operationen und Beratung nach Operationen. Burgstraße 2, Sprechstunde nach Vereinbarung.">
+<meta name="description" content="Dr. med. Christoph Manicke, Neurochirurg in Kiel: unabhängige Zweitmeinung zur Wirbelsäule, persönlich und in Ruhe. Burgstraße 2, Termin per Anfrage.">
+<link rel="canonical" href="https://christophmanicke.de/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="de_DE">
+<meta property="og:url" content="https://christophmanicke.de/">
+<meta property="og:title" content="Dr. med. Christoph Manicke · Neurochirurgie Kiel">
+<meta property="og:description" content="Dr. med. Christoph Manicke, Neurochirurg in Kiel: unabhängige Zweitmeinung zur Wirbelsäule, persönlich und in Ruhe. Burgstraße 2, Termin per Anfrage.">
+<meta property="og:image" content="https://christophmanicke.de/assets/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Dr. med. Christoph Manicke, Zweitmeinung zur Wirbelsäule, Neurochirurg in Kiel">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Physician", "name": "Dr. med. Christoph Manicke", "description": "Neurochirurg in Kiel, Schwerpunkt Wirbelsäule. Unabhängige Zweitmeinung vor und nach Operationen.", "url": "https://christophmanicke.de/", "image": "https://christophmanicke.de/assets/v2/portrait-manicke.webp", "logo": "https://christophmanicke.de/assets/og-image.jpg", "address": {"@type": "PostalAddress", "streetAddress": "Burgstraße 2", "postalCode": "24103", "addressLocality": "Kiel", "addressCountry": "DE"}, "geo": {"@type": "GeoCoordinates", "latitude": 54.32433, "longitude": 10.14184}, "availableService": {"@type": "MedicalProcedure", "name": "Zweitmeinung zur Wirbelsäule"}}</script>
 <meta name="theme-color" content="#f7f7f5">
 <link rel="preload" href="assets/fonts/archivo-var.woff2" as="font" type="font/woff2" crossorigin>
 <script>document.documentElement.classList.add('js')</script>
@@ -79,7 +91,7 @@ p { max-width: 62ch; text-wrap: pretty; }
 .pill:active { transform: scale(0.97); }
 .pill.dark { background: var(--navy); color: var(--paper); }
 .pill.dark:hover { background: var(--navy-2); }
-.bar .pill.dark { background: var(--pill-bg, var(--navy)); color: var(--pill-ink, var(--paper)); transition: background-color 300ms ease, color 300ms ease, transform var(--t-press) var(--ease-out); }
+.bar .pill.dark { background: var(--pill-bg, var(--sea)); color: var(--pill-ink, #fff); transition: background-color 300ms ease, color 300ms ease, transform var(--t-press) var(--ease-out); }
 .bar .pill.dark:hover { filter: brightness(1.08); }
 .link { text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 0.22em; text-decoration-thickness: 0.07em; transition: text-decoration-color var(--t-hover) ease; }
 .link:hover, .link:focus-visible { text-decoration-color: currentColor; }
@@ -88,8 +100,8 @@ p { max-width: 62ch; text-wrap: pretty; }
 .bar { position: fixed; inset: 0 0 auto 0; z-index: 20; height: var(--bar); padding: 0 var(--margin); display: flex; align-items: center; justify-content: space-between; gap: 24px; background: var(--bar-bg, var(--paper)); color: var(--bar-ink, var(--ink)); transition: background-color 300ms ease, color 300ms ease; }
 .wordmark { display: inline-flex; align-items: center; gap: 12px; font-weight: 600; font-stretch: var(--wide); font-size: 1.0625rem; letter-spacing: -0.01em; text-decoration: none; white-space: nowrap; }
 /* the monogram: the C takes the colour of the bar's text, the M stays sea unless the bar is sea itself */
-.logo { flex: none; width: 56px; height: 46px; overflow: visible; }
-.bar .logo { --logo-c: currentColor; --logo-m: var(--bar-logo-m, #287f91); }
+.logo { flex: none; width: 62px; height: 50px; overflow: visible; }
+.bar .logo { --logo-c: currentColor; --logo-m: var(--bar-logo-m, #287f91); --logo-weight: 3px; }
 .bar nav { display: flex; align-items: center; gap: 28px; font-size: var(--step-small); }
 .nav-links { display: flex; gap: 28px; }
 .nav-links a { text-decoration: none; transition: opacity var(--t-hover) ease; }
@@ -301,7 +313,7 @@ details[open] .plus::after { transform: rotate(0deg); }
   .bar nav { gap: 8px; }
   /* on the phone the monogram stands alone; the name stays for screen readers */
   .wordmark span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-  .bar .logo { width: 44px; height: 36px; }
+  .bar .logo { width: 50px; height: 40px; }
   .bar .pill { min-height: 2.75rem; padding: 0 16px; }
   .js .nav-toggle { display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0 14px; border-radius: 999px; font-weight: 560; font-size: var(--step-small); }
   .nav-links { position: absolute; top: var(--bar); left: 0; right: 0; flex-direction: column; gap: 0; padding: 8px var(--margin) 20px; background: var(--bar-bg, var(--paper)); }
@@ -319,7 +331,8 @@ details[open] .plus::after { transform: rotate(0deg); }
   .sp-actions { margin-top: 24px; }
   .sp-actions .pill { flex: 1 1 100%; }
   .hero-spine { display: none; }
-  .hero-spine-h { display: block; width: 100%; height: auto; margin-top: auto; padding-top: 32px; }
+  .sp-hero { justify-content: center; }
+  .hero-spine-h { display: block; width: 100%; height: auto; margin-top: 40px; }
   /* the spine lies down here, so its arrows point sideways */
   .vcard-step svg { rotate: -90deg; }
 
@@ -579,10 +592,10 @@ const paintBar = (chapter) => {
   const bar = document.querySelector('.bar');
   bar.style.setProperty('--bar-bg', chapter.dataset.bg);
   bar.style.setProperty('--bar-ink', chapter.dataset.ink);
-  // on navy the button turns sea; on paper and on sea it stays navy
-  const navy = chapter.dataset.bg === '#101a35';
-  bar.style.setProperty('--pill-bg', navy ? '#287f91' : '#101a35');
-  bar.style.setProperty('--pill-ink', navy ? '#ffffff' : '#f7f7f5');
+  // the request button is sea, like every "anfragen" on the page; only on the sea footer it turns navy
+  const sea = chapter.dataset.bg === '#287f91';
+  bar.style.setProperty('--pill-bg', sea ? '#101a35' : '#287f91');
+  bar.style.setProperty('--pill-ink', '#ffffff');
   bar.style.setProperty('--bar-logo-m', chapter.dataset.bg === '#287f91' ? '#ffffff' : '#287f91');
 };
 (() => {
