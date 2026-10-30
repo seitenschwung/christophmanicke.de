@@ -188,18 +188,20 @@ p { max-width: 62ch; text-wrap: pretty; }
 .card figure img { width: 100%; height: 100%; object-fit: cover; }
 .card p { font-size: var(--step-small); line-height: 1.4; max-width: 24ch; }
 
-/* ---------- Praxis: inset panel with a disc-shaped photograph ---------- */
-.practice { background: var(--mint); padding: 20px; }
-.panel { position: relative; min-height: 110svh; border-radius: var(--radius); background: var(--teal); color: var(--paper); overflow: hidden; padding: 56px; }
-.panel h2 { color: var(--paper); max-width: 8em; }
-.disc { position: absolute; left: 56px; bottom: 0; width: min(28vw, 440px); aspect-ratio: 4 / 5; translate: 0 18%; border-radius: 50%; overflow: hidden; background: #e9eceb; }
-.disc a { display: block; height: 100%; }
-.disc img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
-.panel .texts { position: absolute; left: 63%; top: 56px; right: 56px; display: grid; gap: 56px; max-width: 360px; }
-.panel h3 { font-size: var(--step-lead); letter-spacing: -0.02em; line-height: 1.1; color: var(--paper); }
-.panel .texts p { margin-top: 12px; color: #d3dfdc; }
-.panel .texts p.strong { color: var(--paper); font-size: var(--step-lead); line-height: 1.25; letter-spacing: -0.015em; }
-.panel .pill { justify-self: start; }
+/* ---------- Praxis: out of the dark, the map zooms out to the old town and the Förde ---------- */
+.practice { position: relative; background: var(--paper); }
+.js .practice { height: 210svh; }
+.map-stage { position: relative; height: 100svh; min-height: 34rem; overflow: hidden; }
+.js .map-stage { position: sticky; top: 0; }
+.map { position: absolute; inset: 0; transform: scale(var(--z, 1)); transform-origin: 50% 50%; will-change: transform; }
+.map img { width: 100%; height: 100%; object-fit: cover; }
+.map-pin { position: absolute; left: 50%; top: 50%; width: 52px; height: 70px; translate: -50% -100%; filter: drop-shadow(0 8px 10px rgba(0, 40, 38, 0.3)); }
+.map-veil { position: absolute; inset: 0; background: var(--teal); opacity: var(--veil, 0); pointer-events: none; }
+.map-card { position: absolute; left: var(--margin); bottom: clamp(24px, 7svh, 72px); width: min(460px, calc(100% - 2 * var(--margin))); padding: clamp(24px, 3vw, 40px); border-radius: var(--radius); background: var(--paper); color: var(--ink); box-shadow: 0 30px 60px -30px rgba(0, 40, 38, 0.45); opacity: var(--card, 1); translate: 0 calc((1 - var(--card, 1)) * 40px); }
+.map-card h2 { font-size: clamp(2rem, 1.1rem + 2.6vw, 3.6rem); line-height: 1; letter-spacing: -0.04em; }
+.map-card p { margin-top: 14px; }
+.map-card p.strong { font-size: var(--step-lead); line-height: 1.25; letter-spacing: -0.015em; }
+.map-card .row { margin-top: 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; }
 
 /* ---------- FAQ: accordion of filled tiles ---------- */
 .faq { background: var(--paper); padding: clamp(7rem, 12vw, 11rem) var(--margin); }
@@ -288,8 +290,6 @@ details[open] .plus::after { transform: rotate(0deg); }
   .hero-spine { right: -6vw; }
   .nav-links .hide-mid { display: none; }
   .fan { transform: scale(0.8); transform-origin: 50% 50%; width: 840px; max-width: none; left: 50%; margin-left: -420px; }
-  .panel .texts { left: 54%; }
-  .disc { width: 34vw; }
   .faq h2 { grid-column: 1 / 13; position: static; margin-bottom: 40px; max-width: none; }
   .faq .list { grid-column: 1 / 13; }
   .intro h2 { grid-column: 1 / 13; }
@@ -343,11 +343,12 @@ details[open] .plus::after { transform: rotate(0deg); }
   .t3 { height: 62vw; min-height: 0; }
 
 
-  .practice { padding: 10px; }
-  .panel { min-height: 0; padding: 32px 22px 0; }
+  .js .practice { height: 170svh; }
+  /* the card sits low, so the pin and the centre of the zoom move up */
+  .map { inset: -36% 0 0 0; }
+  .map-pin { top: 32%; }
+  .map-card { bottom: 16px; }
 
-  .panel .texts { position: static; margin-top: 36px; gap: 36px; max-width: none; }
-  .disc { position: relative; left: auto; width: 72vw; margin: 48px auto 0; translate: 0 18%; }
 
   .faq { padding-block: 88px; }
   .faq summary { min-height: 64px; padding: 16px 20px; }
@@ -496,21 +497,21 @@ details[open] .plus::after { transform: rotate(0deg); }
     </div>
   </section>
 
-  <section class="practice" id="praxis" data-bg="#c0e2bf" data-ink="#1b1b1b" aria-labelledby="practice-title">
-    <div class="panel">
-      <h2 id="practice-title" data-reveal>Zeit für Ihre Fragen</h2>
-      <div class="texts">
-        <div data-reveal style="--i:1">
-          <h3>Die Praxis</h3>
-          <p>Burgstraße&nbsp;2 in der Kieler Innenstadt, zwischen Altem Markt und Schloss. 4.&nbsp;Stock, mit Aufzug.</p>
+  <section class="practice" id="praxis" data-bg="#f7f7f5" data-ink="#1b1b1b" aria-labelledby="practice-title">
+    <div class="map-stage">
+      <div class="map"><img src="assets/story/kiel-karte.webp" width="1600" height="1600" decoding="async" alt="Stadtplan der Kieler Altstadt an der Förde, mit einer Markierung auf der Burgstraße&nbsp;2" loading="lazy"></div>
+      <svg class="map-pin" viewBox="0 0 64 86" aria-hidden="true"><path d="M32 84C32 84 4 50 4 30a28 28 0 0 1 56 0c0 20-28 54-28 54z" fill="#003b39" stroke="#f7f7f5" stroke-width="4"/><circle cx="32" cy="30" r="11" fill="#c0e2bf"/></svg>
+      <div class="map-veil" aria-hidden="true"></div>
+      <div class="map-card">
+        <h2 id="practice-title">Zeit für Ihre Fragen</h2>
+        <p>Burgstraße&nbsp;2 in der Kieler Innenstadt, zwischen Altem Markt und Schloss. 4.&nbsp;Stock, mit Aufzug.</p>
+        <!-- TODO Manicke: Originalsatz zur Selbstständigkeit einsetzen -->
+        <p class="strong">„Sie entscheiden. Ich gebe Ihnen die Orientierung dafür.“</p>
+        <div class="row">
+          <a class="pill" href="#kontakt">Gespräch anfragen</a>
+          <a class="link" href="https://www.openstreetmap.org/?mlat=54.32433&amp;mlon=10.14184#map=18/54.32433/10.14184">Auf der Karte öffnen</a>
         </div>
-        <div data-reveal style="--i:2">
-          <!-- TODO Manicke: Originalsatz zur Selbstständigkeit einsetzen -->
-          <p class="strong">„Sie entscheiden. Ich gebe Ihnen die Orientierung dafür.“</p>
-        </div>
-        <a class="pill" data-reveal style="--i:3" href="#kontakt">Gespräch anfragen</a>
       </div>
-      <figure class="disc" data-reveal style="--i:2"><a href="https://www.openstreetmap.org/?mlat=54.32433&amp;mlon=10.14184#map=18/54.32433/10.14184" aria-label="Lage der Praxis auf OpenStreetMap öffnen"><img src="assets/story/praxis-karte.webp" width="560" height="700" alt="Stadtplan der Kieler Altstadt mit einer Markierung auf der Burgstraße&nbsp;2, zwischen Altem Markt und Schloss" loading="lazy"></a></figure>
     </div>
   </section>
 
@@ -990,6 +991,35 @@ const glider = (() => {
       const e = 1 - Math.pow(1 - t, 3);
       c.style.transform = e >= 1 ? '' : `translateY(${(1 - e) * 110}vh)`;
     });
+  };
+  addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(place); } }, { passive: true });
+  addEventListener('resize', place);
+  place();
+})();
+
+// The practice: leaving the dark fan, the view pulls back from the pin to the old town; the colour lifts as it goes.
+(() => {
+  const sec = document.querySelector('.practice');
+  const stage = sec.querySelector('.map-stage');
+  const still = matchMedia('(prefers-reduced-motion: reduce)');
+  const clamp = (v) => Math.min(1, Math.max(0, v));
+  let ticking = false, dark = null;
+  const place = () => {
+    ticking = false;
+    const r = sec.getBoundingClientRect();
+    const span = r.height - innerHeight;
+    const p = still.matches || span <= 0 ? 1 : clamp(-r.top / span);
+    const e = p * p * (3 - 2 * p); // even pull-back, soft at both ends
+    stage.style.setProperty('--z', (3 - 2 * e).toFixed(3));
+    stage.style.setProperty('--veil', clamp(1 - p / 0.3).toFixed(3));
+    stage.style.setProperty('--card', clamp((p - 0.6) / 0.3).toFixed(3));
+    const isDark = p < 0.25;
+    if (isDark !== dark) {
+      dark = isDark;
+      sec.dataset.bg = dark ? '#003b39' : '#f7f7f5';
+      sec.dataset.ink = dark ? '#f7f7f5' : '#1b1b1b';
+      if (r.top <= 0 && r.bottom > 0) paintBar(sec);
+    }
   };
   addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(place); } }, { passive: true });
   addEventListener('resize', place);
