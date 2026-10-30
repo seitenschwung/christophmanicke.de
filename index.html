@@ -168,7 +168,7 @@ p { max-width: 62ch; text-wrap: pretty; }
 .chip { grid-column: 7 / 9; grid-row: 2; align-self: start; justify-self: center; margin-top: clamp(40px, 5vw, 72px); width: clamp(150px, 15vw, 230px); aspect-ratio: 4 / 5; border-radius: var(--radius); overflow: hidden; rotate: 4deg; background: #000; }
 .chip img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; }
 
-/* ---------- Leistungen: four cards dealt into a fan ---------- */
+/* ---------- So berate ich: three cards dealt into a fan ---------- */
 .deal { position: relative; z-index: 1; height: 240svh; border-radius: var(--vert-r) var(--vert-r) 0 0; background: var(--teal); color: var(--paper); }
 /* between the two vertebrae, seen up close: the disc, running in behind their rounded edges */
 :root { --vert-r: clamp(56px, 9vw, 160px); }
@@ -178,7 +178,7 @@ p { max-width: 62ch; text-wrap: pretty; }
 .deal-stage { position: sticky; top: 0; height: 100svh; overflow: hidden; padding: calc(var(--bar) + 32px) var(--margin) 40px; display: grid; grid-template-rows: auto 1fr; }
 .deal-head h2 { color: var(--paper); }
 .deal-head p { margin-top: 16px; max-width: 46ch; color: #d3dfdc; }
-.fan { position: relative; align-self: center; height: 420px; width: 1090px; max-width: 100%; margin: 0 auto; }
+.fan { position: relative; align-self: center; height: 420px; width: 840px; max-width: 100%; margin: 0 auto; }
 .fan:focus-visible { outline: 2px solid var(--paper); outline-offset: 6px; border-radius: var(--radius); }
 .card { position: absolute; top: 10px; left: calc(var(--k) * 250px); width: 340px; height: 400px; padding: 28px; border-radius: var(--radius); background: var(--c); color: var(--ci, var(--ink)); rotate: var(--r); display: grid; grid-template-rows: auto 1fr auto; gap: 14px; will-change: transform; }
 .card h3 { font-size: var(--step-lead); line-height: 1.05; max-width: 236px; letter-spacing: -0.025em; }
@@ -285,7 +285,7 @@ details[open] .plus::after { transform: rotate(0deg); }
   .sp-copy { max-width: 64vw; }
   .hero-spine { right: -6vw; }
   .nav-links .hide-mid { display: none; }
-  .fan { transform: scale(0.66); transform-origin: 50% 50%; width: 1090px; max-width: none; left: 50%; margin-left: -545px; }
+  .fan { transform: scale(0.8); transform-origin: 50% 50%; width: 840px; max-width: none; left: 50%; margin-left: -420px; }
   .panel .texts { left: 54%; }
   .disc { width: 34vw; }
   .faq h2 { grid-column: 1 / 13; position: static; margin-bottom: 40px; max-width: none; }
@@ -455,11 +455,10 @@ details[open] .plus::after { transform: rotate(0deg); }
       <figure class="chip" data-reveal style="--i:2">
         <img src="assets/v2/portrait-manicke.webp" width="528" height="700" alt="Porträt von Dr. med. Christoph Manicke" loading="lazy">
       </figure>
-      <p class="statement" data-reveal style="--i:1">Wäre ich nicht Neurochirurg geworden, stünde ich heute in einer Tischlerei. Die Haltung ist dieselbe: erst genau hinsehen, dann entscheiden. An der Wirbelsäule zählt das besonders, denn eine Operation lässt sich nicht zurücknehmen.</p>
+      <p class="statement" data-reveal style="--i:1">Wäre ich nicht Neurochirurg, wäre ich Tischler. Die Haltung ist dieselbe: erst genau hinsehen, dann entscheiden.</p>
       <blockquote class="quote" data-reveal style="--i:3">
-        <!-- TODO Manicke: VW-Bus- und Studien-Anekdote im Wortlaut bestätigen -->
-        <p>„Als die Zusage für das Medizinstudium kam, war ich mit einem kleinen VW-Bus schon auf dem Weg nach Italien. Fast wäre mein Leben ganz anders verlaufen.</p>
-        <p>Zur Wirbelsäule kam ich dann fast zufällig: Im Studium waren ein Freund und ich die Einzigen, die sich dafür interessiert haben.“</p>
+        <!-- TODO Manicke: VW-Bus-Anekdote im Wortlaut bestätigen -->
+        <p>„Als die Zusage fürs Medizinstudium kam, war ich mit dem VW-Bus schon auf dem Weg nach Italien. Fast wäre alles anders gekommen.“</p>
         <cite>Dr. med. Christoph Manicke</cite>
       </blockquote>
     </div>
@@ -470,29 +469,24 @@ details[open] .plus::after { transform: rotate(0deg); }
   <section class="deal" id="angebot" data-bg="#003b39" data-ink="#f7f7f5" aria-labelledby="deal-title">
     <div class="deal-stage">
       <div class="deal-head">
-        <h2 id="deal-title" data-reveal>Wobei ich berate</h2>
-        <p data-reveal style="--i:1">Alle Erkrankungen des neurochirurgischen Fachgebiets, mit dem Schwerpunkt Wirbelsäule.</p>
+        <h2 id="deal-title" data-reveal>So berate ich</h2>
+        <p data-reveal style="--i:1">Zweitmeinung zur Wirbelsäule, vom Nacken bis zum Becken.</p>
       </div>
-      <div class="fan" tabindex="0" role="region" aria-label="Wobei ich berate, zum Blättern">
+      <div class="fan" tabindex="0" role="region" aria-label="So berate ich, zum Blättern">
         <article class="card" style="--k:0; --r:-3deg; --c:#f7f7f5">
-          <h3>Zweitmeinung vor der OP</h3>
+          <h3>Ausführlich</h3>
           <figure><img src="assets/vertebrae-thirteen-figures-line-engraving-by-a-800.webp" width="800" height="600" alt="Kupferstich von Wirbeln, Andrew Bell, 1798" loading="lazy"></figure>
-          <p>Ihnen wurde eine Operation empfohlen? Ich sage Ihnen ehrlich, ob sie nötig ist, auch wenn die Antwort Nein lautet.</p>
+          <p>Wir nehmen uns die Zeit, die Ihre Fragen brauchen. Niemand drängt Sie zu einer Entscheidung.</p>
         </article>
         <article class="card" style="--k:1; --r:2deg; --c:#c0e2bf">
-          <h3>Nach einer Operation</h3>
+          <h3>Verständlich</h3>
           <figure><img src="assets/wintermorgen-am-eingang-zur-kieler-forde-1200.webp" width="1200" height="800" alt="Kieler Förde an einem Wintermorgen" loading="lazy"></figure>
-          <p>Auch nach einer bereits durchgeführten Operation ist eine Beratung möglich.</p>
+          <p>Ich erkläre Ihre Bilder und Befunde so, dass Sie sie verstehen, und zeige Ihnen alle Wege, nicht nur den Eingriff.</p>
         </article>
         <article class="card" style="--k:2; --r:-2deg; --c:#ebe9e5">
-          <h3>Konservativ oder operativ</h3>
+          <h3>Menschlich</h3>
           <figure><img src="assets/v2/alter-markt-kiel-01.webp" width="800" height="600" alt="Alter Markt in Kiel" loading="lazy"></figure>
-          <p>Sie lernen das ganze Behandlungsspektrum kennen, nicht nur den Eingriff.</p>
-        </article>
-        <article class="card" style="--k:3; --r:3deg; --c:#5d6c67; --ci:#f7f7f5">
-          <h3>Das ganze Fachgebiet</h3>
-          <figure><img src="assets/v2/bell-vertebrae.webp" width="600" height="465" alt="Kupferstich einzelner Wirbel von Andrew Bell, 1798" loading="lazy"></figure>
-          <p>Bandscheibenvorfall, Spinalkanalstenose, Wirbelgleiten und weitere Erkrankungen der Nerven und Wirbel.</p>
+          <p>Es geht um Sie und Ihren Alltag, nicht nur um Ihr MRT.</p>
         </article>
       </div>
     </div>
@@ -503,20 +497,14 @@ details[open] .plus::after { transform: rotate(0deg); }
       <h2 id="practice-title" data-reveal>Zeit für Ihre Fragen</h2>
       <div class="texts">
         <div data-reveal style="--i:1">
-          <h3>Ausführlich</h3>
-          <p>Wir nehmen uns die Zeit, die Ihre Fragen brauchen. Niemand drängt Sie zu einer Entscheidung.</p>
+          <h3>Die Praxis</h3>
+          <p>Burgstraße&nbsp;2 in der Kieler Innenstadt, zwischen Altem Markt und Schloss. 4.&nbsp;Stock, mit Aufzug.</p>
         </div>
         <div data-reveal style="--i:2">
-          <h3>Verständlich</h3>
-          <p>Ich erkläre Ihre Bilder und Befunde so, dass Sie sie verstehen, und zeige Ihnen alle Wege, nicht nur den Eingriff.</p>
-        </div>
-        <div data-reveal style="--i:3">
-          <h3>Menschlich</h3>
-          <p>Es geht um Sie und Ihren Alltag, nicht nur um Ihr MRT.</p>
           <!-- TODO Manicke: Originalsatz zur Selbstständigkeit einsetzen -->
           <p class="strong">„Sie entscheiden. Ich gebe Ihnen die Orientierung dafür.“</p>
         </div>
-        <a class="pill" data-reveal style="--i:4" href="#kontakt">Gespräch anfragen</a>
+        <a class="pill" data-reveal style="--i:3" href="#kontakt">Gespräch anfragen</a>
       </div>
       <figure class="disc" data-reveal style="--i:2"><img src="assets/v2/portrait-manicke.webp" width="528" height="700" alt="Porträt von Dr. med. Christoph Manicke" loading="lazy"></figure>
     </div>
