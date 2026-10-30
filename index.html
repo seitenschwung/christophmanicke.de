@@ -33,7 +33,7 @@
   --font: "Archivo", "Helvetica Neue", Arial, sans-serif;
   --wide: 116%;
 
-  --step-small: clamp(0.875rem, 0.85rem + 0.1vw, 0.9375rem);
+  --step-small: clamp(1rem, 0.97rem + 0.1vw, 1.0625rem);
   --step-body: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
   --step-lead: clamp(1.375rem, 1.15rem + 0.8vw, 1.875rem);
   --step-head: clamp(2.25rem, 1.4rem + 3vw, 4rem);
@@ -113,8 +113,10 @@ p { max-width: 62ch; text-wrap: pretty; }
 .sp-hero h1 { font-size: var(--step-display); line-height: 0.95; font-weight: 600; letter-spacing: -0.045em; }
 .sp-hero h1 .line { display: block; overflow: hidden; padding-bottom: 0.12em; margin-bottom: -0.12em; }
 .sp-hero h1 .line > span { display: block; }
-.sp-lede { margin-top: 40px; font-size: clamp(1.1875rem, 0.95rem + 0.6vw, 1.5rem); line-height: 1.35; max-width: 36ch; }
+.sp-who { margin-top: 32px; font-size: var(--step-body); font-weight: 600; letter-spacing: -0.01em; color: var(--navy); }
+.sp-lede { margin-top: 10px; font-size: clamp(1.1875rem, 0.95rem + 0.6vw, 1.5rem); line-height: 1.35; max-width: 36ch; }
 .sp-actions { margin-top: 36px; display: flex; flex-wrap: wrap; gap: 12px; }
+.sp-actions .pill { min-height: 3.75rem; padding: 0 2.2rem; font-size: var(--step-body); }
 .hero-spine { position: absolute; z-index: 1; right: 7vw; top: calc(var(--bar) - 10svh); height: 140svh; width: auto; max-width: none; }
 .hero-spine-h { display: none; order: 2; }
 .hero-spine .v, .hero-spine-h .v { fill: var(--navy); }
@@ -310,7 +312,10 @@ details[open] .plus::after { transform: rotate(0deg); }
   .sp-hero { --step-display: 10.6vw; padding-top: calc(var(--bar) + 28px); padding-bottom: 32px; }
   .sp-copy { max-width: none; }
   .sp-face { width: 72px; border-width: 4px; margin-bottom: 16px; }
-  .sp-lede { font-size: var(--step-body); margin-top: 20px; max-width: 26ch; }
+  .sp-who { margin-top: 18px; }
+  .sp-who span { display: block; }
+  .sp-who .sep { display: none; }
+  .sp-lede { font-size: var(--step-body); margin-top: 6px; max-width: 26ch; }
   .sp-actions { margin-top: 24px; }
   .sp-actions .pill { flex: 1 1 100%; }
   .hero-spine { display: none; }
@@ -400,6 +405,7 @@ details[open] .plus::after { transform: rotate(0deg); }
         <div class="sp-copy">
           <img class="sp-face" data-rise style="--i:0" src="assets/v2/portrait-manicke.webp" width="528" height="700" alt="Dr. med. Christoph Manicke">
           <h1 id="title"><span class="sr-only">Zweite Meinung zur Wirbelsäule: </span><span class="line"><span style="--l:0">Alles in</span></span> <span class="line"><span style="--l:1">Ruhe.</span></span></h1>
+          <p class="sp-who" data-rise style="--i:1"><span>Dr. med. Christoph Manicke</span><span class="sep"> · </span><span>Neurochirurg in&nbsp;Kiel</span></p>
           <p class="sp-lede" data-rise style="--i:1">Zweitmeinung zur Wirbelsäule:<br> persönlich, verständlich, unabhängig.</p>
           <div class="sp-actions" data-rise style="--i:2">
             <a class="pill" href="#kontakt">Gespräch anfragen</a>
@@ -464,7 +470,7 @@ details[open] .plus::after { transform: rotate(0deg); }
         <p class="lead-line" data-reveal style="--i:1">Schreiben Sie mir kurz, worum es geht. Ich melde mich persönlich bei Ihnen, und wir finden in Ruhe einen Termin.</p>
         <ul class="ask-notes" data-reveal style="--i:2">
           <li>Bitte schreiben Sie keine Befunde oder Diagnosen in die Nachricht.</li>
-          <li>Ihre Anfrage geht verschlüsselt direkt an die Praxis.</li>
+          <li>Ihre Anfrage geht direkt an mich und wird vertraulich behandelt.</li>
         </ul>
       </div>
       <form class="request" action="mailto:christoph.manicke@gmx.de" method="post" enctype="text/plain" data-reveal style="--i:2">
@@ -662,7 +668,10 @@ const glider = (() => {
     };
     frame = requestAnimationFrame(step);
   };
-  return { go, get active() { return gliding; } };
+  // a jump the visitor asks for, by link or by key, always wins over a glide
+  addEventListener('click', (e) => { if (e.target.closest('a[href^="#"]')) stop(); }, true);
+  addEventListener('keydown', (e) => { if (['PageUp', 'PageDown', 'Home', 'End', ' ', 'ArrowUp', 'ArrowDown'].includes(e.key)) stop(); }, true);
+  return { go, stop, get active() { return gliding; } };
 })();
 
 // The opening: the spine builds on arrival; scrolling on, the view dives into one vertebra until its colour fills the screen.
