@@ -214,7 +214,7 @@ details[open] .plus::after { transform: rotate(0deg); }
 .faq .answer { padding: 0 28px 26px; max-width: calc(52ch + 56px); }
 
 /* ---------- Kontakt: photo strip and the three-cell request bar ---------- */
-.contact { background: var(--sage); color: var(--paper); min-height: 80svh; padding: 48px 0 clamp(5rem, 9vw, 8rem); overflow: hidden; }
+.contact { background: var(--sage); color: var(--paper); min-height: 80svh; padding: 48px 0 clamp(5rem, 9vw, 8rem); overflow: clip; }
 .strip { display: flex; gap: 8px; width: max-content; }
 .strip figure { height: 150px; border-radius: 14px; overflow: hidden; flex: none; background: var(--sage-2); }
 .strip img, .strip video { height: 150px; width: auto; object-fit: cover; }
@@ -227,38 +227,42 @@ details[open] .plus::after { transform: rotate(0deg); }
 .motion-toggle[hidden] { display: none; }
 .motion-toggle:hover { background: #56645f; }
 .motion-toggle:active { transform: scale(0.97); }
-.contact h2 { margin: 72px var(--margin) 0; color: var(--paper); }
-.contact .lead-line { margin: 16px var(--margin) 0; max-width: 52ch; color: #eef2f0; }
-.request { margin: 40px var(--margin) 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
-.cell { position: relative; height: 96px; border-radius: var(--radius); background: #4f5d58; transition: background-color var(--t-hover) ease, color var(--t-hover) ease; }
-.cell:hover { background: #56645f; }
-.cell:focus-within { background: #e7ecea; color: var(--ink); }
-.cell label { position: absolute; left: 24px; top: 16px; font-size: var(--step-small); font-weight: 520; pointer-events: none; }
-.cell input, .cell select { position: absolute; inset: 0; width: 100%; height: 100%; padding: 36px 24px 0; border: 0; border-radius: var(--radius); background: transparent; font-size: var(--step-body); outline: none; appearance: none; color: inherit; }
-.cell select { cursor: pointer; padding-right: 56px; }
-.cell input::placeholder { color: #dde4e1; }
-.cell:focus-within input::placeholder { color: #5f6562; }
-.cell:has(:focus-visible) { outline: 2px solid var(--paper); outline-offset: 3px; }
-.cell .chev { position: absolute; right: 28px; top: 50%; width: 10px; height: 10px; border-right: 3px solid currentColor; border-bottom: 3px solid currentColor; rotate: 45deg; translate: 0 -40%; pointer-events: none; }
-.cell select option { color: var(--ink); background: var(--paper); }
-.cell.msg { grid-column: span 2; }
-.cell textarea { position: absolute; inset: 0; width: 100%; height: 100%; padding: 40px 24px 12px; border: 0; border-radius: var(--radius); background: transparent; font: inherit; font-size: var(--step-body); line-height: 1.35; color: inherit; outline: none; resize: none; }
-.cell textarea::placeholder { color: #dde4e1; }
-.cell:focus-within textarea::placeholder { color: #5f6562; }
-.cell .opt { font-weight: 400; opacity: 0.8; }
-.consent { grid-column: span 2; display: flex; align-items: flex-start; gap: 14px; padding: 16px 4px; color: #eef2f0; font-size: var(--step-small); line-height: 1.4; cursor: pointer; }
-.consent input { flex: none; width: 22px; height: 22px; margin-top: 1px; accent-color: var(--mint); cursor: pointer; }
-.consent a { color: var(--paper); }
+/* the request: a light sheet on the sage, big labels above every field, every choice visible at once */
+.ask { margin: 72px var(--margin) 0; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(2rem, 5vw, 5rem); align-items: start; }
+.ask-intro { position: sticky; top: calc(var(--bar) + 32px); }
+.contact h2 { color: var(--paper); }
+.contact .lead-line { margin-top: 20px; max-width: 34ch; font-size: var(--step-lead); line-height: 1.35; color: var(--paper); }
+.ask-notes { margin-top: 32px; display: grid; gap: 14px; color: var(--paper); }
+.ask-notes li { position: relative; padding-left: 30px; max-width: 40ch; }
+.ask-notes li::before { content: ""; position: absolute; left: 0; top: 0.5em; width: 12px; height: 12px; border-radius: 50%; background: var(--mint); }
+.request { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 20px; padding: clamp(24px, 4vw, 48px); border-radius: var(--radius); background: var(--paper); color: var(--ink); font-size: 1.1875rem; box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.45); }
+.request .wide { grid-column: 1 / -1; }
+.field label, .request legend { display: block; padding: 0; font-size: 1.1875rem; font-weight: 600; line-height: 1.3; }
+.request .opt { font-weight: 400; color: #4a4f4d; }
+.hint { margin-top: 4px; font-size: 1rem; line-height: 1.4; color: #4a4f4d; }
+.field input, .field textarea { display: block; width: 100%; margin-top: 10px; min-height: 60px; padding: 14px 18px; border: 2px solid #7d8884; border-radius: 14px; background: #fff; font: inherit; font-size: 1.1875rem; line-height: 1.4; color: var(--ink); transition: border-color var(--t-hover) ease; }
+.field textarea { min-height: 150px; resize: vertical; }
+.field input:hover, .field textarea:hover { border-color: var(--teal); }
+.field input:focus-visible, .field textarea:focus-visible { outline: 3px solid var(--teal); outline-offset: 2px; border-color: var(--teal); }
+.field input:user-invalid { border-color: #b3261e; }
+.request fieldset { margin: 0; padding: 0; border: 0; min-width: 0; }
+.choices { margin-top: 12px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.choice { display: flex; align-items: center; gap: 14px; min-height: 60px; padding: 12px 18px; border: 2px solid #c3cbc8; border-radius: 14px; background: #fff; line-height: 1.3; cursor: pointer; transition: border-color var(--t-hover) ease, background-color var(--t-hover) ease; }
+.choice:hover { border-color: var(--teal); }
+.choice:has(:checked) { border-color: var(--teal); background: #e4f1e3; }
+.choice:has(:focus-visible) { outline: 3px solid var(--teal); outline-offset: 2px; }
+.choice input, .consent input { flex: none; width: 26px; height: 26px; margin: 0; accent-color: var(--teal); cursor: pointer; }
+.consent { display: flex; align-items: flex-start; gap: 16px; font-size: 1.0625rem; line-height: 1.45; cursor: pointer; }
+.consent a { color: var(--teal); text-decoration-color: currentColor; }
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
-.form-status { grid-column: 1 / -1; color: var(--paper); font-size: var(--step-lead); line-height: 1.3; }
+.form-status { grid-column: 1 / -1; color: var(--teal); font-size: var(--step-lead); line-height: 1.3; }
 .form-status:empty { display: none; }
 .request.is-sent > :not(.form-status) { display: none; }
 .request .submit:disabled { opacity: 0.6; cursor: progress; }
-.submit { height: 96px; border-radius: var(--radius); background: var(--paper); color: var(--ink); font-weight: 560; font-stretch: var(--wide); font-size: var(--step-lead); letter-spacing: -0.02em; transition: background-color var(--t-hover) ease, transform var(--t-press) var(--ease-out); }
-.submit:hover { background: var(--mint); }
+.submit { min-height: 76px; border-radius: 999px; background: var(--teal); color: var(--paper); font-weight: 600; font-stretch: var(--wide); font-size: var(--step-lead); letter-spacing: -0.02em; transition: background-color var(--t-hover) ease, transform var(--t-press) var(--ease-out); }
+.submit:hover { background: var(--teal-2); }
+.submit:focus-visible { outline: 3px solid var(--teal); outline-offset: 4px; }
 .submit:active { transform: scale(0.98); }
-.fine { margin: 14px var(--margin) 0; display: flex; flex-wrap: wrap; gap: 8px 40px; color: #eef2f0; }
-.fine a { color: var(--paper); }
 
 /* ---------- footer: the telephone number is the headline ---------- */
 .foot { background: var(--mint); color: var(--ink); min-height: 90svh; padding: 40px var(--margin) 28px; display: grid; grid-template-rows: auto 1fr auto auto; }
@@ -290,8 +294,8 @@ details[open] .plus::after { transform: rotate(0deg); }
   .intro .statement { grid-column: 1 / 13; }
   .intro .quote { grid-column: 1 / 13; grid-row: 3; margin-top: 48px; max-width: 52ch; }
   .chip { display: none; }
-  .request { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .request .submit, .consent { grid-column: 1 / -1; }
+  .ask { grid-template-columns: minmax(0, 1fr); }
+  .ask-intro { position: static; }
 }
 
 /* ---------- phone ---------- */
@@ -348,12 +352,9 @@ details[open] .plus::after { transform: rotate(0deg); }
 
   .strip figure, .strip img, .strip video { height: 110px; }
   .strip-row { flex-wrap: wrap; }
-  .contact h2 { margin-top: 48px; }
-  .request { grid-template-columns: minmax(0, 1fr); }
-  .cell.msg { grid-column: auto; }
-  .cell, .submit { height: 72px; }
-  .cell input, .cell select { padding-top: 30px; }
-  .cell label { top: 12px; }
+  .ask { margin-top: 48px; }
+  .request { grid-template-columns: minmax(0, 1fr); padding: 24px 20px; }
+  .choices { grid-template-columns: minmax(0, 1fr); }
 
   .foot { min-height: 0; padding-top: 32px; }
   .foot-top { grid-template-columns: minmax(0, 1fr); gap: 6px; }
@@ -553,49 +554,52 @@ details[open] .plus::after { transform: rotate(0deg); }
       <button type="button" class="motion-toggle" aria-pressed="false" hidden>Bewegung anhalten</button>
     </div>
 
-    <h2 id="contact-title" data-reveal>Gespräch anfragen</h2>
-    <p class="lead-line" data-reveal style="--i:1">Schreiben Sie mir kurz, worum es geht. Ich melde mich persönlich bei Ihnen, und wir finden in Ruhe einen Termin.</p>
-    <form class="request" action="mailto:christoph.manicke@gmx.de" method="post" enctype="text/plain" data-reveal style="--i:2">
-      <p class="hp" aria-hidden="true"><label>Bitte leer lassen <input name="website" tabindex="-1" autocomplete="off"></label></p>
-      <div class="cell">
-        <label for="f-name">Ihr Name</label>
-        <input id="f-name" name="name" type="text" autocomplete="name" placeholder="z.&nbsp;B. Anna Petersen…" required>
+    <div class="ask">
+      <div class="ask-intro">
+        <h2 id="contact-title" data-reveal>Gespräch anfragen</h2>
+        <p class="lead-line" data-reveal style="--i:1">Schreiben Sie mir kurz, worum es geht. Ich melde mich persönlich bei Ihnen, und wir finden in Ruhe einen Termin.</p>
+        <ul class="ask-notes" data-reveal style="--i:2">
+          <li>Bitte schreiben Sie keine Befunde oder Diagnosen in die Nachricht.</li>
+          <li>Ihre Anfrage geht verschlüsselt direkt an die Praxis.</li>
+        </ul>
       </div>
-      <div class="cell">
-        <label for="f-mail">Ihre E-Mail</label>
-        <input id="f-mail" name="email" type="email" autocomplete="email" spellcheck="false" placeholder="anna@beispiel.de…" required>
-      </div>
-      <div class="cell">
-        <label for="f-topic">Ihr Anliegen</label>
-        <select id="f-topic" name="anliegen">
-          <option>Zweitmeinung vor einer Operation</option>
-          <option>Beschwerden nach einer Operation</option>
-          <option>Beratung bei Rückenbeschwerden</option>
-          <option>Andere neurochirurgische Frage</option>
-        </select>
-        <span class="chev" aria-hidden="true"></span>
-      </div>
-      <div class="cell">
-        <label for="f-when">Wann passt es Ihnen?</label>
-        <select id="f-when" name="zeitraum">
-          <option>So bald wie möglich</option>
-          <option>In den nächsten zwei Wochen</option>
-          <option>Im nächsten Monat</option>
-          <option>Ich bin flexibel</option>
-        </select>
-        <span class="chev" aria-hidden="true"></span>
-      </div>
-      <div class="cell msg">
-        <label for="f-msg">Ihre Nachricht <span class="opt">(freiwillig)</span></label>
-        <textarea id="f-msg" name="nachricht" rows="2" placeholder="Worum geht es, kurz in Ihren Worten…"></textarea>
-      </div>
-      <label class="consent"><input type="checkbox" name="einwilligung" value="ja" required> <span>Ich bin einverstanden, dass meine Angaben zur Bearbeitung der Anfrage verwendet werden. Mehr in der <a class="link" href="datenschutz.html">Datenschutzerklärung</a>.</span></label>
-      <button type="submit" class="submit">Anfrage senden</button>
-      <p class="form-status" role="status" aria-live="polite"></p>
-    </form>
-    <div class="fine small">
-      <p>Bitte schreiben Sie keine Befunde oder Diagnosen in die Nachricht.</p>
-      <p>Ihre Anfrage geht verschlüsselt direkt an die Praxis.</p>
+      <form class="request" action="mailto:christoph.manicke@gmx.de" method="post" enctype="text/plain" data-reveal style="--i:2">
+        <p class="hp" aria-hidden="true"><label>Bitte leer lassen <input name="website" tabindex="-1" autocomplete="off"></label></p>
+        <div class="field">
+          <label for="f-name">Ihr Name</label>
+          <input id="f-name" name="name" type="text" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="f-mail">Ihre E-Mail-Adresse</label>
+          <input id="f-mail" name="email" type="email" autocomplete="email" spellcheck="false" aria-describedby="f-mail-hint" required>
+          <p class="hint" id="f-mail-hint">Dorthin schicke ich Ihnen meine Antwort.</p>
+        </div>
+        <fieldset class="wide">
+          <legend>Worum geht es?</legend>
+          <div class="choices">
+            <label class="choice"><input type="radio" name="anliegen" value="Zweitmeinung vor einer Operation" checked> Zweitmeinung vor einer Operation</label>
+            <label class="choice"><input type="radio" name="anliegen" value="Beschwerden nach einer Operation"> Beschwerden nach einer Operation</label>
+            <label class="choice"><input type="radio" name="anliegen" value="Beratung bei Rückenbeschwerden"> Beratung bei Rückenbeschwerden</label>
+            <label class="choice"><input type="radio" name="anliegen" value="Andere neurochirurgische Frage"> Eine andere Frage</label>
+          </div>
+        </fieldset>
+        <fieldset class="wide">
+          <legend>Wann passt es Ihnen?</legend>
+          <div class="choices">
+            <label class="choice"><input type="radio" name="zeitraum" value="So bald wie möglich" checked> So bald wie möglich</label>
+            <label class="choice"><input type="radio" name="zeitraum" value="In den nächsten zwei Wochen"> In den nächsten zwei Wochen</label>
+            <label class="choice"><input type="radio" name="zeitraum" value="Im nächsten Monat"> Im nächsten Monat</label>
+            <label class="choice"><input type="radio" name="zeitraum" value="Ich bin flexibel"> Ich bin flexibel</label>
+          </div>
+        </fieldset>
+        <div class="field wide">
+          <label for="f-msg">Ihre Nachricht <span class="opt">(freiwillig)</span></label>
+          <textarea id="f-msg" name="nachricht" rows="4"></textarea>
+        </div>
+        <label class="consent wide"><input type="checkbox" name="einwilligung" value="ja" required> <span>Ich bin einverstanden, dass meine Angaben zur Bearbeitung der Anfrage verwendet werden. Mehr in der <a class="link" href="datenschutz.html">Datenschutzerklärung</a>.</span></label>
+        <button type="submit" class="submit wide">Anfrage senden</button>
+        <p class="form-status" role="status" aria-live="polite"></p>
+      </form>
     </div>
   </section>
 </main>
