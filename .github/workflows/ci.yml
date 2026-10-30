@@ -1,0 +1,18 @@
+name: CI & Deploy
+
+# Thin caller of the shared pipeline in seitenschwung/template: mailer tests (Dockerfile stage "test"),
+# hardened Docker run, axe + Lighthouse browser tests, then on main: push the image to ghcr.io and deploy it
+# to Coolify (https://christophmanicke.de, repository variables DEPLOY=auto and APP_DOMAIN), with rollback.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  pipeline:
+    permissions:
+      contents: read
+      packages: write
+    uses: seitenschwung/template/.github/workflows/pipeline.yml@v1
+    secrets: inherit

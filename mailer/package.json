@@ -1,0 +1,9 @@
+{
+  "name": "manicke-mailer",
+  "private": true,
+  "type": "module",
+  "description": "Sends appointment requests from the website as plain-text mail via SMTP.",
+  "dependencies": {
+    "nodemailer": "10.2.1"
+  }
+}
