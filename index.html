@@ -95,7 +95,7 @@ p { max-width: 62ch; text-wrap: pretty; }
 
 /* ---------- hero: headline across two fields, which part as you scroll to show the spine ---------- */
 .split { position: relative; }
-.js .split { height: 340svh; }
+.js .split { height: 220svh; }
 .js .split-stage { position: sticky; top: 0; height: 100svh; overflow: hidden; }
 .doors { position: relative; height: 100svh; min-height: 34rem; }
 .js .doors { position: absolute; inset: 0; z-index: 3; min-height: 0; pointer-events: none; }
@@ -171,7 +171,7 @@ p { max-width: 62ch; text-wrap: pretty; }
 .chip img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; }
 
 /* ---------- So berate ich: three cards dealt into a fan ---------- */
-.deal { position: relative; z-index: 1; height: 240svh; border-radius: var(--vert-r) var(--vert-r) 0 0; background: var(--teal); color: var(--paper); }
+.deal { position: relative; z-index: 1; height: 170svh; border-radius: var(--vert-r) var(--vert-r) 0 0; background: var(--teal); color: var(--paper); }
 /* between the two vertebrae, seen up close: the disc, running in behind their rounded edges */
 :root { --vert-r: clamp(56px, 9vw, 160px); }
 .cartilage { position: relative; height: calc(clamp(120px, 22svh, 220px) + 2 * var(--vert-r)); margin-block: calc(-1 * var(--vert-r)); background: var(--paper); }
@@ -197,7 +197,7 @@ p { max-width: 62ch; text-wrap: pretty; }
 .panel .texts { position: absolute; left: 63%; top: 56px; right: 56px; display: grid; gap: 56px; max-width: 360px; }
 .panel h3 { font-size: var(--step-lead); letter-spacing: -0.02em; line-height: 1.1; color: var(--paper); }
 .panel .texts p { margin-top: 12px; color: #d3dfdc; }
-.panel .texts p.strong { color: var(--paper); }
+.panel .texts p.strong { color: var(--paper); font-size: var(--step-lead); line-height: 1.25; letter-spacing: -0.015em; }
 .panel .pill { justify-self: start; }
 
 /* ---------- FAQ: accordion of filled tiles ---------- */
@@ -267,14 +267,13 @@ details[open] .plus::after { transform: rotate(0deg); }
 .submit:active { transform: scale(0.98); }
 
 /* ---------- footer: the telephone number is the headline ---------- */
-.foot { background: var(--mint); color: var(--ink); min-height: 90svh; padding: 40px var(--margin) 28px; display: grid; grid-template-rows: auto 1fr auto auto; }
+.foot { background: var(--mint); color: var(--ink); min-height: 60svh; padding: 40px var(--margin) 28px; display: grid; grid-template-rows: auto 1fr auto auto; }
 .foot-top { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--gutter); font-size: var(--step-small); }
 .foot-top p { grid-column: span 2; max-width: none; }
 .foot-top p:first-child { grid-column: span 3; }
 .foot-top .up { grid-column: 12; justify-self: end; font-weight: 560; }
-.foot h2 { align-self: end; margin-top: 18vh; font-size: var(--step-lead); letter-spacing: -0.02em; }
+.foot > div:has(> h2) { align-self: end; margin-top: 12vh; }
 .call { display: block; margin-top: 14px; font-size: var(--step-display); font-weight: 600; font-stretch: var(--wide); letter-spacing: -0.05em; line-height: 0.9; text-decoration: none; white-space: nowrap; font-variant-numeric: tabular-nums; transition: color var(--t-hover) ease; }
-.call:hover { color: var(--teal); }
 .mail { display: inline-block; margin-top: 18px; font-size: var(--step-lead); font-weight: 520; letter-spacing: -0.02em; text-decoration-color: currentColor; }
 .foot-meta { margin-top: 56px; display: grid; grid-template-columns: 1fr 2fr 1fr; gap: var(--gutter); align-items: start; font-size: var(--step-small); }
 .foot-meta nav { display: flex; gap: 20px; }
@@ -363,7 +362,7 @@ details[open] .plus::after { transform: rotate(0deg); }
   .foot-top { grid-template-columns: minmax(0, 1fr); gap: 6px; }
   .foot-top p, .foot-top p:first-child { grid-column: auto; }
   .foot-top .up { grid-column: auto; justify-self: start; margin-top: 8px; }
-  .foot h2 { margin-top: 64px; }
+  .foot > div:has(> h2) { margin-top: 64px; }
   .mail { font-size: var(--step-body); }
   .foot-meta { grid-template-columns: minmax(0, 1fr); gap: 12px; margin-top: 40px; }
   .foot-meta .end { justify-self: start; }
@@ -479,17 +478,17 @@ details[open] .plus::after { transform: rotate(0deg); }
       <div class="fan" tabindex="0" role="region" aria-label="So berate ich, zum Blättern">
         <article class="card" style="--k:0; --r:-3deg; --c:#f7f7f5">
           <h3>Ausführlich</h3>
-          <figure><img src="assets/vertebrae-thirteen-figures-line-engraving-by-a-800.webp" width="800" height="600" alt="Kupferstich von Wirbeln, Andrew Bell, 1798" loading="lazy"></figure>
+          <figure><img src="assets/story/tee-buch.webp" width="600" height="600" alt="Eine Tasse Tee über einem aufgeschlagenen Buch" loading="lazy"></figure>
           <p>Wir nehmen uns die Zeit, die Ihre Fragen brauchen. Niemand drängt Sie zu einer Entscheidung.</p>
         </article>
         <article class="card" style="--k:1; --r:2deg; --c:#c0e2bf">
           <h3>Verständlich</h3>
-          <figure><img src="assets/wintermorgen-am-eingang-zur-kieler-forde-1200.webp" width="1200" height="800" alt="Kieler Förde an einem Wintermorgen" loading="lazy"></figure>
+          <figure><img src="assets/story/notizblock.webp" width="600" height="600" alt="Bleistift auf einem leeren Notizblock" loading="lazy"></figure>
           <p>Ich erkläre Ihre Bilder und Befunde so, dass Sie sie verstehen, und zeige Ihnen alle Wege, nicht nur den Eingriff.</p>
         </article>
         <article class="card" style="--k:2; --r:-2deg; --c:#ebe9e5">
           <h3>Menschlich</h3>
-          <figure><img src="assets/v2/alter-markt-kiel-01.webp" width="800" height="600" alt="Alter Markt in Kiel" loading="lazy"></figure>
+          <figure><img src="assets/story/tasse-haende.webp" width="600" height="600" alt="Zwei Hände um eine warme Tasse" loading="lazy"></figure>
           <p>Es geht um Sie und Ihren Alltag, nicht nur um Ihr MRT.</p>
         </article>
       </div>
@@ -510,7 +509,7 @@ details[open] .plus::after { transform: rotate(0deg); }
         </div>
         <a class="pill" data-reveal style="--i:3" href="#kontakt">Gespräch anfragen</a>
       </div>
-      <figure class="disc" data-reveal style="--i:2"><img src="assets/v2/portrait-manicke.webp" width="528" height="700" alt="Porträt von Dr. med. Christoph Manicke" loading="lazy"></figure>
+      <figure class="disc" data-reveal style="--i:2"><img src="assets/v2/burgstra-e-kiel-2017-01.webp" width="1200" height="908" alt="Die Burgstraße in Kiel, in der die Praxis liegt" loading="lazy"></figure>
     </div>
   </section>
 
@@ -603,9 +602,8 @@ details[open] .plus::after { transform: rotate(0deg); }
     <p>Sprechstunde<br>nach Vereinbarung</p>
     <a class="up link" href="#top">Nach oben</a>
   </div>
-  <h2 id="foot-title">Gespräch anfragen</h2>
   <div>
-    <a class="call" href="#kontakt">Zur Anfrage</a>
+    <h2 id="foot-title" class="call">Alles in Ruhe.</h2>
     <a class="mail link" href="mailto:christoph.manicke@gmx.de">christoph.manicke@gmx.de</a>
   </div>
   <div class="foot-meta">
@@ -613,7 +611,7 @@ details[open] .plus::after { transform: rotate(0deg); }
       <a class="link" href="impressum.html">Impressum</a>
       <a class="link" href="datenschutz.html">Datenschutz</a>
     </nav>
-    <p class="credits" id="bildnachweis">Bilder über <a class="link" href="https://commons.wikimedia.org">Wikimedia Commons</a>, zugeschnitten und verkleinert: Wirbel, Kupferstich von A. Bell, 1798, Wellcome Collection (CC BY 4.0); Burgstraße Kiel 2017 (CC BY-SA 4.0); Burgstraße 1966, Friedrich Magnussen, Stadtarchiv Kiel (CC BY-SA 3.0 DE); Alter Markt Kiel (CC BY-SA 4.0); Kieler Schloss (CC BY-SA 2.0); Wintermorgen am Eingang zur Kieler Förde, Dan Kollmann (CC BY-SA 4.0); Panorama von Kiel, 1902 (gemeinfrei); Kühlungsborn Strand, Lukas Beck (CC BY 4.0). Über <a class="link" href="https://unsplash.com">Unsplash</a>: VW-Bus, Hasse Lossius; Toskana, Kristof Van Rentergem; Hobelspäne, Clem Onojeghuo.</p>
+    <p class="credits" id="bildnachweis">Bilder über <a class="link" href="https://commons.wikimedia.org">Wikimedia Commons</a>, zugeschnitten und verkleinert: Wirbel, Kupferstich von A. Bell, 1798, Wellcome Collection (CC BY 4.0); Burgstraße Kiel 2017 (CC BY-SA 4.0); Burgstraße 1966, Friedrich Magnussen, Stadtarchiv Kiel (CC BY-SA 3.0 DE); Alter Markt Kiel (CC BY-SA 4.0); Kieler Schloss (CC BY-SA 2.0); Wintermorgen am Eingang zur Kieler Förde, Dan Kollmann (CC BY-SA 4.0); Panorama von Kiel, 1902 (gemeinfrei); Kühlungsborn Strand, Lukas Beck (CC BY 4.0). Über <a class="link" href="https://unsplash.com">Unsplash</a>: VW-Bus, Hasse Lossius; Toskana, Kristof Van Rentergem; Hobelspäne, Clem Onojeghuo; Tee und Buch, Farzad Mohamadi; Notizblock, Kelly Sikkema; Tasse, Kira auf der Heide.</p>
     <p class="end">Kiel, 2026</p>
   </div>
 </footer>
