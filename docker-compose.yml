@@ -1,0 +1,75 @@
+# For Coolify: Build Pack "Docker Compose", give the service "web" the domain with port 8080
+# (https://<domain>:8080). Coolify handles TLS and routing.
+services:
+  web:
+    # Coolify doesn't build: CI builds and tests the image, pushes it to ghcr.io and sets IMAGE
+    # (an environment variable in Coolify) to exactly that tag before every deploy.
+    image: ${IMAGE:?set by the CI deploy job}
+    restart: unless-stopped
+    # CrowdSec reads this container's logs through the Docker API (labels, see CLAUDE.md).
+    labels:
+      - crowdsec.enable=true
+      - crowdsec.labels.type=nginx
+    # Logs go to the host's journald, which deletes them after 14 days (host setup in README, "Log retention");
+    # the privacy policy promises that period. `docker logs` and CrowdSec still read them through the Docker API.
+    logging:
+      driver: journald
+      options:
+        tag: manicke-web
+    expose:
+      - "8080"
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m,mode=1777,noexec,nosuid,nodev
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 200
+    mem_limit: 256m
+    cpus: 1
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:8080/healthz"]
+      interval: 30s
+      timeout: 3s
+      start_period: 10s
+      retries: 3
+
+  # Request mailer (POST /api/anfrage via nginx): same image, its own process, no domain and no published port.
+  # Set in Coolify: SMTP_USER, SMTP_PASS (secret), MAIL_FROM; the rest has defaults. Without SMTP_PASS it answers 503 and the
+  # page falls back to the visitor's mail program, so deploying before configuring is safe.
+  mailer:
+    image: ${IMAGE:?set by the CI deploy job}
+    command: ["node", "/app/mailer/server.mjs"]
+    user: "101"
+    restart: unless-stopped
+    environment:
+      SMTP_HOST: ${SMTP_HOST:-mail.your-server.de}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USER: ${SMTP_USER}
+      # No default here: Coolify only writes a variable into its .env when the compose file has no default for it,
+      # so `${SMTP_PASS:-}` stayed empty although the value was set in Coolify. Unset still means "mailer off" (503).
+      SMTP_PASS: ${SMTP_PASS}
+      MAIL_FROM: ${MAIL_FROM}
+      MAIL_TO: ${MAIL_TO:-christoph.manicke@gmx.de}
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-https://christophmanicke.de,https://www.christophmanicke.de}
+    logging:
+      driver: journald
+      options:
+        tag: manicke-mailer
+    expose:
+      - "3000"
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 50
+    mem_limit: 128m
+    cpus: 0.5
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:3000/healthz"]
+      interval: 30s
+      timeout: 3s
+      start_period: 10s
+      retries: 3

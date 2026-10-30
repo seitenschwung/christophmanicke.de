@@ -1,0 +1,10 @@
+# Allowlist: only the site and the mailer reach the build. The Dockerfile drops unreferenced assets.
+*
+!index.html
+!impressum.html
+!datenschutz.html
+!assets/
+!mailer/
+!nginx.conf
+mailer/node_modules
+assets/v2/l4-l5-disc-herniation.png
