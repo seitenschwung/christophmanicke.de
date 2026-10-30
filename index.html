@@ -169,7 +169,7 @@ p { max-width: 62ch; text-wrap: pretty; }
 .intro h2 .line-b { display: block; }
 .story-row { margin-top: clamp(32px, 4vw, 56px); display: flex; align-items: flex-start; gap: clamp(24px, 3vw, 48px); }
 .intro .statement { font-size: var(--step-lead); line-height: 1.3; max-width: 26ch; }
-.chip { flex: none; width: clamp(130px, 12vw, 190px); aspect-ratio: 4 / 5; border-radius: var(--radius); overflow: hidden; rotate: 4deg; background: #000; }
+.chip { flex: none; width: clamp(130px, 12vw, 190px); aspect-ratio: 4 / 5; border-radius: var(--radius); overflow: hidden; background: #000; }
 .chip img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; }
 
 /* ---------- the curtain: at its last screen "Über mich" parts down the middle and draws aside to show the request ---------- */
@@ -355,8 +355,6 @@ details[open] .plus::after { transform: rotate(0deg); }
   .js [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity 700ms var(--ease-out), transform 900ms var(--ease-out); transition-delay: calc(var(--i, 0) * 80ms); }
   .js [data-reveal].is-in { opacity: 1; transform: none; }
   /* on arrival the two lines come out of the seam, one up, one down; then the lede rises */
-  .chip { transition: rotate 900ms var(--ease-out); }
-  .chip:hover { rotate: 0deg; }
   /* the spine builds and the copy rises once the fields have parted */
   .js .hero-spine .v { opacity: 0; transform: translateY(40px); transform-box: fill-box; transform-origin: center; animation: build 700ms var(--ease-out) forwards paused; animation-delay: calc((27 - var(--n)) * 45ms + 450ms); }
   .js .sp-hero h1 .line > span { animation: from-below 1000ms var(--ease-out) both paused; animation-delay: calc(var(--l) * 140ms + 200ms); }
