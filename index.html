@@ -161,10 +161,12 @@ p { max-width: 62ch; text-wrap: pretty; }
 .intro { position: relative; z-index: 1; border-radius: 0 0 var(--vert-r) var(--vert-r); background: var(--teal); color: var(--paper); min-height: 90svh; padding: clamp(6rem, 12vw, 10rem) var(--margin); }
 .intro h2 { grid-column: 1 / 13; grid-row: 1; font-size: clamp(2rem, 0.4rem + 6.6vw, 7rem); line-height: 0.95; letter-spacing: -0.045em; }
 .intro .statement { grid-column: 1 / 7; grid-row: 2; margin-top: clamp(40px, 5vw, 72px); font-size: var(--step-lead); line-height: 1.3; max-width: 30ch; }
-.intro .quote { grid-column: 9 / 13; grid-row: 2; align-self: end; }
-.intro .quote p + p { margin-top: 0.8em; }
 .intro h2 .line-b { display: block; }
-.intro .quote cite { display: block; margin-top: 14px; font-style: normal; font-weight: 560; font-size: var(--step-small); }
+/* the story in three snapshots */
+.polaroids { grid-column: 1 / 13; grid-row: 3; display: flex; justify-content: center; gap: clamp(16px, 3vw, 44px); margin-top: clamp(48px, 6vw, 96px); padding: 0; list-style: none; }
+.polaroids li { width: clamp(180px, 22vw, 290px); padding: 12px 12px 0; border-radius: 6px; background: var(--paper); color: var(--ink); box-shadow: 0 14px 34px rgba(0, 20, 19, 0.35); rotate: var(--t); }
+.polaroids img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; border-radius: 2px; }
+.polaroids figcaption { padding: 12px 4px 16px; text-align: center; font-size: var(--step-small); font-style: italic; }
 .chip { grid-column: 7 / 9; grid-row: 2; align-self: start; justify-self: center; margin-top: clamp(40px, 5vw, 72px); width: clamp(150px, 15vw, 230px); aspect-ratio: 4 / 5; border-radius: var(--radius); overflow: hidden; rotate: 4deg; background: #000; }
 .chip img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; }
 
@@ -292,7 +294,8 @@ details[open] .plus::after { transform: rotate(0deg); }
   .faq .list { grid-column: 1 / 13; }
   .intro h2 { grid-column: 1 / 13; }
   .intro .statement { grid-column: 1 / 13; }
-  .intro .quote { grid-column: 1 / 13; grid-row: 3; margin-top: 48px; max-width: 52ch; }
+  .polaroids { flex-wrap: wrap; }
+  .polaroids li { width: calc(50% - 12px); max-width: 260px; }
   .chip { display: none; }
   .ask { grid-template-columns: minmax(0, 1fr); }
   .ask-intro { position: static; }
@@ -451,16 +454,17 @@ details[open] .plus::after { transform: rotate(0deg); }
 
   <section class="intro" id="ueber-mich" data-bg="#003b39" data-ink="#f7f7f5" aria-labelledby="intro-title">
     <div class="grid">
-      <h2 id="intro-title" data-reveal><span class="line-b">Zweimal messen,</span> <span class="line-b">einmal schneiden.</span></h2>
+      <h2 id="intro-title" data-reveal><span class="line-b">Fast wäre alles</span> <span class="line-b">anders gekommen.</span></h2>
       <figure class="chip" data-reveal style="--i:2">
         <img src="assets/v2/portrait-manicke.webp" width="528" height="700" alt="Porträt von Dr. med. Christoph Manicke" loading="lazy">
       </figure>
-      <p class="statement" data-reveal style="--i:1">Wäre ich nicht Neurochirurg, wäre ich Tischler. Die Haltung ist dieselbe: erst genau hinsehen, dann entscheiden.</p>
-      <blockquote class="quote" data-reveal style="--i:3">
-        <!-- TODO Manicke: VW-Bus-Anekdote im Wortlaut bestätigen -->
-        <p>„Als die Zusage fürs Medizinstudium kam, war ich mit dem VW-Bus schon auf dem Weg nach Italien. Fast wäre alles anders gekommen.“</p>
-        <cite>Dr. med. Christoph Manicke</cite>
-      </blockquote>
+      <!-- TODO Manicke: VW-Bus-Anekdote im Wortlaut bestätigen -->
+      <p class="statement" data-reveal style="--i:1">Als die Zusage fürs Medizinstudium kam, war mein kleiner VW-Bus schon gepackt, Richtung Italien. Und hätte es mit der Medizin nicht geklappt? Dann wäre ich heute wohl Tischler.</p>
+      <ul class="polaroids" aria-label="Fast wäre alles anders gekommen, in drei Bildern">
+        <li data-reveal style="--i:2; --t:-4deg"><figure><img src="assets/story/vw-bus.webp" width="720" height="720" alt="Ein grün-weißer VW-Bus am Wasser" loading="lazy"><figcaption>Der Bus war gepackt …</figcaption></figure></li>
+        <li data-reveal style="--i:3; --t:2deg"><figure><img src="assets/story/toskana.webp" width="720" height="720" alt="Zypressenallee in der Toskana" loading="lazy"><figcaption>… Italien wartete schon.</figcaption></figure></li>
+        <li data-reveal style="--i:4; --t:-1.5deg"><figure><img src="assets/story/hobelspaene.webp" width="720" height="720" alt="Hobelspäne auf einer Werkbank" loading="lazy"><figcaption>Plan B: Tischler.</figcaption></figure></li>
+      </ul>
     </div>
   </section>
 
@@ -609,7 +613,7 @@ details[open] .plus::after { transform: rotate(0deg); }
       <a class="link" href="impressum.html">Impressum</a>
       <a class="link" href="datenschutz.html">Datenschutz</a>
     </nav>
-    <p class="credits" id="bildnachweis">Bilder über <a class="link" href="https://commons.wikimedia.org">Wikimedia Commons</a>, zugeschnitten und verkleinert: Wirbel, Kupferstich von A. Bell, 1798, Wellcome Collection (CC BY 4.0); Burgstraße Kiel 2017 (CC BY-SA 4.0); Burgstraße 1966, Friedrich Magnussen, Stadtarchiv Kiel (CC BY-SA 3.0 DE); Alter Markt Kiel (CC BY-SA 4.0); Kieler Schloss (CC BY-SA 2.0); Wintermorgen am Eingang zur Kieler Förde, Dan Kollmann (CC BY-SA 4.0); Panorama von Kiel, 1902 (gemeinfrei); Kühlungsborn Strand, Lukas Beck (CC BY 4.0).</p>
+    <p class="credits" id="bildnachweis">Bilder über <a class="link" href="https://commons.wikimedia.org">Wikimedia Commons</a>, zugeschnitten und verkleinert: Wirbel, Kupferstich von A. Bell, 1798, Wellcome Collection (CC BY 4.0); Burgstraße Kiel 2017 (CC BY-SA 4.0); Burgstraße 1966, Friedrich Magnussen, Stadtarchiv Kiel (CC BY-SA 3.0 DE); Alter Markt Kiel (CC BY-SA 4.0); Kieler Schloss (CC BY-SA 2.0); Wintermorgen am Eingang zur Kieler Förde, Dan Kollmann (CC BY-SA 4.0); Panorama von Kiel, 1902 (gemeinfrei); Kühlungsborn Strand, Lukas Beck (CC BY 4.0). Über <a class="link" href="https://unsplash.com">Unsplash</a>: VW-Bus, Hasse Lossius; Toskana, Kristof Van Rentergem; Hobelspäne, Clem Onojeghuo.</p>
     <p class="end">Kiel, 2026</p>
   </div>
 </footer>
