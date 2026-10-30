@@ -247,6 +247,11 @@ details[open] .plus::after { transform: rotate(0deg); }
 .consent { grid-column: span 2; display: flex; align-items: flex-start; gap: 14px; padding: 16px 4px; color: #eef2f0; font-size: var(--step-small); line-height: 1.4; cursor: pointer; }
 .consent input { flex: none; width: 22px; height: 22px; margin-top: 1px; accent-color: var(--mint); cursor: pointer; }
 .consent a { color: var(--paper); }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.form-status { grid-column: 1 / -1; color: var(--paper); font-size: var(--step-lead); line-height: 1.3; }
+.form-status:empty { display: none; }
+.request.is-sent > :not(.form-status) { display: none; }
+.request .submit:disabled { opacity: 0.6; cursor: progress; }
 .submit { height: 96px; border-radius: var(--radius); background: var(--paper); color: var(--ink); font-weight: 560; font-stretch: var(--wide); font-size: var(--step-lead); letter-spacing: -0.02em; transition: background-color var(--t-hover) ease, transform var(--t-press) var(--ease-out); }
 .submit:hover { background: var(--mint); }
 .submit:active { transform: scale(0.98); }
@@ -548,7 +553,8 @@ details[open] .plus::after { transform: rotate(0deg); }
 
     <h2 id="contact-title" data-reveal>Gespräch anfragen</h2>
     <p class="lead-line" data-reveal style="--i:1">Schreiben Sie mir kurz, worum es geht. Ich melde mich persönlich bei Ihnen, und wir finden in Ruhe einen Termin.</p>
-    <form class="request" action="mailto:christoph.manicke@gmx.de" method="get" data-reveal style="--i:2">
+    <form class="request" action="send.php" method="post" data-reveal style="--i:2">
+      <p class="hp" aria-hidden="true"><label>Bitte leer lassen <input name="website" tabindex="-1" autocomplete="off"></label></p>
       <div class="cell">
         <label for="f-name">Ihr Name</label>
         <input id="f-name" name="name" type="text" autocomplete="name" placeholder="z.&nbsp;B. Anna Petersen…" required>
@@ -583,10 +589,11 @@ details[open] .plus::after { transform: rotate(0deg); }
       </div>
       <label class="consent"><input type="checkbox" name="einwilligung" required> <span>Ich bin einverstanden, dass meine Angaben zur Bearbeitung der Anfrage verwendet werden. Mehr in der <a class="link" href="datenschutz.html">Datenschutzerklärung</a>.</span></label>
       <button type="submit" class="submit">Anfrage senden</button>
+      <p class="form-status" role="status" aria-live="polite"></p>
     </form>
     <div class="fine small">
       <p>Bitte schreiben Sie keine Befunde oder Diagnosen in die Nachricht.</p>
-      <p>Beim Absenden öffnet sich Ihr E-Mail-Programm mit der fertigen Anfrage.</p>
+      <p>Ihre Anfrage geht verschlüsselt direkt an die Praxis.</p>
     </div>
   </section>
 </main>
@@ -1006,17 +1013,37 @@ const glider = (() => {
   apply();
 })();
 
-// The request: a ready-written e-mail from the visitor's choices.
+// The request: sent to send.php; where the server cannot take it, the visitor's own mail program takes over.
 (() => {
   const form = document.querySelector('.request');
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
+  const status = form.querySelector('.form-status');
+  const button = form.querySelector('.submit');
+  const viaMail = () => {
     const f = form.elements;
-    const name = f.name.value.trim();
-    const topic = f.anliegen.value;
     const note = f.nachricht.value.trim();
-    const body = `Guten Tag Herr Dr. Manicke,\n\nich bitte um ein Gespräch.\nMein Anliegen: ${topic}\nZeitraum: ${f.zeitraum.value}${note ? `\n\n${note}` : ''}\n\nSie erreichen mich unter ${f.email.value.trim()}.\n\nMit freundlichen Grüßen\n${name}`;
-    location.href = `mailto:christoph.manicke@gmx.de?subject=${encodeURIComponent('Terminanfrage: ' + topic)}&body=${encodeURIComponent(body)}`;
+    const body = `Guten Tag Herr Dr. Manicke,\n\nich bitte um ein Gespräch.\nMein Anliegen: ${f.anliegen.value}\nZeitraum: ${f.zeitraum.value}${note ? `\n\n${note}` : ''}\n\nSie erreichen mich unter ${f.email.value.trim()}.\n\nMit freundlichen Grüßen\n${f.name.value.trim()}`;
+    location.href = `mailto:christoph.manicke@gmx.de?subject=${encodeURIComponent('Anfrage: ' + f.anliegen.value)}&body=${encodeURIComponent(body)}`;
+  };
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    button.disabled = true;
+    status.textContent = '';
+    try {
+      const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+      const data = await res.json().catch(() => null);
+      if (!data) throw new Error('no endpoint');
+      if (data.ok) {
+        status.textContent = 'Danke, Ihre Anfrage ist angekommen. Ich melde mich persönlich bei Ihnen.';
+        form.classList.add('is-sent');
+        form.reset();
+      } else {
+        status.textContent = data.error || 'Das hat nicht geklappt. Bitte versuchen Sie es noch einmal.';
+      }
+    } catch {
+      viaMail();
+    } finally {
+      button.disabled = false;
+    }
   });
 })();
 </script>
