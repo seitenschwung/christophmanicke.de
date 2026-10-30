@@ -138,6 +138,23 @@ p { max-width: 62ch; text-wrap: pretty; }
   .hero-spine-h.spine-live .v { translate: 0 calc(var(--i, 0) * -10px); }
 }
 .hero-spine .seg:focus-visible .v, .hero-spine-h .seg:focus-visible .v { stroke: var(--ink); stroke-width: 4px; paint-order: stroke; }
+/* a click on a vertebra picks it and opens a small card about it */
+.hero-spine .v.is-picked, .hero-spine-h .v.is-picked { fill: var(--mint); stroke: var(--teal); stroke-width: 3px; paint-order: stroke; }
+.spine-hint { display: none; margin-top: 20px; font-size: var(--step-small); color: var(--sage); }
+.js .spine-hint { display: block; }
+.vcard { position: absolute; z-index: 3; width: min(22rem, calc(100% - 2 * var(--margin))); padding: 22px 24px 18px; border-radius: var(--radius); background: var(--teal); color: var(--paper); box-shadow: 0 28px 56px -24px rgba(0, 59, 57, 0.5); outline: none; }
+.vcard[hidden] { display: none; }
+.vcard-kicker { font-size: var(--step-small); opacity: 0.72; padding-right: 36px; }
+.vcard-name { margin-top: 6px; font-size: clamp(1.5rem, 1.2rem + 0.8vw, 1.875rem); line-height: 1.05; font-weight: 600; font-stretch: var(--wide); letter-spacing: -0.03em; }
+.vcard-fact { margin-top: 12px; font-size: 1rem; line-height: 1.45; }
+.vcard-foot { margin-top: 18px; display: flex; align-items: center; gap: 8px; }
+.vcard-foot .link { margin-left: auto; font-size: var(--step-small); font-weight: 560; text-decoration-color: currentColor; }
+.vcard-step, .vcard-close { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; transition: background-color var(--t-hover) ease, transform var(--t-press) var(--ease-out); }
+.vcard-step { box-shadow: inset 0 0 0 1px rgba(247, 247, 245, 0.3); }
+.vcard-step:hover, .vcard-close:hover { background: rgba(247, 247, 245, 0.12); }
+.vcard-step:active, .vcard-close:active { transform: scale(0.94); }
+.vcard-step svg, .vcard-close svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.vcard-close { position: absolute; top: 10px; right: 10px; }
 
 /* ---------- intro: one statement on sand ---------- */
 .intro { position: relative; z-index: 1; border-radius: 0 0 var(--vert-r) var(--vert-r); background: var(--teal); color: var(--paper); min-height: 90svh; padding: clamp(6rem, 12vw, 10rem) var(--margin); }
@@ -222,6 +239,14 @@ details[open] .plus::after { transform: rotate(0deg); }
 .cell:has(:focus-visible) { outline: 2px solid var(--paper); outline-offset: 3px; }
 .cell .chev { position: absolute; right: 28px; top: 50%; width: 10px; height: 10px; border-right: 3px solid currentColor; border-bottom: 3px solid currentColor; rotate: 45deg; translate: 0 -40%; pointer-events: none; }
 .cell select option { color: var(--ink); background: var(--paper); }
+.cell.msg { grid-column: span 2; }
+.cell textarea { position: absolute; inset: 0; width: 100%; height: 100%; padding: 40px 24px 12px; border: 0; border-radius: var(--radius); background: transparent; font: inherit; font-size: var(--step-body); line-height: 1.35; color: inherit; outline: none; resize: none; }
+.cell textarea::placeholder { color: #dde4e1; }
+.cell:focus-within textarea::placeholder { color: #5f6562; }
+.cell .opt { font-weight: 400; opacity: 0.8; }
+.consent { grid-column: span 2; display: flex; align-items: flex-start; gap: 14px; padding: 16px 4px; color: #eef2f0; font-size: var(--step-small); line-height: 1.4; cursor: pointer; }
+.consent input { flex: none; width: 22px; height: 22px; margin-top: 1px; accent-color: var(--mint); cursor: pointer; }
+.consent a { color: var(--paper); }
 .submit { height: 96px; border-radius: var(--radius); background: var(--paper); color: var(--ink); font-weight: 560; font-stretch: var(--wide); font-size: var(--step-lead); letter-spacing: -0.02em; transition: background-color var(--t-hover) ease, transform var(--t-press) var(--ease-out); }
 .submit:hover { background: var(--mint); }
 .submit:active { transform: scale(0.98); }
@@ -259,7 +284,7 @@ details[open] .plus::after { transform: rotate(0deg); }
   .intro .quote { grid-column: 1 / 13; grid-row: 3; margin-top: 48px; max-width: 52ch; }
   .chip { display: none; }
   .request { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .request .submit { grid-column: 1 / -1; }
+  .request .submit, .consent { grid-column: 1 / -1; }
 }
 
 /* ---------- phone ---------- */
@@ -285,6 +310,8 @@ details[open] .plus::after { transform: rotate(0deg); }
   .sp-actions .pill { flex: 1 1 100%; }
   .hero-spine { display: none; }
   .hero-spine-h { display: block; width: 100%; height: auto; margin-top: auto; padding-top: 32px; }
+  /* the spine lies down here, so its arrows point sideways */
+  .vcard-step svg { rotate: -90deg; }
 
   .intro { min-height: 0; padding-block: 88px; }
   .intro h2 { font-size: 8.4vw; }
@@ -316,6 +343,7 @@ details[open] .plus::after { transform: rotate(0deg); }
   .strip-row { flex-wrap: wrap; }
   .contact h2 { margin-top: 48px; }
   .request { grid-template-columns: minmax(0, 1fr); }
+  .cell.msg { grid-column: auto; }
   .cell, .submit { height: 72px; }
   .cell input, .cell select { padding-top: 30px; }
   .cell label { top: 12px; }
@@ -346,7 +374,11 @@ details[open] .plus::after { transform: rotate(0deg); }
   .js .sp-hero h1 .line > span { animation: from-below 1000ms var(--ease-out) both paused; animation-delay: calc(var(--l) * 140ms + 200ms); }
   .js .sp-hero [data-rise] { opacity: 0; transform: translateY(18px); animation: rise 900ms var(--ease-out) forwards paused; animation-delay: calc(var(--i, 0) * 140ms + 420ms); }
   .js .split.is-open .hero-spine .v, .js .split.is-open .sp-hero h1 .line > span, .js .split.is-open .sp-hero [data-rise] { animation-play-state: running; }
+  .vcard.is-new { animation: card-in 380ms var(--ease-out); }
+  .vcard-fact.is-new { animation: rise-in 320ms var(--ease-out); }
 }
+@keyframes card-in { from { opacity: 0; transform: translateY(10px) scale(0.97); } }
+@keyframes rise-in { from { opacity: 0; transform: translateY(6px); } }
 @keyframes build { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: none; } }
 @keyframes rise { to { opacity: 1; transform: none; } }
 @keyframes from-below { from { transform: translateY(105%); } }
@@ -362,12 +394,11 @@ details[open] .plus::after { transform: rotate(0deg); }
   <nav aria-label="Hauptnavigation">
     <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="nav-links">Menü</button>
     <div class="nav-links" id="nav-links">
-      <a href="#leistungen">Leistungen</a>
-      <a class="hide-mid" href="#praxis">Praxis</a>
-      <a href="#fragen">Fragen</a>
-      <a class="hide-mid" href="#kontakt">Kontakt</a>
+      <a href="#ueber-mich">Über mich</a>
+      <a href="#angebot">Angebot</a>
+      <a href="#kontakt">Kontakt</a>
     </div>
-    <a class="pill dark" href="tel:+491726347706">Anrufen</a>
+    <a class="pill dark" href="#kontakt">Anfragen</a>
   </nav>
 </header>
 
@@ -378,9 +409,21 @@ details[open] .plus::after { transform: rotate(0deg); }
         <svg class="hero-spine" viewBox="0 0 380 1351" role="group" aria-label="Wirbelsäule: Abschnitt wählen"><a class="seg" href="#kontakt" data-region="hws" aria-label="Halswirbelsäule: Termin anfragen"><rect class="hit" x="128.9" y="1.5" width="176.1" height="273.0"/><rect class="v" style="--n:0" x="168.9" y="6.0" width="72.0" height="30" rx="10.2"/><rect class="v" style="--n:1" x="173.6" y="45.0" width="73.7" height="30" rx="10.2"/><rect class="v" style="--n:2" x="177.6" y="84.0" width="75.3" height="30" rx="10.2"/><rect class="v" style="--n:3" x="180.6" y="123.0" width="77.0" height="30" rx="10.2"/><rect class="v" style="--n:4" x="182.6" y="162.0" width="78.7" height="30" rx="10.2"/><rect class="v" style="--n:5" x="183.4" y="201.0" width="80.3" height="30" rx="10.2"/><rect class="v" style="--n:6" x="183.0" y="240.0" width="82.0" height="30" rx="10.2"/></a><a class="seg" href="#kontakt" data-region="bws" aria-label="Brustwirbelsäule: Termin anfragen"><rect class="hit" x="55.1" y="274.5" width="251.9" height="588.0"/><rect class="v" style="--n:7" x="179.0" y="279.0" width="88.0" height="40" rx="13.6"/><rect class="v" style="--n:8" x="174.4" y="328.0" width="91.3" height="40" rx="13.6"/><rect class="v" style="--n:9" x="168.1" y="377.0" width="94.5" height="40" rx="13.6"/><rect class="v" style="--n:10" x="160.4" y="426.0" width="97.8" height="40" rx="13.6"/><rect class="v" style="--n:11" x="151.5" y="475.0" width="101.1" height="40" rx="13.6"/><rect class="v" style="--n:12" x="142.0" y="524.0" width="104.4" height="40" rx="13.6"/><rect class="v" style="--n:13" x="132.2" y="573.0" width="107.6" height="40" rx="13.6"/><rect class="v" style="--n:14" x="122.6" y="622.0" width="110.9" height="40" rx="13.6"/><rect class="v" style="--n:15" x="113.8" y="671.0" width="114.2" height="40" rx="13.6"/><rect class="v" style="--n:16" x="106.0" y="720.0" width="117.5" height="40" rx="13.6"/><rect class="v" style="--n:17" x="99.7" y="769.0" width="120.7" height="40" rx="13.6"/><rect class="v" style="--n:18" x="95.1" y="818.0" width="124.0" height="40" rx="13.6"/></a><a class="seg" href="#kontakt" data-region="lws" aria-label="Lendenwirbelsäule: Termin anfragen"><rect class="hit" x="44.0" y="862.5" width="263.0" height="325.0"/><rect class="v" style="--n:19" x="86.0" y="867.0" width="140.0" height="56" rx="19.0"/><rect class="v" style="--n:20" x="84.0" y="932.0" width="148.0" height="56" rx="19.0"/><rect class="v" style="--n:21" x="85.3" y="997.0" width="156.0" height="56" rx="19.0"/><rect class="v" style="--n:22" x="89.2" y="1062.0" width="164.0" height="56" rx="19.0"/><rect class="v" style="--n:23" x="95.0" y="1127.0" width="172.0" height="56" rx="19.0"/></a><a class="seg" href="#kontakt" data-region="isg" aria-label="Kreuzbein und Becken: Termin anfragen"><rect class="hit" x="75.7" y="1187.5" width="230.0" height="159.0"/><rect class="v" style="--n:24" x="115.7" y="1192.0" width="150.0" height="44" rx="15.0"/><rect class="v" style="--n:25" x="144.4" y="1245.0" width="110.0" height="44" rx="15.0"/><rect class="v" style="--n:26" x="172.5" y="1298.0" width="70.0" height="44" rx="15.0"/></a></svg><svg class="hero-spine-h" viewBox="0 0 1351 380" role="group" aria-label="Wirbelsäule: Abschnitt wählen"><a class="seg" href="#kontakt" data-region="hws" aria-label="Halswirbelsäule: Termin anfragen"><rect class="hit" x="1.5" y="128.9" width="273.0" height="176.1"/><rect class="v" style="--n:0" x="6.0" y="168.9" width="30" height="72.0" rx="10.2"/><rect class="v" style="--n:1" x="45.0" y="173.6" width="30" height="73.7" rx="10.2"/><rect class="v" style="--n:2" x="84.0" y="177.6" width="30" height="75.3" rx="10.2"/><rect class="v" style="--n:3" x="123.0" y="180.6" width="30" height="77.0" rx="10.2"/><rect class="v" style="--n:4" x="162.0" y="182.6" width="30" height="78.7" rx="10.2"/><rect class="v" style="--n:5" x="201.0" y="183.4" width="30" height="80.3" rx="10.2"/><rect class="v" style="--n:6" x="240.0" y="183.0" width="30" height="82.0" rx="10.2"/></a><a class="seg" href="#kontakt" data-region="bws" aria-label="Brustwirbelsäule: Termin anfragen"><rect class="hit" x="274.5" y="55.1" width="588.0" height="251.9"/><rect class="v" style="--n:7" x="279.0" y="179.0" width="40" height="88.0" rx="13.6"/><rect class="v" style="--n:8" x="328.0" y="174.4" width="40" height="91.3" rx="13.6"/><rect class="v" style="--n:9" x="377.0" y="168.1" width="40" height="94.5" rx="13.6"/><rect class="v" style="--n:10" x="426.0" y="160.4" width="40" height="97.8" rx="13.6"/><rect class="v" style="--n:11" x="475.0" y="151.5" width="40" height="101.1" rx="13.6"/><rect class="v" style="--n:12" x="524.0" y="142.0" width="40" height="104.4" rx="13.6"/><rect class="v" style="--n:13" x="573.0" y="132.2" width="40" height="107.6" rx="13.6"/><rect class="v" style="--n:14" x="622.0" y="122.6" width="40" height="110.9" rx="13.6"/><rect class="v" style="--n:15" x="671.0" y="113.8" width="40" height="114.2" rx="13.6"/><rect class="v" style="--n:16" x="720.0" y="106.0" width="40" height="117.5" rx="13.6"/><rect class="v" style="--n:17" x="769.0" y="99.7" width="40" height="120.7" rx="13.6"/><rect class="v" style="--n:18" x="818.0" y="95.1" width="40" height="124.0" rx="13.6"/></a><a class="seg" href="#kontakt" data-region="lws" aria-label="Lendenwirbelsäule: Termin anfragen"><rect class="hit" x="862.5" y="44.0" width="325.0" height="263.0"/><rect class="v" style="--n:19" x="867.0" y="86.0" width="56" height="140.0" rx="19.0"/><rect class="v" style="--n:20" x="932.0" y="84.0" width="56" height="148.0" rx="19.0"/><rect class="v" style="--n:21" x="997.0" y="85.3" width="56" height="156.0" rx="19.0"/><rect class="v" style="--n:22" x="1062.0" y="89.2" width="56" height="164.0" rx="19.0"/><rect class="v" style="--n:23" x="1127.0" y="95.0" width="56" height="172.0" rx="19.0"/></a><a class="seg" href="#kontakt" data-region="isg" aria-label="Kreuzbein und Becken: Termin anfragen"><rect class="hit" x="1187.5" y="75.7" width="159.0" height="230.0"/><rect class="v" style="--n:24" x="1192.0" y="115.7" width="44" height="150.0" rx="15.0"/><rect class="v" style="--n:25" x="1245.0" y="144.4" width="44" height="110.0" rx="15.0"/><rect class="v" style="--n:26" x="1298.0" y="172.5" width="44" height="70.0" rx="15.0"/></a></svg>
         <div class="sp-copy">
           <h1 id="title"><span class="sr-only">Zweite Meinung zur Wirbelsäule: </span><span class="line"><span style="--l:0">Alles in</span></span> <span class="line"><span style="--l:1">Ruhe.</span></span></h1>
-          <p class="sp-lede" data-rise style="--i:1">Vom Nacken bis zum Becken: Ich prüfe Ihre Befunde und sage Ihnen, ob eine Operation wirklich nötig ist.</p>
+          <p class="sp-lede" data-rise style="--i:1">Zweite Meinung vom Nacken bis zum Becken.</p>
           <div class="sp-actions" data-rise style="--i:2">
-            <a class="pill" href="tel:+491726347706">Termin vereinbaren: 0172&nbsp;6347706</a>
+            <a class="pill" href="#kontakt">Gespräch anfragen</a>
+          </div>
+          <p class="spine-hint" data-rise style="--i:3">Tippen Sie auf einen Wirbel: Jeder hat seine eigene Geschichte.</p>
+        </div>
+        <div class="vcard" role="dialog" aria-labelledby="vcard-name" tabindex="-1" hidden>
+          <button type="button" class="vcard-close" aria-label="Schließen"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13"/></svg></button>
+          <p class="vcard-kicker"></p>
+          <p class="vcard-name" id="vcard-name"></p>
+          <p class="vcard-fact" aria-live="polite"></p>
+          <div class="vcard-foot">
+            <button type="button" class="vcard-step" aria-label="Wirbel darüber"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 10l5-5 5 5"/></svg></button>
+            <button type="button" class="vcard-step" aria-label="Wirbel darunter"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 6l5 5 5-5"/></svg></button>
+            <a class="link" href="#kontakt">Termin anfragen</a>
           </div>
         </div>
       </div>
@@ -390,24 +433,25 @@ details[open] .plus::after { transform: rotate(0deg); }
         <div class="door door-bottom">
           <p class="door-line">Christoph Manicke.</p>
           <div class="door-lede">
-            <p data-rise style="--i:1">Neurochirurg in&nbsp;Kiel. Lassen Sie uns in Ruhe über Ihren Rücken sprechen: Ich schaue mir Ihre Befunde an und sage Ihnen ehrlich, ob eine Operation wirklich nötig ist.</p>
-            <a class="pill" data-rise style="--i:2" href="tel:+491726347706" tabindex="-1">Gespräch vereinbaren: 0172&nbsp;6347706</a>
+            <p data-rise style="--i:1">Neurochirurg in&nbsp;Kiel. Ich sage Ihnen ehrlich, ob eine Operation nötig ist.</p>
+            <a class="pill" data-rise style="--i:2" href="#kontakt" tabindex="-1">Gespräch anfragen</a>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="intro" data-bg="#003b39" data-ink="#f7f7f5" aria-labelledby="intro-title">
+  <section class="intro" id="ueber-mich" data-bg="#003b39" data-ink="#f7f7f5" aria-labelledby="intro-title">
     <div class="grid">
-      <h2 id="intro-title" data-reveal><span class="line-b">Erst verstehen,</span> <span class="line-b">dann entscheiden.</span></h2>
+      <h2 id="intro-title" data-reveal><span class="line-b">Zweimal messen,</span> <span class="line-b">einmal schneiden.</span></h2>
       <figure class="chip" data-reveal style="--i:2">
         <img src="assets/v2/portrait-manicke.webp" width="528" height="700" alt="Porträt von Dr. med. Christoph Manicke" loading="lazy">
       </figure>
-      <p class="statement" data-reveal style="--i:1">Eine Operation an der Wirbelsäule lässt sich nicht zurücknehmen. Bevor Sie zustimmen, sollten Sie wissen, was sie leisten kann und welche Wege es sonst gibt.</p>
+      <p class="statement" data-reveal style="--i:1">Wäre ich nicht Neurochirurg geworden, stünde ich heute in einer Tischlerei. Die Haltung ist dieselbe: erst genau hinsehen, dann entscheiden. An der Wirbelsäule zählt das besonders, denn eine Operation lässt sich nicht zurücknehmen.</p>
       <blockquote class="quote" data-reveal style="--i:3">
-        <p>„Ich berate Sie zu allen Erkrankungen auf dem neurochirurgischen Fachgebiet mit dem Schwerpunkt Wirbelsäulenerkrankungen.</p>
-        <p>Sie werden ausführlich über das konservative und operative Behandlungsspektrum informiert.“</p>
+        <!-- TODO Manicke: VW-Bus- und Studien-Anekdote im Wortlaut bestätigen -->
+        <p>„Als die Zusage für das Medizinstudium kam, war ich mit einem kleinen VW-Bus schon auf dem Weg nach Italien. Fast wäre mein Leben ganz anders verlaufen.</p>
+        <p>Zur Wirbelsäule kam ich dann fast zufällig: Im Studium waren ein Freund und ich die Einzigen, die sich dafür interessiert haben.“</p>
         <cite>Dr. med. Christoph Manicke</cite>
       </blockquote>
     </div>
@@ -415,7 +459,7 @@ details[open] .plus::after { transform: rotate(0deg); }
 
   <div class="cartilage" data-bg="#f7f7f5" data-ink="#1b1b1b" aria-hidden="true"></div>
 
-  <section class="deal" id="leistungen" data-bg="#003b39" data-ink="#f7f7f5" aria-labelledby="deal-title">
+  <section class="deal" id="angebot" data-bg="#003b39" data-ink="#f7f7f5" aria-labelledby="deal-title">
     <div class="deal-stage">
       <div class="deal-head">
         <h2 id="deal-title" data-reveal>Wobei ich berate</h2>
@@ -424,17 +468,17 @@ details[open] .plus::after { transform: rotate(0deg); }
       <div class="fan">
         <article class="card" style="--k:0; --r:-3deg; --c:#f7f7f5">
           <h3>Zweitmeinung vor der OP</h3>
-          <figure><img src="assets/v2/mri-stir.webp" width="600" height="771" alt="MRT der Lendenwirbelsäule, STIR-Sequenz" loading="lazy"></figure>
-          <p>Ihnen wurde eine Operation empfohlen? Sie erhalten eine unabhängige Einschätzung, bevor Sie entscheiden.</p>
+          <figure><img src="assets/vertebrae-thirteen-figures-line-engraving-by-a-800.webp" width="800" height="600" alt="Kupferstich von Wirbeln, Andrew Bell, 1798" loading="lazy"></figure>
+          <p>Ihnen wurde eine Operation empfohlen? Ich sage Ihnen ehrlich, ob sie nötig ist, auch wenn die Antwort Nein lautet.</p>
         </article>
         <article class="card" style="--k:1; --r:2deg; --c:#c0e2bf">
           <h3>Nach einer Operation</h3>
-          <figure><img src="assets/v2/mri-t1.webp" width="600" height="771" alt="MRT der Lendenwirbelsäule, T1-gewichtet" loading="lazy"></figure>
+          <figure><img src="assets/wintermorgen-am-eingang-zur-kieler-forde-1200.webp" width="1200" height="800" alt="Kieler Förde an einem Wintermorgen" loading="lazy"></figure>
           <p>Auch nach einer bereits durchgeführten Operation ist eine Beratung möglich.</p>
         </article>
         <article class="card" style="--k:2; --r:-2deg; --c:#ebe9e5">
           <h3>Konservativ oder operativ</h3>
-          <figure><img src="assets/v2/disc-herniation.webp" width="600" height="886" alt="MRT mit einem Bandscheibenvorfall zwischen dem vierten und fünften Lendenwirbel" loading="lazy"></figure>
+          <figure><img src="assets/v2/alter-markt-kiel-01.webp" width="800" height="600" alt="Alter Markt in Kiel" loading="lazy"></figure>
           <p>Sie lernen das ganze Behandlungsspektrum kennen, nicht nur den Eingriff.</p>
         </article>
         <article class="card" style="--k:3; --r:3deg; --c:#5d6c67; --ci:#f7f7f5">
@@ -451,15 +495,20 @@ details[open] .plus::after { transform: rotate(0deg); }
       <h2 id="practice-title" data-reveal>Zeit für Ihre Fragen</h2>
       <div class="texts">
         <div data-reveal style="--i:1">
-          <h3>Die Praxis</h3>
-          <p>Burgstraße&nbsp;2 in der Kieler Innenstadt, zwischen Altem Markt und Schloss. Die Praxis liegt im 4.&nbsp;Stock und ist mit dem Aufzug erreichbar.</p>
+          <h3>Ausführlich</h3>
+          <p>Wir nehmen uns die Zeit, die Ihre Fragen brauchen. Niemand drängt Sie zu einer Entscheidung.</p>
         </div>
         <div data-reveal style="--i:2">
-          <h3>Der Arzt</h3>
-          <p>Dr. med. Christoph Manicke ist Neurochirurg mit dem Schwerpunkt Wirbelsäulenerkrankungen.</p>
-          <p class="strong">„Liebe Patientin, lieber Patient, ich freue mich, Sie in meiner Praxis in Kiel begrüßen zu dürfen!“</p>
+          <h3>Verständlich</h3>
+          <p>Ich erkläre Ihre Bilder und Befunde so, dass Sie sie verstehen, und zeige Ihnen alle Wege, nicht nur den Eingriff.</p>
         </div>
-        <a class="pill" data-reveal style="--i:3" href="tel:+491726347706">Termin vereinbaren</a>
+        <div data-reveal style="--i:3">
+          <h3>Menschlich</h3>
+          <p>Es geht um Sie und Ihren Alltag, nicht nur um Ihr MRT.</p>
+          <!-- TODO Manicke: Originalsatz zur Selbstständigkeit einsetzen -->
+          <p class="strong">„Sie entscheiden. Ich gebe Ihnen die Orientierung dafür.“</p>
+        </div>
+        <a class="pill" data-reveal style="--i:4" href="#kontakt">Gespräch anfragen</a>
       </div>
       <figure class="disc" data-reveal style="--i:2"><img src="assets/v2/portrait-manicke.webp" width="528" height="700" alt="Porträt von Dr. med. Christoph Manicke" loading="lazy"></figure>
     </div>
@@ -470,13 +519,13 @@ details[open] .plus::after { transform: rotate(0deg); }
       <h2 id="faq-title" data-reveal>Häufige Fragen</h2>
       <div class="list">
         <details name="faq" data-reveal style="--i:1"><summary>Wer kann in die Sprechstunde kommen?<span class="plus" aria-hidden="true"></span></summary><p class="answer">Die Praxis ist eine Privatpraxis für privat Versicherte und Selbstzahler. Gesetzlich Versicherte können als Selbstzahler kommen.</p></details>
-        <details name="faq" data-reveal style="--i:2"><summary>Wie bekomme ich einen Termin?<span class="plus" aria-hidden="true"></span></summary><p class="answer">Termine gibt es nach Vereinbarung, telefonisch unter 0172&nbsp;6347706 oder per E-Mail an christoph.manicke@gmx.de. Eine Online-Buchung gibt es nicht.</p></details>
+        <details name="faq" data-reveal style="--i:2"><summary>Wie bekomme ich einen Termin?<span class="plus" aria-hidden="true"></span></summary><p class="answer">Schreiben Sie mir über das Anfrageformular. Ich melde mich persönlich bei Ihnen, und wir finden in Ruhe einen Termin.</p></details>
         <details name="faq" data-reveal style="--i:3"><summary>Was kostet eine Zweitmeinung?<span class="plus" aria-hidden="true"></span></summary><p class="answer">Abgerechnet wird nach der Gebührenordnung für Ärzte (GOÄ). Ob Ihre Versicherung die Kosten übernimmt, klären Sie am besten vorher mit ihr.</p></details>
         <details name="faq" data-reveal style="--i:4"><summary>Was soll ich mitbringen?<span class="plus" aria-hidden="true"></span></summary><p class="answer">Ihre aktuellen MRT- oder CT-Bilder auf CD oder als Link, Arztbriefe und Befunde, die schriftliche OP-Empfehlung, falls es eine gibt, und eine Liste Ihrer Medikamente.</p></details>
         <details name="faq" data-reveal style="--i:5"><summary>Ich bin schon operiert. Kann ich trotzdem kommen?<span class="plus" aria-hidden="true"></span></summary><p class="answer">Ja. Auch nach einer bereits durchgeführten Operation ist eine Beratung möglich, etwa wenn Beschwerden geblieben oder neu aufgetreten sind.</p></details>
         <details name="faq" data-reveal style="--i:6"><summary>Was unterscheidet Neurochirurgie von Orthopädie?<span class="plus" aria-hidden="true"></span></summary><p class="answer">Beide behandeln die Wirbelsäule. Die Neurochirurgie kommt vom Nervensystem her: Sie ist dort gefragt, wo Nervenwurzeln oder Rückenmark bedrängt werden.</p></details>
         <details name="faq" data-reveal style="--i:7"><summary>Ist die Praxis barrierefrei erreichbar?<span class="plus" aria-hidden="true"></span></summary><p class="answer">Die Praxis liegt im 4.&nbsp;Stock der Burgstraße&nbsp;2 und ist mit einem Aufzug erreichbar.</p></details>
-        <details name="faq" data-reveal style="--i:8"><summary>Kann ich Befunde vorab per E-Mail schicken?<span class="plus" aria-hidden="true"></span></summary><p class="answer">Bitte senden Sie Gesundheitsdaten nicht unverschlüsselt per E-Mail. Sprechen Sie am Telefon ab, wie Ihre Unterlagen am besten zur Praxis kommen.</p></details>
+        <details name="faq" data-reveal style="--i:8"><summary>Kann ich Befunde vorab per E-Mail schicken?<span class="plus" aria-hidden="true"></span></summary><p class="answer">Bitte senden Sie Gesundheitsdaten nicht unverschlüsselt per E-Mail. Schreiben Sie in Ihrer Anfrage, dass Sie Unterlagen haben. Ich melde mich mit einem sicheren Weg.</p></details>
       </div>
     </div>
   </section>
@@ -484,13 +533,11 @@ details[open] .plus::after { transform: rotate(0deg); }
   <section class="contact" id="kontakt" data-bg="#5d6c67" data-ink="#f7f7f5" aria-labelledby="contact-title">
     <div class="strip">
       <figure class="w32"><img src="assets/v2/burgstra-e-kiel-2017-01-strip.webp" width="396" height="300" alt="Burgstraße in Kiel, 2017" loading="lazy"></figure>
-      <figure class="w34"><img src="assets/v2/mri-stir.webp" width="600" height="771" alt="MRT der Lendenwirbelsäule" loading="lazy"></figure>
       <figure class="w32"><img src="assets/v2/alter-markt-kiel-01-strip.webp" width="400" height="300" alt="Alter Markt in Kiel" loading="lazy"></figure>
       <figure class="w11"><img src="assets/v2/burgstrasse-1966-strip.webp" width="453" height="300" alt="Burgstraße in Kiel, 1966" loading="lazy"></figure>
       <figure class="w32"><video muted loop playsinline preload="none" poster="assets/v2/ostsee-strip.webp" width="533" height="300" aria-hidden="true"><source src="assets/kuhlungsborn-strand-lub-2025-02-14.webm" type="video/webm"><source src="assets/kuhlungsborn-strand-lub-2025-02-14.mp4" type="video/mp4"></video></figure>
       <figure class="w34"><img src="assets/v2/kieler-schloss-01-16505090827-strip.webp" width="450" height="300" alt="Kieler Schloss" loading="lazy"></figure>
       <figure class="w32"><img src="assets/v2/forde-strip.webp" width="450" height="300" alt="Kieler Förde an einem Wintermorgen" loading="lazy"></figure>
-      <figure class="w11"><img src="assets/v2/mri-t2-disc.webp" width="800" height="800" alt="Bandscheibe im MRT" loading="lazy"></figure>
       <figure class="w32"><img src="assets/v2/panorama-strip.webp" width="461" height="300" alt="Kiel auf einer Postkarte um 1902" loading="lazy"></figure>
       <figure class="w34"><img src="assets/v2/burgstra-e-kiel-2017-02-strip.webp" width="396" height="300" alt="Häuserzeile in der Burgstraße" loading="lazy"></figure>
     </div>
@@ -499,12 +546,16 @@ details[open] .plus::after { transform: rotate(0deg); }
       <button type="button" class="motion-toggle" aria-pressed="false" hidden>Bewegung anhalten</button>
     </div>
 
-    <h2 id="contact-title" data-reveal>Anfrage vorbereiten</h2>
-    <p class="lead-line" data-reveal style="--i:1">Wählen Sie Ihr Anliegen. Ihr E-Mail-Programm öffnet sich mit einer fertigen Nachricht, die Sie nur noch abschicken.</p>
+    <h2 id="contact-title" data-reveal>Gespräch anfragen</h2>
+    <p class="lead-line" data-reveal style="--i:1">Schreiben Sie mir kurz, worum es geht. Ich melde mich persönlich bei Ihnen, und wir finden in Ruhe einen Termin.</p>
     <form class="request" action="mailto:christoph.manicke@gmx.de" method="get" data-reveal style="--i:2">
       <div class="cell">
         <label for="f-name">Ihr Name</label>
         <input id="f-name" name="name" type="text" autocomplete="name" placeholder="z.&nbsp;B. Anna Petersen…" required>
+      </div>
+      <div class="cell">
+        <label for="f-mail">Ihre E-Mail</label>
+        <input id="f-mail" name="email" type="email" autocomplete="email" spellcheck="false" placeholder="anna@beispiel.de…" required>
       </div>
       <div class="cell">
         <label for="f-topic">Ihr Anliegen</label>
@@ -516,11 +567,26 @@ details[open] .plus::after { transform: rotate(0deg); }
         </select>
         <span class="chev" aria-hidden="true"></span>
       </div>
-      <button type="submit" class="submit">E-Mail öffnen</button>
+      <div class="cell">
+        <label for="f-when">Wann passt es Ihnen?</label>
+        <select id="f-when" name="zeitraum">
+          <option>So bald wie möglich</option>
+          <option>In den nächsten zwei Wochen</option>
+          <option>Im nächsten Monat</option>
+          <option>Ich bin flexibel</option>
+        </select>
+        <span class="chev" aria-hidden="true"></span>
+      </div>
+      <div class="cell msg">
+        <label for="f-msg">Ihre Nachricht <span class="opt">(freiwillig)</span></label>
+        <textarea id="f-msg" name="nachricht" rows="2" placeholder="Worum geht es, kurz in Ihren Worten…"></textarea>
+      </div>
+      <label class="consent"><input type="checkbox" name="einwilligung" required> <span>Ich bin einverstanden, dass meine Angaben zur Bearbeitung der Anfrage verwendet werden. Mehr in der <a class="link" href="datenschutz.html">Datenschutzerklärung</a>.</span></label>
+      <button type="submit" class="submit">Anfrage senden</button>
     </form>
     <div class="fine small">
-      <p>Bitte hängen Sie keine Befunde an.</p>
-      <p>Lieber sprechen? <a class="link" href="tel:+491726347706">0172&nbsp;6347706</a></p>
+      <p>Bitte schreiben Sie keine Befunde oder Diagnosen in die Nachricht.</p>
+      <p>Beim Absenden öffnet sich Ihr E-Mail-Programm mit der fertigen Anfrage.</p>
     </div>
   </section>
 </main>
@@ -532,9 +598,9 @@ details[open] .plus::after { transform: rotate(0deg); }
     <p>Sprechstunde<br>nach Vereinbarung</p>
     <a class="up link" href="#top">Nach oben</a>
   </div>
-  <h2 id="foot-title">Termin vereinbaren</h2>
+  <h2 id="foot-title">Gespräch anfragen</h2>
   <div>
-    <a class="call" href="tel:+491726347706">0172&nbsp;6347706</a>
+    <a class="call" href="#kontakt">Zur Anfrage</a>
     <a class="mail link" href="mailto:christoph.manicke@gmx.de">christoph.manicke@gmx.de</a>
   </div>
   <div class="foot-meta">
@@ -542,7 +608,7 @@ details[open] .plus::after { transform: rotate(0deg); }
       <a class="link" href="impressum.html">Impressum</a>
       <a class="link" href="datenschutz.html">Datenschutz</a>
     </nav>
-    <p class="credits" id="bildnachweis">Bilder über <a class="link" href="https://commons.wikimedia.org">Wikimedia Commons</a>, zugeschnitten und verkleinert: MRT-Aufnahmen der Lendenwirbelsäule (CC BY-SA 4.0) und Bandscheibenvorfall L4/L5 (gemeinfrei); Wirbel, Kupferstich von A. Bell, 1798, Wellcome Collection (CC BY 4.0); Burgstraße Kiel 2017 (CC BY-SA 4.0); Burgstraße 1966, Friedrich Magnussen, Stadtarchiv Kiel (CC BY-SA 3.0 DE); Alter Markt Kiel (CC BY-SA 4.0); Kieler Schloss (CC BY-SA 2.0); Wintermorgen am Eingang zur Kieler Förde, Dan Kollmann (CC BY-SA 4.0); Panorama von Kiel, 1902 (gemeinfrei); Kühlungsborn Strand, Lukas Beck (CC BY 4.0).</p>
+    <p class="credits" id="bildnachweis">Bilder über <a class="link" href="https://commons.wikimedia.org">Wikimedia Commons</a>, zugeschnitten und verkleinert: Wirbel, Kupferstich von A. Bell, 1798, Wellcome Collection (CC BY 4.0); Burgstraße Kiel 2017 (CC BY-SA 4.0); Burgstraße 1966, Friedrich Magnussen, Stadtarchiv Kiel (CC BY-SA 3.0 DE); Alter Markt Kiel (CC BY-SA 4.0); Kieler Schloss (CC BY-SA 2.0); Wintermorgen am Eingang zur Kieler Förde, Dan Kollmann (CC BY-SA 4.0); Panorama von Kiel, 1902 (gemeinfrei); Kühlungsborn Strand, Lukas Beck (CC BY 4.0).</p>
     <p class="end">Kiel, 2026</p>
   </div>
 </footer>
@@ -768,6 +834,114 @@ const glider = (() => {
   });
 })();
 
+// The spine: a click on a vertebra opens a card with a small fact about it; the arrows walk up and down.
+(() => {
+  const FACTS = [
+    ['C1 · Atlas', 'Benannt nach dem Titanen, der die Welt trägt. Er trägt Ihren Kopf, gut fünf Kilo, und hat als einziger Wirbel keinen Wirbelkörper.'],
+    ['C2 · Axis', 'Er hat einen Zahn, den Dens. Um ihn dreht sich der Atlas: Gut die Hälfte jedes Kopfschüttelns passiert genau hier.'],
+    ['C3', 'Maus, Mensch, Giraffe: Fast alle Säugetiere haben sieben Halswirbel. Bei der Giraffe ist nur jeder einzelne rund 25 Zentimeter lang.'],
+    ['C4', 'Durch kleine Löcher in den Halswirbeln laufen zwei Arterien hinauf zum Gehirn. Die Wirbelsäule ist also auch eine Leitung.'],
+    ['C5', 'Die Nerven, die hier austreten, heben Ihren Arm zur Seite. Aus einer schwachen Schulter lässt sich oft ablesen, welche Etage betroffen ist.'],
+    ['C6', 'An seinem Querfortsatz liegt ein kleiner Höcker, gegen den sich die Halsschlagader drücken lässt. Er heißt Tuberculum caroticum.'],
+    ['C7 · Vertebra prominens', 'Der Höcker, den Sie im Nacken fühlen, wenn Sie den Kopf senken. Von hier aus zählen Ärzte die Wirbel ab.'],
+    ['Th1', 'Hier setzt das erste Rippenpaar an. Zwölf Brustwirbel, zwölf Rippenpaare: Jeder Brustwirbel trägt seine eigenen.'],
+    ['Th2', 'Rippen und Brustbein machen die Brustwirbelsäule zum steifsten Abschnitt. Gut so: Sie schützt Herz und Lunge.'],
+    ['Th3', 'Lassen Sie die Arme hängen: Die Gräten Ihrer Schulterblätter liegen dann ungefähr auf Höhe dieses Wirbels.'],
+    ['Th4', 'Die Dornfortsätze der Brustwirbel zeigen steil nach unten und überlappen sich wie Dachziegel.'],
+    ['Th5', 'Neugeborene haben eine Wirbelsäule wie ein C. Die S-Form entsteht erst, wenn das Kind den Kopf hebt und laufen lernt.'],
+    ['Th6', 'Rund ein Viertel der Länge Ihrer Wirbelsäule ist gar kein Knochen, sondern Bandscheibe.'],
+    ['Th7', 'Morgens sind Sie ein bis zwei Zentimeter größer als abends. Tagsüber geben die Bandscheiben Wasser ab, nachts saugen sie sich wieder voll.'],
+    ['Th8', 'Astronauten wachsen in der Schwerelosigkeit um einige Zentimeter. Zurück auf der Erde schrumpfen sie wieder.'],
+    ['Th9', 'Das Rückenmark im Wirbelkanal ist nur etwa so dick wie ein kleiner Finger und rund 45 Zentimeter lang.'],
+    ['Th10', 'An der Wirbelsäule setzen mehr als hundert Muskeln an. Ein starker Rücken ist vor allem eine Frage dieser Muskeln.'],
+    ['Th11', 'Die Rippen der letzten beiden Brustwirbel enden frei, ohne Verbindung zum Brustbein. Man nennt sie fliegende Rippen.'],
+    ['Th12', 'Hier geht die starre Brust in die bewegliche Lende über. An diesem Übergang brechen Wirbel nach Stürzen am häufigsten.'],
+    ['L1', 'Etwa hier endet beim Erwachsenen das Rückenmark. Darunter ziehen die Nervenwurzeln als Bündel weiter: die Cauda equina, der Pferdeschwanz.'],
+    ['L2', 'Die Lendenwirbel sind die kräftigsten freien Wirbel. Sie tragen fast das ganze Gewicht des Oberkörpers.'],
+    ['L3', 'Vorgebeugt sitzen drückt stärker auf die Bandscheiben als aufrecht stehen. Im Liegen ist der Druck am geringsten.'],
+    ['L4', 'Die meisten Bandscheibenvorfälle der Lende liegen zwischen L4 und L5 oder zwischen L5 und dem Kreuzbein. Längst nicht jeder muss operiert werden.'],
+    ['L5', 'Der letzte Lendenwirbel ist vorn höher als hinten. Mit dieser Keilform macht er den Knick zum Kreuzbein mit.'],
+    ['Kreuzbein', 'Fünf Wirbel, die bis ins junge Erwachsenenalter zu einem Knochen verschmelzen. Lateinisch Os sacrum: der heilige Knochen.'],
+    ['Kreuzbein · ISG', 'Links und rechts ist das Kreuzbein mit dem Becken verbunden. Diese Gelenke bewegen sich nur wenige Millimeter und können trotzdem kräftig schmerzen.'],
+    ['Steißbein', 'Drei bis fünf kleine, verschmolzene Wirbel: der Rest eines Schwanzes. Beckenboden und Bänder halten sich daran fest.'],
+  ];
+  const region = (n) => n < 7 ? 'Halswirbelsäule' : n < 19 ? 'Brustwirbelsäule' : n < 24 ? 'Lendenwirbelsäule' : 'Kreuzbein und Becken';
+  const inner = document.querySelector('.sp-hero');
+  const card = inner.querySelector('.vcard');
+  const [kicker, name, fact] = ['.vcard-kicker', '.vcard-name', '.vcard-fact'].map((s) => card.querySelector(s));
+  const [up, down] = card.querySelectorAll('.vcard-step');
+  let sv = null, n = -1, from = null, y0 = 0;
+  const vert = (s, k) => s.querySelectorAll('.v')[k];
+
+  const show = (s, k) => {
+    const fresh = card.hidden;
+    if (sv) vert(sv, n).classList.remove('is-picked');
+    sv = s; n = (k + FACTS.length) % FACTS.length;
+    const v = vert(sv, n);
+    v.classList.add('is-picked');
+    kicker.textContent = `${region(n)} · ${n + 1} von ${FACTS.length}`;
+    [name.textContent, fact.textContent] = FACTS[n];
+    card.hidden = false;
+    card.classList.toggle('is-new', fresh);
+    fact.classList.remove('is-new'); void fact.offsetWidth; fact.classList.toggle('is-new', !fresh);
+    // beside the vertebra on the tall spine, above it on the lying one, always inside the hero
+    const box = inner.getBoundingClientRect(), r = v.getBoundingClientRect(), w = card.offsetWidth, h = card.offsetHeight, m = 16;
+    const lying = sv.classList.contains('hero-spine-h');
+    const x = lying ? r.left + r.width / 2 - w / 2 : r.left - w - 28;
+    const y = lying ? r.top - h - 14 : r.top + r.height / 2 - h / 2;
+    card.style.left = `${Math.min(Math.max(x - box.left, m), box.width - w - m)}px`;
+    card.style.top = `${Math.min(Math.max(y - box.top, parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--bar')) + m), box.height - h - m)}px`;
+    y0 = scrollY;
+  };
+  const hide = (refocus) => {
+    if (card.hidden) return;
+    card.hidden = true;
+    vert(sv, n).classList.remove('is-picked');
+    if (refocus && from) from.focus();
+    sv = null; n = -1;
+  };
+
+  document.querySelectorAll('.hero-spine, .hero-spine-h').forEach((s) => {
+    const verts = [...s.querySelectorAll('.v')];
+    s.setAttribute('aria-label', 'Wirbelsäule: Wirbel wählen');
+    s.querySelectorAll('.seg').forEach((seg) => {
+      seg.setAttribute('aria-label', seg.getAttribute('aria-label').replace('Termin anfragen', 'Wirbel entdecken'));
+      seg.setAttribute('aria-haspopup', 'dialog');
+      seg.addEventListener('click', (e) => {
+        e.preventDefault();
+        let k;
+        if (e.target.classList.contains('v')) k = verts.indexOf(e.target);
+        else if (e.detail === 0) k = verts.indexOf(seg.querySelector('.v')); // from the keyboard: the first of the section
+        else {
+          // between two vertebrae: the nearer one
+          let best = Infinity;
+          seg.querySelectorAll('.v').forEach((v) => {
+            const b = v.getBoundingClientRect(), d = Math.hypot(b.left + b.width / 2 - e.clientX, b.top + b.height / 2 - e.clientY);
+            if (d < best) { best = d; k = verts.indexOf(v); }
+          });
+        }
+        from = seg;
+        if (sv === s && n === k) return hide(false);
+        show(s, k);
+        if (e.detail === 0) card.focus();
+      });
+    });
+  });
+
+  up.addEventListener('click', () => show(sv, n - 1));
+  down.addEventListener('click', () => show(sv, n + 1));
+  card.querySelector('.vcard-close').addEventListener('click', () => hide(true));
+  addEventListener('keydown', (e) => {
+    if (card.hidden || !(card.contains(document.activeElement) || sv.contains(document.activeElement))) return;
+    if (e.key === 'Escape') hide(true);
+    else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') { e.preventDefault(); show(sv, n - 1); }
+    else if (e.key === 'ArrowDown' || e.key === 'ArrowRight') { e.preventDefault(); show(sv, n + 1); }
+  });
+  addEventListener('click', (e) => { if (!card.contains(e.target) && !e.target.closest('.seg')) hide(false); });
+  addEventListener('scroll', () => { if (Math.abs(scrollY - y0) > 60) hide(false); }, { passive: true });
+  addEventListener('resize', () => hide(false));
+})();
+
 // Phone menu.
 (() => {
   const bar = document.querySelector('.bar');
@@ -837,9 +1011,11 @@ const glider = (() => {
   const form = document.querySelector('.request');
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    const name = form.elements.name.value.trim();
-    const topic = form.elements.anliegen.value;
-    const body = `Guten Tag Herr Dr. Manicke,\n\nich bitte um einen Termin. Mein Anliegen: ${topic}.\n\nSie erreichen mich unter dieser Telefonnummer: \n\nMit freundlichen Grüßen\n${name}`;
+    const f = form.elements;
+    const name = f.name.value.trim();
+    const topic = f.anliegen.value;
+    const note = f.nachricht.value.trim();
+    const body = `Guten Tag Herr Dr. Manicke,\n\nich bitte um ein Gespräch.\nMein Anliegen: ${topic}\nZeitraum: ${f.zeitraum.value}${note ? `\n\n${note}` : ''}\n\nSie erreichen mich unter ${f.email.value.trim()}.\n\nMit freundlichen Grüßen\n${name}`;
     location.href = `mailto:christoph.manicke@gmx.de?subject=${encodeURIComponent('Terminanfrage: ' + topic)}&body=${encodeURIComponent(body)}`;
   });
 })();
