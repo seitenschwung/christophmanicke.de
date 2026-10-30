@@ -122,6 +122,7 @@ p { max-width: 62ch; text-wrap: pretty; }
 .js .sp-flood { display: block; position: absolute; inset: 0; z-index: 2; background: var(--navy); opacity: 0; pointer-events: none; }
 .split.is-zooming .spine-live .v { fill: var(--navy); translate: none; }
 .sp-copy { position: relative; z-index: 2; order: 1; max-width: min(58vw, 60rem); }
+.sp-face { width: clamp(88px, 9vw, 132px); aspect-ratio: 1; margin-bottom: clamp(20px, 3svh, 32px); border-radius: 50%; object-fit: cover; object-position: 50% 22%; background: #fff; border: 5px solid var(--sea); box-shadow: 0 18px 40px -18px rgba(16, 26, 53, 0.35); }
 .sp-hero h1 { font-size: var(--step-display); line-height: 0.95; font-weight: 600; letter-spacing: -0.045em; }
 .sp-hero h1 .line { display: block; overflow: hidden; padding-bottom: 0.12em; margin-bottom: -0.12em; }
 .sp-hero h1 .line > span { display: block; }
@@ -211,6 +212,7 @@ details[open] .plus::after { transform: rotate(0deg); }
 .faq .answer { padding: 0 28px 26px; max-width: calc(52ch + 56px); }
 
 /* ---------- Kontakt: the request on navy ---------- */
+.intro + .contact { box-shadow: inset 0 1px 0 rgba(247, 247, 245, 0.14); }
 .contact { background: var(--navy); color: var(--paper); padding: clamp(6rem, 11vw, 9rem) 0 clamp(5rem, 9vw, 8rem); overflow: clip; }
 /* the request: a light sheet on the navy, big labels above every field, every choice visible at once */
 .ask { margin: 0 var(--margin); display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(2rem, 5vw, 5rem); align-items: start; }
@@ -303,6 +305,7 @@ details[open] .plus::after { transform: rotate(0deg); }
   .door-lede .pill { width: 100%; }
   .sp-hero { --step-display: 10.6vw; padding-top: calc(var(--bar) + 28px); padding-bottom: 32px; }
   .sp-copy { max-width: none; }
+  .sp-face { width: 72px; border-width: 4px; margin-bottom: 16px; }
   .sp-lede { font-size: var(--step-body); margin-top: 20px; max-width: 26ch; }
   .sp-actions { margin-top: 24px; }
   .sp-actions .pill { flex: 1 1 100%; }
@@ -396,6 +399,7 @@ details[open] .plus::after { transform: rotate(0deg); }
       <div class="sp-hero">
         <svg class="hero-spine" viewBox="0 0 380 1351" role="group" aria-label="Wirbelsäule: Abschnitt wählen"><g class="seg" role="button" tabindex="0" data-region="hws" aria-label="Halswirbelsäule: Termin anfragen"><rect class="hit" x="128.9" y="1.5" width="176.1" height="273.0"/><rect class="v" style="--n:0" x="168.9" y="6.0" width="72.0" height="30" rx="10.2"/><rect class="v" style="--n:1" x="173.6" y="45.0" width="73.7" height="30" rx="10.2"/><rect class="v" style="--n:2" x="177.6" y="84.0" width="75.3" height="30" rx="10.2"/><rect class="v" style="--n:3" x="180.6" y="123.0" width="77.0" height="30" rx="10.2"/><rect class="v" style="--n:4" x="182.6" y="162.0" width="78.7" height="30" rx="10.2"/><rect class="v" style="--n:5" x="183.4" y="201.0" width="80.3" height="30" rx="10.2"/><rect class="v" style="--n:6" x="183.0" y="240.0" width="82.0" height="30" rx="10.2"/></g><g class="seg" role="button" tabindex="0" data-region="bws" aria-label="Brustwirbelsäule: Termin anfragen"><rect class="hit" x="55.1" y="274.5" width="251.9" height="588.0"/><rect class="v" style="--n:7" x="179.0" y="279.0" width="88.0" height="40" rx="13.6"/><rect class="v" style="--n:8" x="174.4" y="328.0" width="91.3" height="40" rx="13.6"/><rect class="v" style="--n:9" x="168.1" y="377.0" width="94.5" height="40" rx="13.6"/><rect class="v" style="--n:10" x="160.4" y="426.0" width="97.8" height="40" rx="13.6"/><rect class="v" style="--n:11" x="151.5" y="475.0" width="101.1" height="40" rx="13.6"/><rect class="v" style="--n:12" x="142.0" y="524.0" width="104.4" height="40" rx="13.6"/><rect class="v" style="--n:13" x="132.2" y="573.0" width="107.6" height="40" rx="13.6"/><rect class="v" style="--n:14" x="122.6" y="622.0" width="110.9" height="40" rx="13.6"/><rect class="v" style="--n:15" x="113.8" y="671.0" width="114.2" height="40" rx="13.6"/><rect class="v" style="--n:16" x="106.0" y="720.0" width="117.5" height="40" rx="13.6"/><rect class="v" style="--n:17" x="99.7" y="769.0" width="120.7" height="40" rx="13.6"/><rect class="v" style="--n:18" x="95.1" y="818.0" width="124.0" height="40" rx="13.6"/></g><g class="seg" role="button" tabindex="0" data-region="lws" aria-label="Lendenwirbelsäule: Termin anfragen"><rect class="hit" x="44.0" y="862.5" width="263.0" height="325.0"/><rect class="v" style="--n:19" x="86.0" y="867.0" width="140.0" height="56" rx="19.0"/><rect class="v" style="--n:20" x="84.0" y="932.0" width="148.0" height="56" rx="19.0"/><rect class="v" style="--n:21" x="85.3" y="997.0" width="156.0" height="56" rx="19.0"/><rect class="v" style="--n:22" x="89.2" y="1062.0" width="164.0" height="56" rx="19.0"/><rect class="v" style="--n:23" x="95.0" y="1127.0" width="172.0" height="56" rx="19.0"/></g><g class="seg" role="button" tabindex="0" data-region="isg" aria-label="Kreuzbein und Becken: Termin anfragen"><rect class="hit" x="75.7" y="1187.5" width="230.0" height="159.0"/><rect class="v" style="--n:24" x="115.7" y="1192.0" width="150.0" height="44" rx="15.0"/><rect class="v" style="--n:25" x="144.4" y="1245.0" width="110.0" height="44" rx="15.0"/><rect class="v" style="--n:26" x="172.5" y="1298.0" width="70.0" height="44" rx="15.0"/></g></svg><svg class="hero-spine-h" viewBox="0 0 1351 380" role="group" aria-label="Wirbelsäule: Abschnitt wählen"><g class="seg" role="button" tabindex="0" data-region="hws" aria-label="Halswirbelsäule: Termin anfragen"><rect class="hit" x="1.5" y="128.9" width="273.0" height="176.1"/><rect class="v" style="--n:0" x="6.0" y="168.9" width="30" height="72.0" rx="10.2"/><rect class="v" style="--n:1" x="45.0" y="173.6" width="30" height="73.7" rx="10.2"/><rect class="v" style="--n:2" x="84.0" y="177.6" width="30" height="75.3" rx="10.2"/><rect class="v" style="--n:3" x="123.0" y="180.6" width="30" height="77.0" rx="10.2"/><rect class="v" style="--n:4" x="162.0" y="182.6" width="30" height="78.7" rx="10.2"/><rect class="v" style="--n:5" x="201.0" y="183.4" width="30" height="80.3" rx="10.2"/><rect class="v" style="--n:6" x="240.0" y="183.0" width="30" height="82.0" rx="10.2"/></g><g class="seg" role="button" tabindex="0" data-region="bws" aria-label="Brustwirbelsäule: Termin anfragen"><rect class="hit" x="274.5" y="55.1" width="588.0" height="251.9"/><rect class="v" style="--n:7" x="279.0" y="179.0" width="40" height="88.0" rx="13.6"/><rect class="v" style="--n:8" x="328.0" y="174.4" width="40" height="91.3" rx="13.6"/><rect class="v" style="--n:9" x="377.0" y="168.1" width="40" height="94.5" rx="13.6"/><rect class="v" style="--n:10" x="426.0" y="160.4" width="40" height="97.8" rx="13.6"/><rect class="v" style="--n:11" x="475.0" y="151.5" width="40" height="101.1" rx="13.6"/><rect class="v" style="--n:12" x="524.0" y="142.0" width="40" height="104.4" rx="13.6"/><rect class="v" style="--n:13" x="573.0" y="132.2" width="40" height="107.6" rx="13.6"/><rect class="v" style="--n:14" x="622.0" y="122.6" width="40" height="110.9" rx="13.6"/><rect class="v" style="--n:15" x="671.0" y="113.8" width="40" height="114.2" rx="13.6"/><rect class="v" style="--n:16" x="720.0" y="106.0" width="40" height="117.5" rx="13.6"/><rect class="v" style="--n:17" x="769.0" y="99.7" width="40" height="120.7" rx="13.6"/><rect class="v" style="--n:18" x="818.0" y="95.1" width="40" height="124.0" rx="13.6"/></g><g class="seg" role="button" tabindex="0" data-region="lws" aria-label="Lendenwirbelsäule: Termin anfragen"><rect class="hit" x="862.5" y="44.0" width="325.0" height="263.0"/><rect class="v" style="--n:19" x="867.0" y="86.0" width="56" height="140.0" rx="19.0"/><rect class="v" style="--n:20" x="932.0" y="84.0" width="56" height="148.0" rx="19.0"/><rect class="v" style="--n:21" x="997.0" y="85.3" width="56" height="156.0" rx="19.0"/><rect class="v" style="--n:22" x="1062.0" y="89.2" width="56" height="164.0" rx="19.0"/><rect class="v" style="--n:23" x="1127.0" y="95.0" width="56" height="172.0" rx="19.0"/></g><g class="seg" role="button" tabindex="0" data-region="isg" aria-label="Kreuzbein und Becken: Termin anfragen"><rect class="hit" x="1187.5" y="75.7" width="159.0" height="230.0"/><rect class="v" style="--n:24" x="1192.0" y="115.7" width="44" height="150.0" rx="15.0"/><rect class="v" style="--n:25" x="1245.0" y="144.4" width="44" height="110.0" rx="15.0"/><rect class="v" style="--n:26" x="1298.0" y="172.5" width="44" height="70.0" rx="15.0"/></g></svg>
         <div class="sp-copy">
+          <img class="sp-face" data-rise style="--i:0" src="assets/v2/portrait-manicke.webp" width="528" height="700" alt="Dr. med. Christoph Manicke">
           <h1 id="title"><span class="sr-only">Zweite Meinung zur Wirbelsäule: </span><span class="line"><span style="--l:0">Alles in</span></span> <span class="line"><span style="--l:1">Ruhe.</span></span></h1>
           <p class="sp-lede" data-rise style="--i:1">Zweitmeinung zur Wirbelsäule:<br> persönlich, verständlich, unabhängig.</p>
           <div class="sp-actions" data-rise style="--i:2">
@@ -457,40 +461,6 @@ details[open] .plus::after { transform: rotate(0deg); }
     </div>
   </section>
 
-  <section class="practice" id="praxis" data-bg="#f7f7f5" data-ink="#1b1b1b" aria-labelledby="practice-title">
-    <div class="map-stage">
-      <div class="map"><img src="assets/story/kiel-karte.webp" width="1600" height="1600" decoding="async" alt="Stadtplan der Kieler Altstadt an der Förde, mit einer Markierung auf der Burgstraße&nbsp;2" loading="lazy"></div>
-      <svg class="map-pin" viewBox="0 0 64 86" aria-hidden="true"><path d="M32 84C32 84 4 50 4 30a28 28 0 0 1 56 0c0 20-28 54-28 54z" fill="#101a35" stroke="#f7f7f5" stroke-width="4"/><circle cx="32" cy="30" r="11" fill="#287f91"/></svg>
-      <div class="map-veil" aria-hidden="true"></div>
-      <div class="map-card">
-        <h2 id="practice-title">Zeit für Ihre Fragen</h2>
-        <p>Burgstraße&nbsp;2 in der Kieler Innenstadt, zwischen Altem Markt und Schloss. 4.&nbsp;Stock, mit Aufzug.</p>
-        <!-- TODO Manicke: Originalsatz zur Selbstständigkeit einsetzen -->
-        <p class="strong">„Sie entscheiden. Ich gebe Ihnen die Orientierung dafür.“</p>
-        <div class="row">
-          <a class="pill" href="#kontakt">Gespräch anfragen</a>
-          <a class="link" href="https://www.openstreetmap.org/?mlat=54.32433&amp;mlon=10.14184#map=18/54.32433/10.14184">Auf der Karte öffnen</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="faq" id="fragen" data-bg="#f7f7f5" data-ink="#1b1b1b" aria-labelledby="faq-title">
-    <div class="grid">
-      <h2 id="faq-title" data-reveal>Häufige Fragen</h2>
-      <div class="list">
-        <details name="faq" data-reveal style="--i:1"><summary>Wer kann in die Sprechstunde kommen?<span class="plus" aria-hidden="true"></span></summary><p class="answer">Die Praxis ist eine Privatpraxis für privat Versicherte und Selbstzahler. Gesetzlich Versicherte können als Selbstzahler kommen.</p></details>
-        <details name="faq" data-reveal style="--i:2"><summary>Wie bekomme ich einen Termin?<span class="plus" aria-hidden="true"></span></summary><p class="answer">Schreiben Sie mir über das Anfrageformular. Ich melde mich persönlich bei Ihnen, und wir finden in Ruhe einen Termin.</p></details>
-        <details name="faq" data-reveal style="--i:3"><summary>Was kostet eine Zweitmeinung?<span class="plus" aria-hidden="true"></span></summary><p class="answer">Abgerechnet wird nach der Gebührenordnung für Ärzte (GOÄ). Ob Ihre Versicherung die Kosten übernimmt, klären Sie am besten vorher mit ihr.</p></details>
-        <details name="faq" data-reveal style="--i:4"><summary>Was soll ich mitbringen?<span class="plus" aria-hidden="true"></span></summary><p class="answer">Ihre aktuellen MRT- oder CT-Bilder auf CD oder als Link, Arztbriefe und Befunde, die schriftliche OP-Empfehlung, falls es eine gibt, und eine Liste Ihrer Medikamente.</p></details>
-        <details name="faq" data-reveal style="--i:5"><summary>Ich bin schon operiert. Kann ich trotzdem kommen?<span class="plus" aria-hidden="true"></span></summary><p class="answer">Ja. Auch nach einer bereits durchgeführten Operation ist eine Beratung möglich, etwa wenn Beschwerden geblieben oder neu aufgetreten sind.</p></details>
-        <details name="faq" data-reveal style="--i:6"><summary>Was unterscheidet Neurochirurgie von Orthopädie?<span class="plus" aria-hidden="true"></span></summary><p class="answer">Beide behandeln die Wirbelsäule. Die Neurochirurgie kommt vom Nervensystem her: Sie ist dort gefragt, wo Nervenwurzeln oder Rückenmark bedrängt werden.</p></details>
-        <details name="faq" data-reveal style="--i:7"><summary>Ist die Praxis barrierefrei erreichbar?<span class="plus" aria-hidden="true"></span></summary><p class="answer">Die Praxis liegt im 4.&nbsp;Stock der Burgstraße&nbsp;2 und ist mit einem Aufzug erreichbar.</p></details>
-        <details name="faq" data-reveal style="--i:8"><summary>Kann ich Befunde vorab per E-Mail schicken?<span class="plus" aria-hidden="true"></span></summary><p class="answer">Bitte senden Sie Gesundheitsdaten nicht unverschlüsselt per E-Mail. Schreiben Sie in Ihrer Anfrage, dass Sie Unterlagen haben. Ich melde mich mit einem sicheren Weg.</p></details>
-      </div>
-    </div>
-  </section>
-
   <section class="contact" id="kontakt" data-bg="#101a35" data-ink="#f7f7f5" aria-labelledby="contact-title">
     <div class="ask">
       <div class="ask-intro">
@@ -540,6 +510,41 @@ details[open] .plus::after { transform: rotate(0deg); }
       </form>
     </div>
   </section>
+
+  <section class="practice" id="praxis" data-bg="#f7f7f5" data-ink="#1b1b1b" aria-labelledby="practice-title">
+    <div class="map-stage">
+      <div class="map"><img src="assets/story/kiel-karte.webp" width="1600" height="1600" decoding="async" alt="Stadtplan der Kieler Altstadt an der Förde, mit einer Markierung auf der Burgstraße&nbsp;2" loading="lazy"></div>
+      <svg class="map-pin" viewBox="0 0 64 86" aria-hidden="true"><path d="M32 84C32 84 4 50 4 30a28 28 0 0 1 56 0c0 20-28 54-28 54z" fill="#101a35" stroke="#f7f7f5" stroke-width="4"/><circle cx="32" cy="30" r="11" fill="#287f91"/></svg>
+      <div class="map-veil" aria-hidden="true"></div>
+      <div class="map-card">
+        <h2 id="practice-title">Zeit für Ihre Fragen</h2>
+        <p>Burgstraße&nbsp;2 in der Kieler Innenstadt, zwischen Altem Markt und Schloss. 4.&nbsp;Stock, mit Aufzug.</p>
+        <!-- TODO Manicke: Originalsatz zur Selbstständigkeit einsetzen -->
+        <p class="strong">„Sie entscheiden. Ich gebe Ihnen die Orientierung dafür.“</p>
+        <div class="row">
+          <a class="pill" href="#kontakt">Gespräch anfragen</a>
+          <a class="link" href="https://www.openstreetmap.org/?mlat=54.32433&amp;mlon=10.14184#map=18/54.32433/10.14184">Auf der Karte öffnen</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq" id="fragen" data-bg="#f7f7f5" data-ink="#1b1b1b" aria-labelledby="faq-title">
+    <div class="grid">
+      <h2 id="faq-title" data-reveal>Häufige Fragen</h2>
+      <div class="list">
+        <details name="faq" data-reveal style="--i:1"><summary>Wer kann in die Sprechstunde kommen?<span class="plus" aria-hidden="true"></span></summary><p class="answer">Die Praxis ist eine Privatpraxis für privat Versicherte und Selbstzahler. Gesetzlich Versicherte können als Selbstzahler kommen.</p></details>
+        <details name="faq" data-reveal style="--i:2"><summary>Wie bekomme ich einen Termin?<span class="plus" aria-hidden="true"></span></summary><p class="answer">Schreiben Sie mir über das Anfrageformular. Ich melde mich persönlich bei Ihnen, und wir finden in Ruhe einen Termin.</p></details>
+        <details name="faq" data-reveal style="--i:3"><summary>Was kostet eine Zweitmeinung?<span class="plus" aria-hidden="true"></span></summary><p class="answer">Abgerechnet wird nach der Gebührenordnung für Ärzte (GOÄ). Ob Ihre Versicherung die Kosten übernimmt, klären Sie am besten vorher mit ihr.</p></details>
+        <details name="faq" data-reveal style="--i:4"><summary>Was soll ich mitbringen?<span class="plus" aria-hidden="true"></span></summary><p class="answer">Ihre aktuellen MRT- oder CT-Bilder auf CD oder als Link, Arztbriefe und Befunde, die schriftliche OP-Empfehlung, falls es eine gibt, und eine Liste Ihrer Medikamente.</p></details>
+        <details name="faq" data-reveal style="--i:5"><summary>Ich bin schon operiert. Kann ich trotzdem kommen?<span class="plus" aria-hidden="true"></span></summary><p class="answer">Ja. Auch nach einer bereits durchgeführten Operation ist eine Beratung möglich, etwa wenn Beschwerden geblieben oder neu aufgetreten sind.</p></details>
+        <details name="faq" data-reveal style="--i:6"><summary>Was unterscheidet Neurochirurgie von Orthopädie?<span class="plus" aria-hidden="true"></span></summary><p class="answer">Beide behandeln die Wirbelsäule. Die Neurochirurgie kommt vom Nervensystem her: Sie ist dort gefragt, wo Nervenwurzeln oder Rückenmark bedrängt werden.</p></details>
+        <details name="faq" data-reveal style="--i:7"><summary>Ist die Praxis barrierefrei erreichbar?<span class="plus" aria-hidden="true"></span></summary><p class="answer">Die Praxis liegt im 4.&nbsp;Stock der Burgstraße&nbsp;2 und ist mit einem Aufzug erreichbar.</p></details>
+        <details name="faq" data-reveal style="--i:8"><summary>Kann ich Befunde vorab per E-Mail schicken?<span class="plus" aria-hidden="true"></span></summary><p class="answer">Bitte senden Sie Gesundheitsdaten nicht unverschlüsselt per E-Mail. Schreiben Sie in Ihrer Anfrage, dass Sie Unterlagen haben. Ich melde mich mit einem sicheren Weg.</p></details>
+      </div>
+    </div>
+  </section>
+
 </main>
 
 <footer class="foot" data-bg="#287f91" data-ink="#ffffff" aria-labelledby="foot-title">
@@ -915,7 +920,8 @@ const glider = (() => {
     return [0.5, 0.38, 0.62].every((f) => !document.elementsFromPoint(innerWidth * f, y).some((el) => el !== cue && !cue.contains(el) && el.closest(BUSY)));
   };
   const show = () => {
-    if (contact.getBoundingClientRect().top < innerHeight * 0.6) return; // the form is in sight: nothing more to point at
+    const f = contact.getBoundingClientRect();
+    if (f.top < innerHeight * 0.6 && f.bottom > innerHeight * 0.4) return; // the form is in sight: leave the visitor to it
     if (!card.hidden || document.activeElement?.closest('form')) return;
     if (clear()) cue.classList.add('is-on');
   };
