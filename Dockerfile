@@ -11,7 +11,7 @@ RUN npm ci --omit=dev --no-audit --no-fund
 # the screenshot with patient data) stays in the repository.
 FROM alpine:3.22 AS site
 WORKDIR /site
-COPY index.html impressum.html datenschutz.html ./
+COPY index.html impressum.html datenschutz.html robots.txt sitemap.xml ./
 COPY assets/ ./assets/
 RUN rm -f assets/v2/l4-l5-disc-herniation.png \
  && find assets -type f | while read -r f; do \
