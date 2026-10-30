@@ -955,6 +955,7 @@ const glider = (() => {
   const show = () => {
     const f = contact.getBoundingClientRect();
     if (f.top < innerHeight * 0.6 && f.bottom > innerHeight * 0.4) return; // the form is in sight: leave the visitor to it
+    if (document.querySelector('.foot').getBoundingClientRect().top < innerHeight) return; // the end of the page is in sight: nothing below to point at
     if (!card.hidden || document.activeElement?.closest('form')) return;
     if (clear()) cue.classList.add('is-on');
   };
