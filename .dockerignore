@@ -1,6 +1,7 @@
 # Allowlist: only the site and the mailer reach the build. The Dockerfile drops unreferenced assets.
 *
 !index.html
+!fancy/
 !impressum.html
 !datenschutz.html
 !robots.txt

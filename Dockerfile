@@ -12,10 +12,11 @@ RUN npm ci --omit=dev --no-audit --no-fund
 FROM alpine:3.22 AS site
 WORKDIR /site
 COPY index.html impressum.html datenschutz.html robots.txt sitemap.xml ./
+COPY fancy/index.html ./fancy/
 COPY assets/ ./assets/
 RUN rm -f assets/v2/l4-l5-disc-herniation.png \
  && find assets -type f | while read -r f; do \
-      grep -qF "$(basename "$f")" index.html impressum.html datenschutz.html || rm "$f"; \
+      grep -qF "$(basename "$f")" index.html fancy/index.html impressum.html datenschutz.html || rm "$f"; \
     done \
  && find assets -type d -empty -delete
 
@@ -26,7 +27,7 @@ COPY mailer/ ./mailer/
 COPY --from=site /site/ ./site/
 RUN cd mailer && npm ci --no-audit --no-fund && node --test *.test.mjs
 RUN ! find site -iname '*herniation*' -o -iname '*sagittal*' | grep . \
- && test -f site/index.html && test -f site/impressum.html && test -f site/datenschutz.html
+ && test -f site/index.html && test -f site/fancy/index.html && test -f site/impressum.html && test -f site/datenschutz.html
 
 FROM nginxinc/nginx-unprivileged:1.29-alpine
 ARG APP_VERSION=dev
