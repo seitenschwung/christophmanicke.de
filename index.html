@@ -116,15 +116,17 @@ p { max-width: 62ch; text-wrap: pretty; }
 .spine { margin-top: clamp(2rem, 4vw, 3rem); width: 100%; height: auto; overflow: visible; }
 /* the spine is a row of buttons: a vertebra opens a card with a small fact about it, as on /fancy. Nothing moves until it is touched. */
 .hero { position: relative; }
-.spine .v { fill: var(--navy); transition: fill 160ms ease, translate 200ms ease; }
+.spine .v { fill: var(--navy); transition: fill 320ms ease, translate 260ms ease; }
 .spine .seg[data-region="isg"] .v { fill: var(--sea); }
 .spine .seg { cursor: pointer; outline: none; }
 .spine .hit { fill: transparent; }
-/* while the pointer is on the spine, each vertebra darkens and lifts by its distance to the pointer (--i, 0 to 1) */
-.spine.spine-live .v { fill: color-mix(in srgb, var(--navy) calc(var(--i, 0) * 100%), var(--sand-2)); }
+/* while the pointer is on the spine it stays navy; the vertebrae near the pointer take on the sea blue and lift, by their
+   distance to it (--i, 0 to 1). The sea-blue ones at the bottom turn navy instead. */
+.spine.spine-live .v { fill: color-mix(in srgb, var(--sea) calc(var(--i, 0) * 100%), var(--navy)); }
+.spine.spine-live .seg[data-region="isg"] .v { fill: color-mix(in srgb, var(--navy) calc(var(--i, 0) * 100%), var(--sea)); }
 /* each vertebra carries its name, quietly; on the phone the spine is too small for them to be read */
-.spine .vl { fill: var(--paper); fill-opacity: 0.6; font-family: var(--font); font-weight: 600; font-stretch: var(--wide); letter-spacing: 0.02em; text-anchor: middle; dominant-baseline: central; pointer-events: none; user-select: none; transition: fill 160ms ease, translate 200ms ease; }
-.spine.spine-live .vl { fill: color-mix(in srgb, var(--paper) calc(var(--i, 0) * 100%), var(--navy)); }
+.spine .vl { fill: var(--paper); fill-opacity: 0.6; font-family: var(--font); font-weight: 600; font-stretch: var(--wide); letter-spacing: 0.02em; text-anchor: middle; dominant-baseline: central; pointer-events: none; user-select: none; transition: fill-opacity 320ms ease, translate 260ms ease; }
+.spine.spine-live .vl { fill-opacity: calc(0.6 + var(--i, 0) * 0.35); }
 .spine .v.is-picked + .vl { fill: var(--paper); fill-opacity: 0.9; }
 @media (prefers-reduced-motion: no-preference) { .spine.spine-live .v, .spine.spine-live .vl { translate: 0 calc(var(--i, 0) * -10px); } }
 .spine .seg:focus-visible .v { stroke: var(--ink); stroke-width: 4px; paint-order: stroke; }
@@ -184,17 +186,23 @@ p { max-width: 62ch; text-wrap: pretty; }
 .timeline strong { display: block; font-weight: 600; line-height: 1.3; }
 .timeline span { display: block; margin-top: 2px; font-size: var(--step-small); line-height: 1.45; color: #c3cad8; }
 
-/* ---------- the practice ---------- */
-.practice { padding-top: var(--section); }
-.practice .wrap { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
-.practice h2 { margin-top: 14px; }
-.practice address { margin-top: 22px; font-style: normal; font-size: var(--step-lead); line-height: 1.35; font-weight: 560; }
-.practice p { margin-top: 14px; }
-.practice .quote { margin-top: 26px; padding-left: 20px; border-left: 4px solid var(--sea); font-size: var(--step-lead); line-height: 1.35; }
-.practice .row { margin-top: 30px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; }
-.map { position: relative; border-radius: var(--radius); overflow: hidden; background: var(--sand); aspect-ratio: 4 / 3; }
+/* ---------- the practice: the map across the whole width, a card on it, as on /fancy. No scroll scene: the map pulls back
+   from the pin to the old town and the Förde as it scrolls into view, exactly as far as the page has moved, and back again
+   when scrolling up. Nothing plays by itself, nothing holds the page. ---------- */
+.practice { position: relative; }
+.map-stage { position: relative; height: clamp(36rem, 82svh, 54rem); overflow: hidden; background: var(--sand); }
+.map { position: absolute; inset: 0; transform-origin: 50% 50%; }
 .map img { width: 100%; height: 100%; object-fit: cover; }
-.map svg { position: absolute; left: 50%; top: 50%; width: 46px; height: 62px; translate: -50% -100%; filter: drop-shadow(0 6px 8px rgba(16, 26, 53, 0.3)); }
+@media (prefers-reduced-motion: no-preference) {
+  .js .map { will-change: transform; transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1); } /* evens out the steps of a mouse wheel */
+}
+.map-pin { position: absolute; left: 50%; top: 50%; width: 52px; height: 70px; translate: -50% -100%; filter: drop-shadow(0 8px 10px rgba(16, 26, 53, 0.3)); }
+.map-card { position: absolute; left: max(var(--margin), calc((100% - var(--max)) / 2 + var(--margin))); bottom: clamp(24px, 6svh, 64px); width: min(30rem, calc(100% - 2 * var(--margin))); padding: clamp(24px, 3vw, 40px); border-radius: var(--radius); background: var(--paper); color: var(--ink); box-shadow: 0 30px 60px -30px rgba(16, 26, 53, 0.45); }
+.map-card h2 { margin-top: 12px; font-size: clamp(2rem, 1.2rem + 2.4vw, 3.4rem); line-height: 1; letter-spacing: -0.04em; }
+.map-card address { margin-top: 18px; font-style: normal; font-size: var(--step-lead); line-height: 1.35; font-weight: 560; }
+.map-card p { margin-top: 12px; }
+.map-card .quote { margin-top: 20px; padding-left: 18px; border-left: 4px solid var(--sea); font-size: var(--step-lead); line-height: 1.35; }
+.map-card .row { margin-top: 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; }
 
 /* ---------- questions ---------- */
 .faq { padding-top: var(--section); }
@@ -290,7 +298,7 @@ details[open] .plus::after { transform: none; }
 @media (max-width: 1100px) {
   .nav-links .hide-mid { display: none; }
   .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .about .wrap, .practice .wrap, .faq .wrap, .ask { grid-template-columns: minmax(0, 1fr); }
+  .about .wrap, .faq .wrap, .ask { grid-template-columns: minmax(0, 1fr); }
   .faq .section-head { margin-bottom: 0; }
   .foot-top { grid-template-columns: 1fr 1fr; }
   .foot-top .up { justify-self: start; }
@@ -328,6 +336,9 @@ details[open] .plus::after { transform: none; }
   .faq summary { padding: 16px 20px; }
   .faq .answer { padding: 0 20px 20px; }
   .foot-top { grid-template-columns: minmax(0, 1fr); }
+  /* on the phone the card follows the map instead of covering the pin */
+  .map-stage { height: 58svh; }
+  .map-card { position: relative; left: auto; bottom: auto; width: auto; margin: -3rem var(--margin) 0; }
 }
 </style>
 </head>
@@ -454,22 +465,20 @@ details[open] .plus::after { transform: none; }
   </section>
 
   <section class="practice" id="praxis" aria-labelledby="practice-title">
-    <div class="wrap">
-      <div>
-        <p class="kicker">Praxis</p>
-        <h2 id="practice-title">Zeit für Ihre Fragen</h2>
-        <address>Burgstraße&nbsp;2, 4.&nbsp;Stock<br>24103&nbsp;Kiel</address>
-        <p>In der Kieler Innenstadt, zwischen Altem Markt und Schloss. Der 4.&nbsp;Stock ist mit dem Aufzug erreichbar.</p>
-        <!-- TODO Manicke: Originalsatz zur Selbstständigkeit einsetzen -->
-        <p class="quote">„Sie entscheiden. Ich gebe Ihnen die Orientierung dafür.“</p>
-        <div class="row">
-          <a class="pill" href="#kontakt">Gespräch anfragen</a>
-          <a class="link" href="https://www.openstreetmap.org/?mlat=54.32433&amp;mlon=10.14184#map=18/54.32433/10.14184">Auf der Karte öffnen</a>
-        </div>
-      </div>
-      <div class="map">
-        <img src="assets/story/kiel-karte.webp" width="1600" height="1600" decoding="async" loading="lazy" alt="Stadtplan der Kieler Altstadt an der Förde, mit einer Markierung auf der Burgstraße&nbsp;2">
-        <svg viewBox="0 0 64 86" aria-hidden="true"><path d="M32 84C32 84 4 50 4 30a28 28 0 0 1 56 0c0 20-28 54-28 54z" fill="#101a35" stroke="#f7f7f5" stroke-width="4"/><circle cx="32" cy="30" r="11" fill="#287f91"/></svg>
+    <div class="map-stage">
+      <div class="map"><img src="assets/story/kiel-karte.webp" width="1600" height="1600" decoding="async" loading="lazy" alt="Stadtplan der Kieler Altstadt an der Förde, mit einer Markierung auf der Burgstraße&nbsp;2"></div>
+      <svg class="map-pin" viewBox="0 0 64 86" aria-hidden="true"><path d="M32 84C32 84 4 50 4 30a28 28 0 0 1 56 0c0 20-28 54-28 54z" fill="#101a35" stroke="#f7f7f5" stroke-width="4"/><circle cx="32" cy="30" r="11" fill="#287f91"/></svg>
+    </div>
+    <div class="map-card">
+      <p class="kicker">Praxis</p>
+      <h2 id="practice-title">Zeit für Ihre Fragen</h2>
+      <address>Burgstraße&nbsp;2, 4.&nbsp;Stock<br>24103&nbsp;Kiel</address>
+      <p>In der Kieler Innenstadt, zwischen Altem Markt und Schloss. Der 4.&nbsp;Stock ist mit dem Aufzug erreichbar.</p>
+      <!-- TODO Manicke: Originalsatz zur Selbstständigkeit einsetzen -->
+      <p class="quote">„Sie entscheiden. Ich gebe Ihnen die Orientierung dafür.“</p>
+      <div class="row">
+        <a class="pill" href="#kontakt">Gespräch anfragen</a>
+        <a class="link" href="https://www.openstreetmap.org/?mlat=54.32433&amp;mlon=10.14184#map=18/54.32433/10.14184">Auf der Karte öffnen</a>
       </div>
     </div>
   </section>
@@ -723,6 +732,30 @@ details[open] .plus::after { transform: none; }
   addEventListener('click', (e) => { if (!card.contains(e.target) && !e.target.closest('.seg')) hide(false); });
   addEventListener('scroll', () => { if (Math.abs(scrollY - y0) > 60) hide(false); }, { passive: true });
   addEventListener('resize', () => hide(false));
+})();
+
+// The map pulls back from the pin while it scrolls into view: close in as its top edge appears at the bottom of the screen,
+// the whole old town once the map stands fully in view. It follows the page both ways and never moves it.
+(() => {
+  const stage = document.querySelector('.map-stage');
+  const map = stage.querySelector('.map');
+  const still = matchMedia('(prefers-reduced-motion: reduce)');
+  const NEAR = 2.6; // how close it starts
+  let ticking = false;
+  const place = () => {
+    ticking = false;
+    if (still.matches) { map.style.transform = ''; return; }
+    const r = stage.getBoundingClientRect();
+    const bar = document.querySelector('.bar').offsetHeight;
+    const done = Math.max(bar, innerHeight - r.height); // where the top edge is once the map is fully in view
+    const p = Math.min(1, Math.max(0, (innerHeight - r.top) / Math.max(1, innerHeight - done)));
+    const e = p * p * (3 - 2 * p);
+    map.style.transform = p >= 1 ? '' : `scale(${(NEAR - (NEAR - 1) * e).toFixed(4)})`;
+  };
+  addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(place); } }, { passive: true });
+  addEventListener('resize', place);
+  still.addEventListener('change', place);
+  place();
 })();
 
 // "Dazu anfragen" on a topic picks that topic in the form.

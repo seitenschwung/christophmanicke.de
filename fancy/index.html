@@ -141,14 +141,16 @@ p { max-width: 62ch; text-wrap: pretty; }
 /* the spine is a set of four links to the request form; the vertebrae answer the pointer */
 .hero-spine .seg, .hero-spine-h .seg { cursor: pointer; outline: none; }
 .hero-spine .hit, .hero-spine-h .hit { fill: transparent; }
-.hero-spine .v, .hero-spine-h .v { transition: fill 160ms ease, translate 200ms var(--ease-out); }
+.hero-spine .v, .hero-spine-h .v { transition: fill 320ms ease, translate 260ms var(--ease-out); }
 /* each vertebra carries its name, quietly; it moves with its vertebra and steps aside while the view dives in */
-.hero-spine .vl { fill: var(--paper); fill-opacity: 0.55; font-family: var(--font); font-weight: 600; font-stretch: var(--wide); letter-spacing: 0.02em; text-anchor: middle; dominant-baseline: central; pointer-events: none; user-select: none; transition: fill 160ms ease, fill-opacity 160ms ease, translate 200ms var(--ease-out); }
-.hero-spine.spine-live .vl { fill: color-mix(in srgb, var(--paper) calc(var(--i, 0) * 100%), var(--navy)); }
+.hero-spine .vl { fill: var(--paper); fill-opacity: 0.55; font-family: var(--font); font-weight: 600; font-stretch: var(--wide); letter-spacing: 0.02em; text-anchor: middle; dominant-baseline: central; pointer-events: none; user-select: none; transition: fill 320ms ease, fill-opacity 320ms ease, translate 260ms var(--ease-out); }
+.hero-spine.spine-live .vl { fill-opacity: calc(0.55 + var(--i, 0) * 0.4); }
 .hero-spine .v.is-picked + .vl { fill: var(--paper); fill-opacity: 0.9; }
 .split.is-zooming .hero-spine .vl { fill-opacity: 0; }
-/* while the pointer is on the spine, each vertebra darkens and lifts by its distance to the pointer (--i, 0 to 1) */
-.spine-live .v { fill: color-mix(in srgb, var(--navy) calc(var(--i, 0) * 100%), var(--sand-2)); }
+/* while the pointer is on the spine it stays navy; the vertebrae near the pointer take on the sea blue and lift, by their
+   distance to it (--i, 0 to 1). The sea-blue ones at the bottom turn navy instead. */
+.spine-live .v { fill: color-mix(in srgb, var(--sea) calc(var(--i, 0) * 100%), var(--navy)); }
+.spine-live .seg[data-region="isg"] .v { fill: color-mix(in srgb, var(--navy) calc(var(--i, 0) * 100%), var(--sea)); }
 @media (prefers-reduced-motion: no-preference) {
   .hero-spine.spine-live .v, .hero-spine.spine-live .vl { translate: calc(var(--i, 0) * -22px) 0; }
   .hero-spine-h.spine-live .v { translate: 0 calc(var(--i, 0) * -10px); }
