@@ -52,7 +52,8 @@
   --step-head: clamp(2.25rem, 1.4rem + 3vw, 4rem);
   --step-display: clamp(2.5rem, 0.6rem + 8.6vw, 9.25rem);
 
-  --margin: clamp(1.25rem, 2.2vw, 2rem);
+  /* on wide screens the content keeps to a column of 1600px; the colours still run to the edges */
+  --margin: max(clamp(1.25rem, 2.2vw, 2rem), calc((100vw - 1600px) / 2));
   --gutter: clamp(1rem, 2vw, 2rem);
   --radius: 24px;
   --bar: 72px;
@@ -112,25 +113,28 @@ p { max-width: 62ch; text-wrap: pretty; }
 /* ---------- hero: headline across two fields, which part as you scroll to show the spine ---------- */
 .split { position: relative; }
 .js .split { height: 170svh; }
-.js .split-stage { position: sticky; top: 0; height: 100svh; overflow: hidden; }
+/* 2px past the bottom edge: at a display scale like 125% the screen's last row of pixels otherwise stays paper, a white line under the colour */
+.js .split-stage { position: sticky; top: 0; height: calc(100svh + 2px); overflow: hidden; }
 
 /* beneath the fields: the spine, built large */
-.sp-hero { --step-display: clamp(2.6rem, 0.8rem + 6.2vw, 7.5rem); position: relative; display: flex; flex-direction: column; min-height: 100svh; padding: calc(var(--bar) + 12vh) var(--margin) 56px; overflow: hidden; background: var(--paper); }
+.sp-hero { --step-display: clamp(2.6rem, 0.8rem + 6.2vw, 7.5rem); position: relative; display: flex; flex-direction: column; min-height: 100svh; padding: calc(var(--bar) + 4svh) var(--margin) 56px; overflow: hidden; background: var(--paper); }
 .js .sp-hero { position: absolute; inset: 0; min-height: 0; }
 /* past the spine the view dives into one vertebra until its colour fills the screen */
 .sp-flood { display: none; }
 .js .sp-flood { display: block; position: absolute; inset: 0; z-index: 2; background: var(--navy); opacity: 0; pointer-events: none; }
 .split.is-zooming .spine-live .v { fill: var(--navy); translate: none; }
 .sp-copy { position: relative; z-index: 2; order: 1; max-width: min(58vw, 60rem); }
-.sp-face { width: clamp(88px, 9vw, 132px); aspect-ratio: 1; margin-bottom: clamp(20px, 3svh, 32px); border-radius: 50%; object-fit: cover; object-position: 50% 22%; background: #fff; border: 5px solid var(--sea); box-shadow: 0 18px 40px -18px rgba(16, 26, 53, 0.35); }
-.sp-hero h1 { font-size: var(--step-display); line-height: 0.95; font-weight: 600; letter-spacing: -0.045em; }
+/* the hero's sizes also answer to the window's height, so the first button stays on the first screen of a short window */
+.sp-face { width: min(clamp(88px, 9vw, 132px), 12svh); aspect-ratio: 1; margin-bottom: clamp(20px, 3svh, 32px); border-radius: 50%; object-fit: cover; object-position: 50% 22%; background: #fff; border: 5px solid var(--sea); box-shadow: 0 18px 40px -18px rgba(16, 26, 53, 0.35); }
+.sp-hero h1 { font-size: min(var(--step-display), 12svh); line-height: 0.95; font-weight: 600; letter-spacing: -0.045em; }
 .sp-hero h1 .line { display: block; overflow: hidden; padding-bottom: 0.12em; margin-bottom: -0.12em; }
 .sp-hero h1 .line > span { display: block; }
-.sp-who { margin-top: 32px; font-size: var(--step-body); font-weight: 600; letter-spacing: -0.01em; color: var(--navy); }
+.sp-who { margin-top: clamp(14px, 3.5svh, 32px); font-size: var(--step-body); font-weight: 600; letter-spacing: -0.01em; color: var(--navy); }
 .sp-lede { margin-top: 10px; font-size: clamp(1.1875rem, 0.95rem + 0.6vw, 1.5rem); line-height: 1.35; max-width: 36ch; }
-.sp-actions { margin-top: 36px; display: flex; flex-wrap: wrap; gap: 12px; }
+.sp-actions { margin-top: clamp(16px, 4svh, 36px); display: flex; flex-wrap: wrap; gap: 12px; }
 .sp-actions .pill { min-height: 3.75rem; padding: 0 2.2rem; font-size: var(--step-body); }
-.hero-spine { position: absolute; z-index: 1; right: 7vw; top: calc(var(--bar) - 10svh); height: 140svh; width: auto; max-width: none; }
+/* the whole spine, from C1 to the tailbone, stands in the first screen below the bar, so every vertebra and its name is in view */
+.hero-spine { position: absolute; z-index: 1; right: calc(var(--margin) + 4vw); top: calc(var(--bar) + 1.5svh); height: calc(100svh - var(--bar) - 3svh); width: auto; max-width: none; }
 .hero-spine-h { display: none; order: 2; }
 .hero-spine .v, .hero-spine-h .v { fill: var(--navy); }
 .hero-spine .seg[data-region="isg"] .v, .hero-spine-h .seg[data-region="isg"] .v { fill: var(--sea); }
@@ -138,10 +142,15 @@ p { max-width: 62ch; text-wrap: pretty; }
 .hero-spine .seg, .hero-spine-h .seg { cursor: pointer; outline: none; }
 .hero-spine .hit, .hero-spine-h .hit { fill: transparent; }
 .hero-spine .v, .hero-spine-h .v { transition: fill 160ms ease, translate 200ms var(--ease-out); }
+/* each vertebra carries its name, quietly; it moves with its vertebra and steps aside while the view dives in */
+.hero-spine .vl { fill: var(--paper); fill-opacity: 0.55; font-family: var(--font); font-weight: 600; font-stretch: var(--wide); letter-spacing: 0.02em; text-anchor: middle; dominant-baseline: central; pointer-events: none; user-select: none; transition: fill 160ms ease, fill-opacity 160ms ease, translate 200ms var(--ease-out); }
+.hero-spine.spine-live .vl { fill: color-mix(in srgb, var(--paper) calc(var(--i, 0) * 100%), var(--navy)); }
+.hero-spine .v.is-picked + .vl { fill: var(--paper); fill-opacity: 0.9; }
+.split.is-zooming .hero-spine .vl { fill-opacity: 0; }
 /* while the pointer is on the spine, each vertebra darkens and lifts by its distance to the pointer (--i, 0 to 1) */
 .spine-live .v { fill: color-mix(in srgb, var(--navy) calc(var(--i, 0) * 100%), var(--sand-2)); }
 @media (prefers-reduced-motion: no-preference) {
-  .hero-spine.spine-live .v { translate: calc(var(--i, 0) * -22px) 0; }
+  .hero-spine.spine-live .v, .hero-spine.spine-live .vl { translate: calc(var(--i, 0) * -22px) 0; }
   .hero-spine-h.spine-live .v { translate: 0 calc(var(--i, 0) * -10px); }
 }
 .hero-spine .seg:focus-visible .v, .hero-spine-h .seg:focus-visible .v { stroke: var(--ink); stroke-width: 4px; paint-order: stroke; }
@@ -186,19 +195,6 @@ p { max-width: 62ch; text-wrap: pretty; }
 .intro .statement { font-size: var(--step-lead); line-height: 1.3; max-width: 26ch; }
 .chip { flex: none; width: clamp(130px, 12vw, 190px); aspect-ratio: 4 / 5; border-radius: var(--radius); overflow: hidden; background: #000; }
 .chip img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; }
-
-/* ---------- the curtain: at its last screen "Über mich" parts down the middle and draws aside to show the request ---------- */
-:root { --hold: 100svh; }
-/* a spacer, not padding: a sticky child stays inside its parent's content box */
-.js .curtain-track::after { content: ""; display: block; height: var(--hold); }
-.js .curtain-pane { overflow: clip; position: sticky; top: min(0px, calc(100svh - var(--intro-h, 100svh))); z-index: 2; }
-.curtain-half.is-right { display: none; }
-.curtain.is-parting .curtain-half { width: 50%; overflow: hidden; background: var(--navy); box-shadow: 0 0 80px rgba(4, 8, 20, 0.6); will-change: transform; }
-.curtain.is-parting .curtain-half > .intro { width: 200%; }
-.curtain.is-parting .curtain-half.is-right { display: block; position: absolute; top: 0; right: 0; height: 100%; }
-.curtain.is-parting .curtain-half.is-right > .intro { margin-left: -100%; }
-.js .curtain > .contact { position: sticky; top: 0; z-index: 1; margin-top: calc(-1 * (var(--hold) + 100svh)); }
-.js .curtain-tail { height: var(--hold); }
 
 /* ---------- Praxis: out of the dark, the map zooms out to the old town and the Förde ---------- */
 .practice { position: relative; background: var(--paper); }
@@ -279,6 +275,22 @@ details[open] .plus::after { transform: rotate(0deg); }
   .choice { min-height: 42px; padding: 6px 12px; }
   .submit { min-height: 50px; }
 }
+/* short windows (a laptop with browser bars and a taskbar): the two questions side by side and everything tighter,
+   so "Anfrage senden" still sits on the first screen */
+@media (min-width: 1101px) and (max-height: 720px) {
+  .ask { grid-template-columns: minmax(0, 3fr) minmax(0, 9fr); }
+  .request { gap: 8px 14px; padding: 16px 22px; }
+  .request fieldset.wide { grid-column: auto; }
+  .hint { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .field label, .request legend { font-size: 1rem; }
+  .field input { min-height: 40px; margin-top: 4px; padding: 6px 12px; }
+  .field textarea { min-height: 48px; margin-top: 4px; padding: 6px 12px; }
+  .choices { margin-top: 4px; gap: 6px; }
+  .choice { min-height: 38px; padding: 4px 10px; font-size: 1rem; }
+  .consent { font-size: 0.9375rem; }
+  .submit { min-height: 46px; }
+  .contact { padding-top: calc(var(--bar) + 8px); padding-bottom: 8px; }
+}
 
 /* ---------- footer: the telephone number is the headline ---------- */
 /* behind "Alles in Ruhe.": the Förde at Friedrichsort, in the two colours, fading out where the small print sits */
@@ -308,7 +320,7 @@ details[open] .plus::after { transform: rotate(0deg); }
 /* ---------- tablet ---------- */
 @media (max-width: 1100px) {
   .sp-copy { max-width: 64vw; }
-  .hero-spine { right: -6vw; }
+  .hero-spine { right: var(--margin); }
   .nav-links .hide-mid { display: none; }
   .faq h2 { grid-column: 1 / 13; position: static; margin-bottom: 40px; max-width: none; }
   .faq .list { grid-column: 1 / 13; }
@@ -388,10 +400,10 @@ details[open] .plus::after { transform: rotate(0deg); }
   .js [data-reveal].is-in { opacity: 1; transform: none; }
   /* on arrival the two lines come out of the seam, one up, one down; then the lede rises */
   /* the spine builds and the copy rises once the fields have parted */
-  .js .hero-spine .v { opacity: 0; transform: translateY(40px); transform-box: fill-box; transform-origin: center; animation: build 700ms var(--ease-out) forwards paused; animation-delay: calc((27 - var(--n)) * 45ms + 450ms); }
+  .js .hero-spine .v, .js .hero-spine .vl { opacity: 0; transform: translateY(40px); transform-box: fill-box; transform-origin: center; animation: build 700ms var(--ease-out) forwards paused; animation-delay: calc((27 - var(--n)) * 45ms + 450ms); }
   .js .sp-hero h1 .line > span { animation: from-below 1000ms var(--ease-out) both paused; animation-delay: calc(var(--l) * 140ms + 200ms); }
   .js .sp-hero [data-rise] { opacity: 0; transform: translateY(18px); animation: rise 900ms var(--ease-out) forwards paused; animation-delay: calc(var(--i, 0) * 140ms + 420ms); }
-  .js .split.is-open .hero-spine .v, .js .split.is-open .sp-hero h1 .line > span, .js .split.is-open .sp-hero [data-rise] { animation-play-state: running; }
+  .js .split.is-open .hero-spine .v, .js .split.is-open .hero-spine .vl, .js .split.is-open .sp-hero h1 .line > span, .js .split.is-open .sp-hero [data-rise] { animation-play-state: running; }
   .vcard.is-new { animation: card-in 380ms var(--ease-out); }
   .cue.is-on svg { animation: nudge 1800ms var(--ease-soft) infinite; }
   .vcard-fact.is-new { animation: rise-in 320ms var(--ease-out); }
@@ -426,7 +438,7 @@ details[open] .plus::after { transform: rotate(0deg); }
   <section class="split" id="top" data-bg="#f7f7f5" data-ink="#1b1b1b" aria-labelledby="title">
     <div class="split-stage">
       <div class="sp-hero">
-        <svg class="hero-spine" viewBox="0 0 380 1351" role="group" aria-label="Wirbelsäule: Abschnitt wählen"><g class="seg" role="button" tabindex="0" data-region="hws" aria-label="Halswirbelsäule: Termin anfragen"><rect class="hit" x="128.9" y="1.5" width="176.1" height="273.0"/><rect class="v" style="--n:0" x="168.9" y="6.0" width="72.0" height="30" rx="10.2"/><rect class="v" style="--n:1" x="173.6" y="45.0" width="73.7" height="30" rx="10.2"/><rect class="v" style="--n:2" x="177.6" y="84.0" width="75.3" height="30" rx="10.2"/><rect class="v" style="--n:3" x="180.6" y="123.0" width="77.0" height="30" rx="10.2"/><rect class="v" style="--n:4" x="182.6" y="162.0" width="78.7" height="30" rx="10.2"/><rect class="v" style="--n:5" x="183.4" y="201.0" width="80.3" height="30" rx="10.2"/><rect class="v" style="--n:6" x="183.0" y="240.0" width="82.0" height="30" rx="10.2"/></g><g class="seg" role="button" tabindex="0" data-region="bws" aria-label="Brustwirbelsäule: Termin anfragen"><rect class="hit" x="55.1" y="274.5" width="251.9" height="588.0"/><rect class="v" style="--n:7" x="179.0" y="279.0" width="88.0" height="40" rx="13.6"/><rect class="v" style="--n:8" x="174.4" y="328.0" width="91.3" height="40" rx="13.6"/><rect class="v" style="--n:9" x="168.1" y="377.0" width="94.5" height="40" rx="13.6"/><rect class="v" style="--n:10" x="160.4" y="426.0" width="97.8" height="40" rx="13.6"/><rect class="v" style="--n:11" x="151.5" y="475.0" width="101.1" height="40" rx="13.6"/><rect class="v" style="--n:12" x="142.0" y="524.0" width="104.4" height="40" rx="13.6"/><rect class="v" style="--n:13" x="132.2" y="573.0" width="107.6" height="40" rx="13.6"/><rect class="v" style="--n:14" x="122.6" y="622.0" width="110.9" height="40" rx="13.6"/><rect class="v" style="--n:15" x="113.8" y="671.0" width="114.2" height="40" rx="13.6"/><rect class="v" style="--n:16" x="106.0" y="720.0" width="117.5" height="40" rx="13.6"/><rect class="v" style="--n:17" x="99.7" y="769.0" width="120.7" height="40" rx="13.6"/><rect class="v" style="--n:18" x="95.1" y="818.0" width="124.0" height="40" rx="13.6"/></g><g class="seg" role="button" tabindex="0" data-region="lws" aria-label="Lendenwirbelsäule: Termin anfragen"><rect class="hit" x="44.0" y="862.5" width="263.0" height="325.0"/><rect class="v" style="--n:19" x="86.0" y="867.0" width="140.0" height="56" rx="19.0"/><rect class="v" style="--n:20" x="84.0" y="932.0" width="148.0" height="56" rx="19.0"/><rect class="v" style="--n:21" x="85.3" y="997.0" width="156.0" height="56" rx="19.0"/><rect class="v" style="--n:22" x="89.2" y="1062.0" width="164.0" height="56" rx="19.0"/><rect class="v" style="--n:23" x="95.0" y="1127.0" width="172.0" height="56" rx="19.0"/></g><g class="seg" role="button" tabindex="0" data-region="isg" aria-label="Kreuzbein und Becken: Termin anfragen"><rect class="hit" x="75.7" y="1187.5" width="230.0" height="159.0"/><rect class="v" style="--n:24" x="115.7" y="1192.0" width="150.0" height="44" rx="15.0"/><rect class="v" style="--n:25" x="144.4" y="1245.0" width="110.0" height="44" rx="15.0"/><rect class="v" style="--n:26" x="172.5" y="1298.0" width="70.0" height="44" rx="15.0"/></g></svg><svg class="hero-spine-h" viewBox="0 0 1351 380" role="group" aria-label="Wirbelsäule: Abschnitt wählen"><g class="seg" role="button" tabindex="0" data-region="hws" aria-label="Halswirbelsäule: Termin anfragen"><rect class="hit" x="1.5" y="128.9" width="273.0" height="176.1"/><rect class="v" style="--n:0" x="6.0" y="168.9" width="30" height="72.0" rx="10.2"/><rect class="v" style="--n:1" x="45.0" y="173.6" width="30" height="73.7" rx="10.2"/><rect class="v" style="--n:2" x="84.0" y="177.6" width="30" height="75.3" rx="10.2"/><rect class="v" style="--n:3" x="123.0" y="180.6" width="30" height="77.0" rx="10.2"/><rect class="v" style="--n:4" x="162.0" y="182.6" width="30" height="78.7" rx="10.2"/><rect class="v" style="--n:5" x="201.0" y="183.4" width="30" height="80.3" rx="10.2"/><rect class="v" style="--n:6" x="240.0" y="183.0" width="30" height="82.0" rx="10.2"/></g><g class="seg" role="button" tabindex="0" data-region="bws" aria-label="Brustwirbelsäule: Termin anfragen"><rect class="hit" x="274.5" y="55.1" width="588.0" height="251.9"/><rect class="v" style="--n:7" x="279.0" y="179.0" width="40" height="88.0" rx="13.6"/><rect class="v" style="--n:8" x="328.0" y="174.4" width="40" height="91.3" rx="13.6"/><rect class="v" style="--n:9" x="377.0" y="168.1" width="40" height="94.5" rx="13.6"/><rect class="v" style="--n:10" x="426.0" y="160.4" width="40" height="97.8" rx="13.6"/><rect class="v" style="--n:11" x="475.0" y="151.5" width="40" height="101.1" rx="13.6"/><rect class="v" style="--n:12" x="524.0" y="142.0" width="40" height="104.4" rx="13.6"/><rect class="v" style="--n:13" x="573.0" y="132.2" width="40" height="107.6" rx="13.6"/><rect class="v" style="--n:14" x="622.0" y="122.6" width="40" height="110.9" rx="13.6"/><rect class="v" style="--n:15" x="671.0" y="113.8" width="40" height="114.2" rx="13.6"/><rect class="v" style="--n:16" x="720.0" y="106.0" width="40" height="117.5" rx="13.6"/><rect class="v" style="--n:17" x="769.0" y="99.7" width="40" height="120.7" rx="13.6"/><rect class="v" style="--n:18" x="818.0" y="95.1" width="40" height="124.0" rx="13.6"/></g><g class="seg" role="button" tabindex="0" data-region="lws" aria-label="Lendenwirbelsäule: Termin anfragen"><rect class="hit" x="862.5" y="44.0" width="325.0" height="263.0"/><rect class="v" style="--n:19" x="867.0" y="86.0" width="56" height="140.0" rx="19.0"/><rect class="v" style="--n:20" x="932.0" y="84.0" width="56" height="148.0" rx="19.0"/><rect class="v" style="--n:21" x="997.0" y="85.3" width="56" height="156.0" rx="19.0"/><rect class="v" style="--n:22" x="1062.0" y="89.2" width="56" height="164.0" rx="19.0"/><rect class="v" style="--n:23" x="1127.0" y="95.0" width="56" height="172.0" rx="19.0"/></g><g class="seg" role="button" tabindex="0" data-region="isg" aria-label="Kreuzbein und Becken: Termin anfragen"><rect class="hit" x="1187.5" y="75.7" width="159.0" height="230.0"/><rect class="v" style="--n:24" x="1192.0" y="115.7" width="44" height="150.0" rx="15.0"/><rect class="v" style="--n:25" x="1245.0" y="144.4" width="44" height="110.0" rx="15.0"/><rect class="v" style="--n:26" x="1298.0" y="172.5" width="44" height="70.0" rx="15.0"/></g></svg>
+        <svg class="hero-spine" viewBox="0 0 380 1351" role="group" aria-label="Wirbelsäule: Abschnitt wählen"><g class="seg" role="button" tabindex="0" data-region="hws" aria-label="Halswirbelsäule: Termin anfragen"><rect class="hit" x="128.9" y="1.5" width="176.1" height="273.0"/><rect class="v" style="--n:0" x="168.9" y="6.0" width="72.0" height="30" rx="10.2"/><text class="vl" style="--n:0" x="204.9" y="21.0" font-size="18.0" aria-hidden="true">C1</text><rect class="v" style="--n:1" x="173.6" y="45.0" width="73.7" height="30" rx="10.2"/><text class="vl" style="--n:1" x="210.4" y="60.0" font-size="18.0" aria-hidden="true">C2</text><rect class="v" style="--n:2" x="177.6" y="84.0" width="75.3" height="30" rx="10.2"/><text class="vl" style="--n:2" x="215.2" y="99.0" font-size="18.0" aria-hidden="true">C3</text><rect class="v" style="--n:3" x="180.6" y="123.0" width="77.0" height="30" rx="10.2"/><text class="vl" style="--n:3" x="219.1" y="138.0" font-size="18.0" aria-hidden="true">C4</text><rect class="v" style="--n:4" x="182.6" y="162.0" width="78.7" height="30" rx="10.2"/><text class="vl" style="--n:4" x="221.9" y="177.0" font-size="18.0" aria-hidden="true">C5</text><rect class="v" style="--n:5" x="183.4" y="201.0" width="80.3" height="30" rx="10.2"/><text class="vl" style="--n:5" x="223.6" y="216.0" font-size="18.0" aria-hidden="true">C6</text><rect class="v" style="--n:6" x="183.0" y="240.0" width="82.0" height="30" rx="10.2"/><text class="vl" style="--n:6" x="224.0" y="255.0" font-size="18.0" aria-hidden="true">C7</text></g><g class="seg" role="button" tabindex="0" data-region="bws" aria-label="Brustwirbelsäule: Termin anfragen"><rect class="hit" x="55.1" y="274.5" width="251.9" height="588.0"/><rect class="v" style="--n:7" x="179.0" y="279.0" width="88.0" height="40" rx="13.6"/><text class="vl" style="--n:7" x="223.0" y="299.0" font-size="24.0" aria-hidden="true">Th1</text><rect class="v" style="--n:8" x="174.4" y="328.0" width="91.3" height="40" rx="13.6"/><text class="vl" style="--n:8" x="220.1" y="348.0" font-size="24.0" aria-hidden="true">Th2</text><rect class="v" style="--n:9" x="168.1" y="377.0" width="94.5" height="40" rx="13.6"/><text class="vl" style="--n:9" x="215.3" y="397.0" font-size="24.0" aria-hidden="true">Th3</text><rect class="v" style="--n:10" x="160.4" y="426.0" width="97.8" height="40" rx="13.6"/><text class="vl" style="--n:10" x="209.3" y="446.0" font-size="24.0" aria-hidden="true">Th4</text><rect class="v" style="--n:11" x="151.5" y="475.0" width="101.1" height="40" rx="13.6"/><text class="vl" style="--n:11" x="202.1" y="495.0" font-size="24.0" aria-hidden="true">Th5</text><rect class="v" style="--n:12" x="142.0" y="524.0" width="104.4" height="40" rx="13.6"/><text class="vl" style="--n:12" x="194.2" y="544.0" font-size="24.0" aria-hidden="true">Th6</text><rect class="v" style="--n:13" x="132.2" y="573.0" width="107.6" height="40" rx="13.6"/><text class="vl" style="--n:13" x="186.0" y="593.0" font-size="24.0" aria-hidden="true">Th7</text><rect class="v" style="--n:14" x="122.6" y="622.0" width="110.9" height="40" rx="13.6"/><text class="vl" style="--n:14" x="178.1" y="642.0" font-size="24.0" aria-hidden="true">Th8</text><rect class="v" style="--n:15" x="113.8" y="671.0" width="114.2" height="40" rx="13.6"/><text class="vl" style="--n:15" x="170.9" y="691.0" font-size="24.0" aria-hidden="true">Th9</text><rect class="v" style="--n:16" x="106.0" y="720.0" width="117.5" height="40" rx="13.6"/><text class="vl" style="--n:16" x="164.8" y="740.0" font-size="24.0" aria-hidden="true">Th10</text><rect class="v" style="--n:17" x="99.7" y="769.0" width="120.7" height="40" rx="13.6"/><text class="vl" style="--n:17" x="160.1" y="789.0" font-size="24.0" aria-hidden="true">Th11</text><rect class="v" style="--n:18" x="95.1" y="818.0" width="124.0" height="40" rx="13.6"/><text class="vl" style="--n:18" x="157.1" y="838.0" font-size="24.0" aria-hidden="true">Th12</text></g><g class="seg" role="button" tabindex="0" data-region="lws" aria-label="Lendenwirbelsäule: Termin anfragen"><rect class="hit" x="44.0" y="862.5" width="263.0" height="325.0"/><rect class="v" style="--n:19" x="86.0" y="867.0" width="140.0" height="56" rx="19.0"/><text class="vl" style="--n:19" x="156.0" y="895.0" font-size="26.0" aria-hidden="true">L1</text><rect class="v" style="--n:20" x="84.0" y="932.0" width="148.0" height="56" rx="19.0"/><text class="vl" style="--n:20" x="158.0" y="960.0" font-size="26.0" aria-hidden="true">L2</text><rect class="v" style="--n:21" x="85.3" y="997.0" width="156.0" height="56" rx="19.0"/><text class="vl" style="--n:21" x="163.3" y="1025.0" font-size="26.0" aria-hidden="true">L3</text><rect class="v" style="--n:22" x="89.2" y="1062.0" width="164.0" height="56" rx="19.0"/><text class="vl" style="--n:22" x="171.2" y="1090.0" font-size="26.0" aria-hidden="true">L4</text><rect class="v" style="--n:23" x="95.0" y="1127.0" width="172.0" height="56" rx="19.0"/><text class="vl" style="--n:23" x="181.0" y="1155.0" font-size="26.0" aria-hidden="true">L5</text></g><g class="seg" role="button" tabindex="0" data-region="isg" aria-label="Kreuzbein und Becken: Termin anfragen"><rect class="hit" x="75.7" y="1187.5" width="230.0" height="159.0"/><rect class="v" style="--n:24" x="115.7" y="1192.0" width="150.0" height="44" rx="15.0"/><text class="vl" style="--n:24" x="190.7" y="1214.0" font-size="21.5" aria-hidden="true">Kreuzbein</text><rect class="v" style="--n:25" x="144.4" y="1245.0" width="110.0" height="44" rx="15.0"/><text class="vl" style="--n:25" x="199.4" y="1267.0" font-size="26.0" aria-hidden="true">ISG</text><rect class="v" style="--n:26" x="172.5" y="1298.0" width="70.0" height="44" rx="15.0"/><text class="vl" style="--n:26" x="207.5" y="1320.0" font-size="18.1" aria-hidden="true">Steiß</text></g></svg><svg class="hero-spine-h" viewBox="0 0 1351 380" role="group" aria-label="Wirbelsäule: Abschnitt wählen"><g class="seg" role="button" tabindex="0" data-region="hws" aria-label="Halswirbelsäule: Termin anfragen"><rect class="hit" x="1.5" y="128.9" width="273.0" height="176.1"/><rect class="v" style="--n:0" x="6.0" y="168.9" width="30" height="72.0" rx="10.2"/><rect class="v" style="--n:1" x="45.0" y="173.6" width="30" height="73.7" rx="10.2"/><rect class="v" style="--n:2" x="84.0" y="177.6" width="30" height="75.3" rx="10.2"/><rect class="v" style="--n:3" x="123.0" y="180.6" width="30" height="77.0" rx="10.2"/><rect class="v" style="--n:4" x="162.0" y="182.6" width="30" height="78.7" rx="10.2"/><rect class="v" style="--n:5" x="201.0" y="183.4" width="30" height="80.3" rx="10.2"/><rect class="v" style="--n:6" x="240.0" y="183.0" width="30" height="82.0" rx="10.2"/></g><g class="seg" role="button" tabindex="0" data-region="bws" aria-label="Brustwirbelsäule: Termin anfragen"><rect class="hit" x="274.5" y="55.1" width="588.0" height="251.9"/><rect class="v" style="--n:7" x="279.0" y="179.0" width="40" height="88.0" rx="13.6"/><rect class="v" style="--n:8" x="328.0" y="174.4" width="40" height="91.3" rx="13.6"/><rect class="v" style="--n:9" x="377.0" y="168.1" width="40" height="94.5" rx="13.6"/><rect class="v" style="--n:10" x="426.0" y="160.4" width="40" height="97.8" rx="13.6"/><rect class="v" style="--n:11" x="475.0" y="151.5" width="40" height="101.1" rx="13.6"/><rect class="v" style="--n:12" x="524.0" y="142.0" width="40" height="104.4" rx="13.6"/><rect class="v" style="--n:13" x="573.0" y="132.2" width="40" height="107.6" rx="13.6"/><rect class="v" style="--n:14" x="622.0" y="122.6" width="40" height="110.9" rx="13.6"/><rect class="v" style="--n:15" x="671.0" y="113.8" width="40" height="114.2" rx="13.6"/><rect class="v" style="--n:16" x="720.0" y="106.0" width="40" height="117.5" rx="13.6"/><rect class="v" style="--n:17" x="769.0" y="99.7" width="40" height="120.7" rx="13.6"/><rect class="v" style="--n:18" x="818.0" y="95.1" width="40" height="124.0" rx="13.6"/></g><g class="seg" role="button" tabindex="0" data-region="lws" aria-label="Lendenwirbelsäule: Termin anfragen"><rect class="hit" x="862.5" y="44.0" width="325.0" height="263.0"/><rect class="v" style="--n:19" x="867.0" y="86.0" width="56" height="140.0" rx="19.0"/><rect class="v" style="--n:20" x="932.0" y="84.0" width="56" height="148.0" rx="19.0"/><rect class="v" style="--n:21" x="997.0" y="85.3" width="56" height="156.0" rx="19.0"/><rect class="v" style="--n:22" x="1062.0" y="89.2" width="56" height="164.0" rx="19.0"/><rect class="v" style="--n:23" x="1127.0" y="95.0" width="56" height="172.0" rx="19.0"/></g><g class="seg" role="button" tabindex="0" data-region="isg" aria-label="Kreuzbein und Becken: Termin anfragen"><rect class="hit" x="1187.5" y="75.7" width="159.0" height="230.0"/><rect class="v" style="--n:24" x="1192.0" y="115.7" width="44" height="150.0" rx="15.0"/><rect class="v" style="--n:25" x="1245.0" y="144.4" width="44" height="110.0" rx="15.0"/><rect class="v" style="--n:26" x="1298.0" y="172.5" width="44" height="70.0" rx="15.0"/></g></svg>
         <div class="sp-copy">
           <img class="sp-face" data-rise style="--i:0" src="../assets/v2/portrait-manicke.webp" width="528" height="700" alt="Dr. med. Christoph Manicke">
           <h1 id="title"><span class="sr-only">Zweite Meinung zur Wirbelsäule: </span><span class="line"><span style="--l:0">Alles in</span></span> <span class="line"><span style="--l:1">Ruhe.</span></span></h1>
@@ -453,10 +465,6 @@ details[open] .plus::after { transform: rotate(0deg); }
     </div>
   </section>
 
-  <div class="curtain">
-  <div class="curtain-track">
-  <div class="curtain-pane">
-  <div class="curtain-half is-left">
   <section class="intro" id="ueber-mich" data-bg="#101a35" data-ink="#f7f7f5" aria-labelledby="intro-title">
     <div class="grid">
       <div class="path" data-reveal style="--i:2">
@@ -483,10 +491,6 @@ details[open] .plus::after { transform: rotate(0deg); }
       </div>
     </div>
   </section>
-  </div>
-  <div class="curtain-half is-right" aria-hidden="true"></div>
-  </div>
-  </div>
 
   <section class="contact" id="kontakt" data-bg="#101a35" data-ink="#f7f7f5" aria-labelledby="contact-title">
     <div class="ask">
@@ -537,8 +541,6 @@ details[open] .plus::after { transform: rotate(0deg); }
       </form>
     </div>
   </section>
-  <div class="curtain-tail" aria-hidden="true"></div>
-  </div>
 
   <section class="practice" id="praxis" data-bg="#f7f7f5" data-ink="#1b1b1b" aria-labelledby="practice-title">
     <div class="map-stage">
@@ -630,21 +632,40 @@ const paintBar = (chapter) => {
 
 // The glide: past a threshold a pinned scene finishes on its own, one glide at a time across the page.
 // The visitor stays in charge: scrolling the other way stops a glide on the spot and the page follows them;
-// scrolling the same way is absorbed while it runs and for a moment after it lands, so trackpad momentum does not overshoot.
+// scrolling the same way speeds the glide up, and for a moment after it lands it is absorbed, so trackpad momentum does not overshoot.
+// Whenever the page comes to rest halfway through a scene (a glide stopped, a reload), it settles on a finished state:
+// the one the visitor was last heading for, or the nearer one if they were not scrolling.
 const glider = (() => {
   const still = matchMedia('(prefers-reduced-motion: reduce)');
   let gliding = false, lastWheel = 0, speed = 0, lastY = scrollY, lastT = performance.now(), heading = 0, frame = 0, settle = 0, touchY = 0;
+  let boost = 0, quietUntil = 0, idle = 0, touching = false, pressing = false, way = 0, lastAbs = 0;
+  const rests = [];
   addEventListener('scroll', () => {
     const now = performance.now();
-    if (!gliding) speed = speed * 0.4 + 0.6 * (scrollY - lastY) / Math.max(1, now - lastT); // px per ms, lightly smoothed
+    if (!gliding) {
+      speed = speed * 0.4 + 0.6 * (scrollY - lastY) / Math.max(1, now - lastT); // px per ms, lightly smoothed
+      way = Math.sign(scrollY - lastY) || way;
+      clearTimeout(idle);
+      idle = setTimeout(rest, 350);
+    }
     lastY = scrollY;
     lastT = now;
   }, { passive: true });
+  // the visitor holding the page (finger, scrollbar) is never overruled; letting go counts as coming to rest
+  addEventListener('touchstart', () => { touching = true; }, { passive: true });
+  addEventListener('touchend', () => { touching = false; clearTimeout(idle); idle = setTimeout(rest, 350); }, { passive: true });
+  addEventListener('pointerdown', () => { pressing = true; }, { passive: true });
+  for (const t of ['pointerup', 'pointercancel', 'blur']) addEventListener(t, () => { pressing = false; }, { passive: true });
   const steer = (e, dy) => {
     if (!heading || !dy) return;
     if (Math.sign(dy) === -heading) return stop();
+    // landed: momentum dies away, so a push that grows again is the visitor going on, and the page lets them
+    const a = Math.abs(dy);
+    if (!gliding && a > lastAbs * 1.2 + 4) return stop();
+    lastAbs = a;
     e.preventDefault();
     lastWheel = performance.now();
+    if (gliding) boost += Math.min(80, a * 1.5); // the same way: on faster, never past the end
   };
   const onWheel = (e) => steer(e, e.deltaY);
   const onTouchStart = (e) => { touchY = e.touches[0].clientY; };
@@ -669,34 +690,50 @@ const glider = (() => {
     stop();
     const from = scrollY, d = to - from, t0 = performance.now();
     if (!d) return;
+    boost = 0;
+    lastAbs = Infinity;
     gliding = true;
     heading = Math.sign(d);
     listen(true);
     const span = still.matches ? 0 : Math.max(ms * 0.6, Math.min(ms, 2.5 * Math.abs(d) / Math.max(0.01, Math.abs(speed)))); // a fast scroll gets a shorter glide
     const m = Math.min(2.5, Math.max(1.2, Math.abs(speed) * span / Math.abs(d))); // starting slope, kept short of an overshoot
     const step = (now) => {
-      const k = span ? Math.min(1, (now - t0) / span) : 1;
+      const k = span ? Math.min(1, (now - t0 + boost) / span) : 1;
       scrollTo(0, from + d * (m * (k - 2 * k * k + k * k * k) + 3 * k * k - 2 * k * k * k));
       if (k < 1) { frame = requestAnimationFrame(step); return; }
       gliding = false;
       speed = 0;
       // on the way back up, a visitor still scrolling carries straight on
       if (heading < 0) { stop(); return; }
-      // on the way down, let go once the wheel is quiet, and in any case within half a second
+      // on the way down, let go once the momentum has died away, and in any case within 0.7 seconds
       const landed = performance.now();
       const release = () => {
         const now2 = performance.now();
-        if (now2 - lastWheel < 160 && now2 - landed < 500) { settle = setTimeout(release, 60); return; }
+        if (now2 - lastWheel < 160 && now2 - landed < 700) { settle = setTimeout(release, 60); return; }
         stop();
       };
       release();
     };
     frame = requestAnimationFrame(step);
   };
-  // a jump the visitor asks for, by link or by key, always wins over a glide
-  addEventListener('click', (e) => { if (e.target.closest('a[href^="#"]')) stop(); }, true);
+  // at rest halfway through a scene: on to the nearer finished state. Each scene says where that is, or null where it is not halfway.
+  const rest = () => {
+    if (gliding || touching || pressing || performance.now() < quietUntil) return;
+    for (const find of rests) {
+      const to = find(way);
+      if (to == null || Math.abs(to - scrollY) < 2) continue;
+      speed = 0;
+      go(Math.round(to), 900);
+      return;
+    }
+  };
+  // a jump the visitor asks for, by link or by key, always wins over a glide, and the scenes keep still while the page lands
+  const hush = (ms = 450) => { quietUntil = performance.now() + ms; way = 0; };
+  addEventListener('click', (e) => { if (e.target.closest('a[href^="#"]')) { stop(); hush(); } }, true);
   addEventListener('keydown', (e) => { if (['PageUp', 'PageDown', 'Home', 'End', ' ', 'ArrowUp', 'ArrowDown'].includes(e.key)) stop(); }, true);
-  return { go, stop, get active() { return gliding; } };
+  // a page reloaded halfway through a scene comes back to rest in a finished state, the nearer one
+  addEventListener('load', () => { way = 0; idle = setTimeout(rest, 300); });
+  return { go, stop, hush, rest: (find) => rests.push(find), get active() { return gliding; }, get quiet() { return performance.now() < quietUntil; } };
 })();
 
 // The opening: the spine builds on arrival; scrolling on, the view dives into one vertebra until its colour fills the screen.
@@ -707,7 +744,6 @@ const glider = (() => {
   const copy = inner.querySelector('.sp-copy');
   const flood = split.querySelector('.sp-flood');
   const pinned = () => split.offsetHeight - innerHeight;
-  const SNAP = 0.3; // scrolling back, below 1 - SNAP the view returns to the spine
   const DIVE_SNAP = 0.06; // the dive takes over almost as soon as it starts
   const at = () => split.getBoundingClientRect().top + scrollY;
   let ticking = false, lastY = scrollY, target = null, deep = null;
@@ -716,17 +752,20 @@ const glider = (() => {
   const aim = () => {
     inner.style.transform = '';
     const box = inner.getBoundingClientRect();
-    let best = null, bestD = Infinity;
+    let best = null, bestD = Infinity, el = null;
     inner.querySelectorAll('.seg:not([data-region="isg"]) .v').forEach((v) => {
       const r = v.getBoundingClientRect();
       if (!r.width || r.top < 0 || r.bottom > innerHeight) return;
       const d = Math.hypot(r.left + r.width / 2 - innerWidth / 2, r.top + r.height / 2 - innerHeight / 2);
-      if (d < bestD) { bestD = d; best = r; }
+      if (d < bestD) { bestD = d; best = r; el = v; }
     });
     if (!best) return null;
     return {
+      el,
+      corner: (parseFloat(el.getAttribute('rx')) || 0) * best.width / (parseFloat(el.getAttribute('width')) || best.width), // on screen, at rest
       x: best.left + best.width / 2 - box.left,
       y: best.top + best.height / 2 - box.top,
+      w0: best.width,
       s: Math.max(innerWidth / best.width, innerHeight / best.height) * 1.8, // past the rounded corners
     };
   };
@@ -737,9 +776,11 @@ const glider = (() => {
     const z = Math.min(1, Math.max(0, -rect.top / pinned()));
     const dir = Math.sign(scrollY - lastY);
     lastY = scrollY;
-    const free = !glider.active;
-    if (free && dir > 0 && z >= DIVE_SNAP && z < 1) glider.go(at() + split.offsetHeight, 2200);
-    else if (free && dir < 0 && z > 0 && z <= 1 - SNAP) glider.go(at(), 1500);
+    const free = !glider.active && !glider.quiet;
+    if (free && dir > 0 && z >= DIVE_SNAP && z < 1) glider.go(at() + split.offsetHeight, 1300);
+    // back up: as soon as the story has slipped a little way down (15% of the screen, at least 120px), not only once the zoom is undone,
+    // so the visitor never scrolls through a screen of empty colour to get back to the spine
+    else if (free && dir < 0 && scrollY > at() && scrollY < at() + split.offsetHeight - Math.max(innerHeight * 0.15, 120)) glider.go(at(), 1300);
     if (z > 0 && !still.matches) {
       if (!target) target = aim();
       if (target) {
@@ -752,8 +793,17 @@ const glider = (() => {
       target = null;
       inner.style.transform = inner.style.transformOrigin = '';
     }
-    // with reduced motion the colour simply fades in
-    flood.style.opacity = String(still.matches ? z : Math.min(1, Math.max(0, (z - 0.7) / 0.3)));
+    // with reduced motion the colour simply fades in. Otherwise it comes in as the vertebra closes on the edges of the screen:
+    // the paper still showing beside it (its rounded corners included) is measured, and the colour is complete before that
+    // paper is down to a thin stripe, which would otherwise flash as a white line.
+    let fill = Math.min(1, Math.max(0, (z - 0.7) / 0.3));
+    if (!still.matches && target && z > 0) {
+      const r = target.el.getBoundingClientRect(), k = r.width / target.w0, round = target.corner * k * 0.3;
+      const top = document.querySelector('.bar').offsetHeight;
+      const paper = Math.max(0, r.top + round - top, innerHeight - r.bottom + round, r.left + round, innerWidth - r.right + round);
+      fill = Math.max(fill, Math.min(1, Math.max(0, (320 - paper) / 180))); // complete while that paper is still 140px wide
+    }
+    flood.style.opacity = String(still.matches ? z : fill);
     copy.style.opacity = z ? String(Math.max(0, 1 - z * 4)) : '';
     copy.style.visibility = z > 0.25 ? 'hidden' : '';
     split.classList.toggle('is-zooming', z > 0);
@@ -767,6 +817,13 @@ const glider = (() => {
   };
   addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(place); } }, { passive: true });
   addEventListener('resize', () => { target = null; place(); });
+  // halfway through the dive, or while the colour after it still fills most of the screen: back to the spine or on to the story
+  glider.rest((way) => {
+    const a = at(), y = scrollY - a, end = a + split.offsetHeight;
+    if (y <= 0 || y >= split.offsetHeight - innerHeight * 0.4) return null;
+    if (way) return way < 0 ? a : end;
+    return y < pinned() * 0.5 ? a : end;
+  });
   split.classList.add('is-open');
   place();
 })();
@@ -778,13 +835,18 @@ const glider = (() => {
     const horizontal = sv.classList.contains('hero-spine-h');
     const verts = [...sv.querySelectorAll('.v')].map((el) => {
       const n = (k) => parseFloat(el.getAttribute(k));
-      return { el, c: horizontal ? n('x') + n('width') / 2 : n('y') + n('height') / 2 };
+      const label = el.nextElementSibling?.classList.contains('vl') ? el.nextElementSibling : null;
+      return { el, label, c: horizontal ? n('x') + n('width') / 2 : n('y') + n('height') / 2 };
     });
     const light = (pos) => {
       sv.classList.add('spine-live');
-      for (const v of verts) { const d = v.c - pos; v.el.style.setProperty('--i', Math.exp(-(d * d) / (2 * SIGMA * SIGMA)).toFixed(3)); }
+      for (const v of verts) {
+        const d = v.c - pos, i = Math.exp(-(d * d) / (2 * SIGMA * SIGMA)).toFixed(3);
+        v.el.style.setProperty('--i', i);
+        v.label?.style.setProperty('--i', i);
+      }
     };
-    const dark = () => { sv.classList.remove('spine-live'); verts.forEach((v) => v.el.style.removeProperty('--i')); };
+    const dark = () => { sv.classList.remove('spine-live'); verts.forEach((v) => { v.el.style.removeProperty('--i'); v.label?.style.removeProperty('--i'); }); };
     let frame = 0;
     sv.addEventListener('pointermove', (e) => {
       if (e.pointerType !== 'mouse') return;
@@ -982,69 +1044,25 @@ const glider = (() => {
   arm();
 })();
 
-// The curtain: once "Über mich" has shown its last screen, its two halves draw aside to the left and right and uncover the request.
+// From "Über mich" the request simply follows as the page scrolls. Links to it land on its first screen (the bar sits over
+// its own top padding); links to the story land where its heading clears the bar.
 (() => {
-  const curtain = document.querySelector('.curtain');
-  const track = curtain.querySelector('.curtain-track');
-  const pane = curtain.querySelector('.curtain-pane');
-  const left = curtain.querySelector('.curtain-half.is-left');
-  const right = curtain.querySelector('.curtain-half.is-right');
-  const intro = left.querySelector('.intro');
-  const tail = curtain.querySelector('.curtain-tail');
-  const still = matchMedia('(prefers-reduced-motion: reduce)');
-  const clamp = (v) => Math.min(1, Math.max(0, v));
-  const START = 0.12; // a little way into the opening the rest plays by itself
-  const BACK = 0.7; // scrolling back below this share closes it again
-  // the right half shows a quiet copy of the story, without ids or entrances
-  const copy = intro.cloneNode(true);
-  copy.removeAttribute('id');
-  copy.removeAttribute('data-bg');
-  copy.removeAttribute('aria-labelledby');
-  copy.querySelectorAll('[id]').forEach((el) => el.removeAttribute('id'));
-  copy.querySelectorAll('[aria-labelledby]').forEach((el) => el.removeAttribute('aria-labelledby'));
-  copy.querySelectorAll('[data-reveal]').forEach((el) => el.removeAttribute('data-reveal'));
-  copy.querySelectorAll('.is-waiting').forEach((el) => el.classList.remove('is-waiting'));
-  right.append(copy);
-  right.inert = true;
-  const measure = () => curtain.style.setProperty('--intro-h', `${intro.offsetHeight}px`);
-  new ResizeObserver(measure).observe(intro);
-  measure();
-  // where the opening starts and ends, in page pixels
-  const start = () => track.getBoundingClientRect().top + scrollY - parseFloat(getComputedStyle(pane).top);
-  const end = () => start() + tail.offsetHeight;
-  let ticking = false, lastY = scrollY;
-  const place = () => {
-    ticking = false;
-    const p = clamp((scrollY - start()) / tail.offsetHeight);
-    const dir = Math.sign(scrollY - lastY);
-    lastY = scrollY;
-    if (!glider.active && !still.matches) {
-      if (dir > 0 && p >= START && p < 1) glider.go(Math.round(end()), 1800);
-      else if (dir < 0 && p > 0 && p <= BACK) glider.go(Math.round(start()), 1400);
-    }
-    const parting = p > 0;
-    curtain.classList.toggle('is-parting', parting);
-    if (!parting) { left.style.transform = right.style.transform = left.style.opacity = right.style.opacity = ''; return; }
-    if (still.matches) {
-      left.style.opacity = right.style.opacity = String(1 - p);
-      return;
-    }
-    const e = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(2 - 2 * p, 3) / 2;
-    left.style.transform = `translateX(${-e * 101}%)`;
-    right.style.transform = `translateX(${e * 101}%)`;
-    pane.style.visibility = p >= 1 ? 'hidden' : '';
+  const intro = document.querySelector('#ueber-mich');
+  const contact = document.querySelector('#kontakt');
+  const top = (el) => el.getBoundingClientRect().top + scrollY;
+  const toForm = () => scrollTo({ top: Math.ceil(top(contact)), behavior: 'instant' });
+  const toIntro = () => {
+    const margin = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--bar')) + 16;
+    scrollTo({ top: Math.max(0, Math.floor(top(intro) - margin)), behavior: 'instant' });
   };
-  addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(place); } }, { passive: true });
-  addEventListener('resize', place);
-  // links to the request land with the curtain already open
-  const toForm = () => scrollTo({ top: Math.ceil(end()), behavior: 'instant' });
-  document.querySelectorAll('a[href="#kontakt"]').forEach((a) => a.addEventListener('click', (e) => {
-    e.preventDefault();
-    toForm();
-    history.replaceState(null, '', '#kontakt');
-  }));
-  if (location.hash === '#kontakt') addEventListener('load', toForm);
-  place();
+  for (const [hash, go] of [['#kontakt', toForm], ['#ueber-mich', toIntro]]) {
+    document.querySelectorAll(`a[href="${hash}"]`).forEach((a) => a.addEventListener('click', (e) => {
+      e.preventDefault();
+      go();
+      history.replaceState(null, '', hash);
+    }));
+    if (location.hash === hash) addEventListener('load', go);
+  }
 })();
 
 // Phone menu.
@@ -1053,7 +1071,7 @@ const glider = (() => {
   const btn = bar.querySelector('.nav-toggle');
   const set = (open) => { bar.classList.toggle('is-open', open); btn.setAttribute('aria-expanded', String(open)); };
   btn.addEventListener('click', () => set(!bar.classList.contains('is-open')));
-  bar.querySelectorAll('.nav-links a').forEach((a) => a.addEventListener('click', () => set(false)));
+  bar.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => set(false)));
   addEventListener('keydown', (e) => { if (e.key === 'Escape' && bar.classList.contains('is-open')) { set(false); btn.focus(); } });
   addEventListener('click', (e) => { if (!bar.contains(e.target)) set(false); });
 })();
@@ -1074,7 +1092,7 @@ const glider = (() => {
   const stage = sec.querySelector('.map-stage');
   const still = matchMedia('(prefers-reduced-motion: reduce)');
   const clamp = (v) => Math.min(1, Math.max(0, v));
-  const START = 0.1; // as soon as the map peeks in below the form, the rest plays by itself
+  const form = document.querySelector('.request');
   const BACK = 0.7; // scrolling back below this share of the pull-back returns to the cards
   let ticking = false, dark = null, lastY = scrollY;
   const place = () => {
@@ -1085,9 +1103,12 @@ const glider = (() => {
     const dir = Math.sign(scrollY - lastY);
     lastY = scrollY;
     const at = r.top + scrollY;
-    if (!glider.active && span > 0) {
-      if (dir > 0 && r.top < innerHeight * (1 - START) && p < 1) glider.go(at + span, 2600);
-      else if (dir < 0 && r.top < 0 && p <= BACK) glider.go(at - innerHeight, 1600);
+    if (!glider.active && !glider.quiet && span > 0) {
+      // only once the request is behind the visitor (its button in the upper half of the screen) and nobody is typing in it,
+      // so checking the form or reaching for "Anfrage senden" never carries them off to the map
+      const past = form.getBoundingClientRect().bottom < innerHeight * 0.5 && !form.contains(document.activeElement);
+      if (dir > 0 && past && r.top < innerHeight && p < 1) glider.go(at + span, 1400);
+      else if (dir < 0 && r.top < 0 && p <= BACK) glider.go(at - innerHeight, 1000);
     }
     const e = p * p * (3 - 2 * p); // even pull-back, soft at both ends
     stage.style.setProperty('--z', (3 - 2 * e).toFixed(3));
@@ -1103,6 +1124,16 @@ const glider = (() => {
   };
   addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(place); } }, { passive: true });
   addEventListener('resize', place);
+  // stopped in the dark between the request and the map: back to the request or on to the finished map.
+  // Not while the request still fills the upper half of the screen, and never while someone is typing in it.
+  glider.rest((way) => {
+    const r = sec.getBoundingClientRect(), span = r.height - innerHeight;
+    if (span <= 0 || r.top >= innerHeight * 0.5 || form.contains(document.activeElement)) return null;
+    const p = clamp(-r.top / span);
+    if (p >= 1) return null;
+    const at = r.top + scrollY;
+    return (way ? way > 0 : p >= 0.5) ? at + span : at - innerHeight;
+  });
   // links to the practice land on the finished map, with its card, not in the dark at its start
   const toMap = () => {
     const r = sec.getBoundingClientRect();
