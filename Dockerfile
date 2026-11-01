@@ -9,7 +9,7 @@ RUN npm ci --omit=dev --no-audit --no-fund
 
 # Only what the pages actually reference goes live. Everything else in assets/ (originals, unused MRI pictures,
 # the screenshot with patient data) stays in the repository.
-FROM alpine:3.22 AS site
+FROM alpine:3.24 AS site
 WORKDIR /site
 COPY index.html impressum.html datenschutz.html robots.txt sitemap.xml ./
 COPY fancy/index.html ./fancy/
@@ -29,7 +29,7 @@ RUN cd mailer && npm ci --no-audit --no-fund && node --test *.test.mjs
 RUN ! find site -iname '*herniation*' -o -iname '*sagittal*' | grep . \
  && test -f site/index.html && test -f site/fancy/index.html && test -f site/impressum.html && test -f site/datenschutz.html
 
-FROM nginxinc/nginx-unprivileged:1.29-alpine
+FROM nginxinc/nginx-unprivileged:1.31-alpine
 ARG APP_VERSION=dev
 USER root
 RUN apk add --no-cache nodejs
