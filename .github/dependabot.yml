@@ -1,0 +1,16 @@
+# Written by `dev deps` (claude-dev). Minor and patch only: majors need a person (and often code changes).
+# `dev automerge` merges these PRs after green CI when they touch only manifests, lock files or FROM lines.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: "/mailer"
+    schedule: { interval: weekly, day: monday, time: "05:00", timezone: Europe/Vienna }
+    open-pull-requests-limit: 3
+    groups: { all: { patterns: ["*"] } }
+    ignore: [ { dependency-name: "*", update-types: ["version-update:semver-major"] } ]
+  - package-ecosystem: docker
+    directory: "/"
+    schedule: { interval: weekly, day: monday, time: "05:00", timezone: Europe/Vienna }
+    open-pull-requests-limit: 3
+    groups: { all: { patterns: ["*"] } }
+    ignore: [ { dependency-name: "*", update-types: ["version-update:semver-major"] } ]
